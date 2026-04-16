@@ -1,58 +1,158 @@
 <UserControl x:Class="SubscriptionTracker.DashboardView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Border Background="#1B1B2B" CornerRadius="15" Padding="20">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+    <Grid Margin="50,40,50,0">
         <StackPanel>
+            
             <!-- HEADER -->
-            <TextBlock Text="SubTrack" Foreground="White" FontSize="16"/>
-            <TextBlock Text="Podsumowanie"
-                       Foreground="White"
-                       FontSize="28"
-                       FontWeight="Bold"
-                       Margin="0,10,0,0"/>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" Foreground="#3b82f6" FontSize="18" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                <TextBlock Text="SubTrack" Foreground="White" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+            </StackPanel>
+            
+            <TextBlock Text="Podsumowanie" Foreground="White" FontSize="32" FontWeight="SemiBold"/>
+            <TextBlock Text="Dzisiejsza data: 29 marca 2026" Foreground="#8A8A93" FontSize="13" Margin="0,5,0,30"/>
 
-            <!-- KARTY -->
-            <Grid Margin="0,20,0,0">
+            <!-- TOP CARDS -->
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- KARTA 1 -->
-                <Border Background="#24243A" CornerRadius="10" Padding="20" Margin="10">
-                    <StackPanel>
-                        <TextBlock Text="Miesięczne koszty" Foreground="Gray"/>
-                        <TextBlock Text="1845,90 PLN"
-                                   Foreground="White"
-                                   FontSize="22"
-                                   FontWeight="Bold"/>
+                <!-- KOSZTY -->
+                <Border Background="#1E1E24" CornerRadius="12" Padding="25" BorderBrush="#2A2A35" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="45" Height="45" CornerRadius="10" Background="#161b26" VerticalAlignment="Center" Margin="0,0,20,0">
+                            <TextBlock Text="&#xE7C3;" FontFamily="Segoe MDL2 Assets" Foreground="#3b82f6" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Miesięczne koszty" Foreground="#8A8A93" FontSize="13" Margin="0,0,0,4"/>
+                            <TextBlock Text="1845,90 PLN" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,0,0,4"/>
+                            <TextBlock Text="-2.3% vs poprzedni miesiąc" Foreground="#22c55e" FontSize="12"/>
+                        </StackPanel>
                     </StackPanel>
                 </Border>
 
-                <!-- KARTA 2 -->
-                <Border Background="#24243A" CornerRadius="10" Padding="20" Margin="10" Grid.Column="1">
-                    <StackPanel>
-                        <TextBlock Text="Aktywne subskrypcje" Foreground="Gray"/>
-                        <TextBlock Text="28 usług"
-                                   Foreground="White"
-                                   FontSize="22"
-                                   FontWeight="Bold"/>
+                <!-- SUBSKRYPCJE -->
+                <Border Grid.Column="2" Background="#1E1E24" CornerRadius="12" Padding="25" BorderBrush="#2A2A35" BorderThickness="1">
+                    <StackPanel Orientation="Horizontal">
+                        <Border Width="45" Height="45" CornerRadius="10" Background="#1a1c23" VerticalAlignment="Center" Margin="0,0,20,0">
+                            <TextBlock Text="&#xE73E;" FontFamily="Segoe MDL2 Assets" Foreground="#3b82f6" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock Text="Aktywne subskrypcje" Foreground="#8A8A93" FontSize="13" Margin="0,0,0,4"/>
+                            <TextBlock Text="28 Usług" Foreground="White" FontSize="28" FontWeight="Bold" Margin="0,0,0,4"/>
+                            <TextBlock Text="4 nowe w tym miesiącu" Foreground="#8A8A93" FontSize="12"/>
+                        </StackPanel>
                     </StackPanel>
                 </Border>
             </Grid>
 
-            <!-- LISTA -->
-            <Border Background="#24243A" CornerRadius="10" Padding="15" Margin="10">
-                <StackPanel>
-                    <TextBlock Text="Nadchodzące płatności" Foreground="White"/>
+            <!-- BOTTOM SECTION -->
+            <Grid Margin="0,25,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="20"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                    <StackPanel Margin="0,10,0,0">
-                        <TextBlock Text="Netflix - 60 PLN" Foreground="LightGray"/>
-                        <TextBlock Text="Spotify - 19,99 PLN" Foreground="LightGray"/>
-                        <TextBlock Text="Adobe - 249 PLN" Foreground="LightGray"/>
+                <!-- LISTA -->
+                <Border Background="#1E1E24" CornerRadius="12" Padding="25" BorderBrush="#2A2A35" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="Nadchodzące płatności" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,20"/>
+                        
+                        <!-- Item 1 -->
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Width="40" Height="40" CornerRadius="8" Background="#e50914" Margin="0,0,15,0">
+                                <TextBlock Text="N" Foreground="White" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="Netflix" Foreground="White" FontWeight="SemiBold" FontSize="14"/>
+                                <TextBlock Text="14 Maja" Foreground="#8A8A93" FontSize="12"/>
+                            </StackPanel>
+                            <TextBlock Grid.Column="2" Text="Streaming" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,30,0"/>
+                            <TextBlock Grid.Column="3" Text="60,00 PLN" Foreground="White" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <Rectangle Height="1" Fill="#2A2A35" Margin="0,5,0,15"/>
+
+                        <!-- Item 2 -->
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Width="40" Height="40" CornerRadius="8" Background="#ff0000" Margin="0,0,15,0">
+                                <TextBlock Text="A" Foreground="White" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="Adobe CC" Foreground="White" FontWeight="SemiBold" FontSize="14"/>
+                                <TextBlock Text="15 Maja" Foreground="#8A8A93" FontSize="12"/>
+                            </StackPanel>
+                            <TextBlock Grid.Column="2" Text="Oprogramowanie" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,30,0"/>
+                            <TextBlock Grid.Column="3" Text="249,99 PLN" Foreground="White" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
+                        </Grid>
+
+                        <Rectangle Height="1" Fill="#2A2A35" Margin="0,5,0,15"/>
+
+                        <!-- Item 3 -->
+                        <Grid Margin="0,0,0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Width="40" Height="40" CornerRadius="8" Background="#1db954" Margin="0,0,15,0">
+                                <TextBlock Text="S" Foreground="White" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="Spotify" Foreground="White" FontWeight="SemiBold" FontSize="14"/>
+                                <TextBlock Text="18 Maja" Foreground="#8A8A93" FontSize="12"/>
+                            </StackPanel>
+                            <TextBlock Grid.Column="2" Text="Streaming" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,30,0"/>
+                            <TextBlock Grid.Column="3" Text="19,99 PLN" Foreground="White" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
+                        </Grid>
                     </StackPanel>
-                </StackPanel>
-            </Border>
+                </Border>
+
+                <!-- WYKRES WIZUALIZACJA -->
+                <Border Grid.Column="2" Background="#1E1E24" CornerRadius="12" Padding="25" BorderBrush="#2A2A35" BorderThickness="1">
+                    <StackPanel>
+                        <TextBlock Text="Wydatki wg kategorii" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,40"/>
+                        
+                        <Grid Width="150" Height="150" HorizontalAlignment="Center">
+                            <!-- Solid circle + slices to mimic a pie chart -->
+                            <Ellipse Fill="#3b82f6" Width="150" Height="150"/>
+                            <Path Data="M 75,75 L 75,0 A 75,75 0 0,1 150,75 Z" Fill="#a855f7" />
+                            <Path Data="M 75,75 L 150,75 A 75,75 0 0,1 75,150 Z" Fill="#22c55e" />
+                            <Path Data="M 75,75 L 75,150 A 75,75 0 0,1 0,75 Z" Fill="#eab308" />
+                        </Grid>
+                        
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,40,0,0">
+                            <Ellipse Width="8" Height="8" Fill="#3b82f6" Margin="0,0,5,0"/>
+                            <TextBlock Text="Oprogramowanie" Foreground="White" FontSize="12" Margin="0,0,15,0"/>
+                            <Ellipse Width="8" Height="8" Fill="#22c55e" Margin="0,0,5,0"/>
+                            <TextBlock Text="Streaming" Foreground="White" FontSize="12" Margin="0,0,15,0"/>
+                            <Ellipse Width="8" Height="8" Fill="#eab308" Margin="0,0,5,0"/>
+                            <TextBlock Text="Gry" Foreground="White" FontSize="12"/>
+                        </StackPanel>
+
+                    </StackPanel>
+                </Border>
+
+            </Grid>
         </StackPanel>
-    </Border>
+    </Grid>
 </UserControl>

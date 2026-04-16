@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-X:\PROJEKT WPF\subtrackers\SubscriptionTracker\obj\Debug\net8.0-windows\
+C:\Users\dryjd\Desktop\subtracker\subtrackers\SubscriptionTracker\obj\Debug\net8.0-windows\
 SubscriptionTracker
 none
 false
-TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-X:\PROJEKT WPF\subtrackers\SubscriptionTracker\App.xaml
-5-789018431
+TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
+C:\Users\dryjd\Desktop\subtracker\subtrackers\SubscriptionTracker\App.xaml
+6771551868
 
-81397579704
-216-1770005271
-CategoriesView.xaml;DashboardView.xaml;MainWindow.xaml;SettingsView.xaml;SubscriptionsView.xaml;
+10-722290020
+21613924848
+AddSubscriptionWindow.xaml;CategoriesView.xaml;DashboardView.xaml;MainWindow.xaml;SettingsView.xaml;SubscriptionsView.xaml;
 
-True
+False
 

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "X:\\PROJEKT WPF\\SubscriptionTracker\\SubscriptionTracker.csproj": {}
+    "C:\\Users\\dryjd\\Desktop\\subtracker\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj": {}
   },
   "projects": {
-    "X:\\PROJEKT WPF\\SubscriptionTracker\\SubscriptionTracker.csproj": {
+    "C:\\Users\\dryjd\\Desktop\\subtracker\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "X:\\PROJEKT WPF\\SubscriptionTracker\\SubscriptionTracker.csproj",
+        "projectUniqueName": "C:\\Users\\dryjd\\Desktop\\subtracker\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj",
         "projectName": "SubscriptionTracker",
-        "projectPath": "X:\\PROJEKT WPF\\SubscriptionTracker\\SubscriptionTracker.csproj",
-        "packagesPath": "C:\\Users\\OEM\\.nuget\\packages\\",
-        "outputPath": "X:\\PROJEKT WPF\\SubscriptionTracker\\obj\\",
+        "projectPath": "C:\\Users\\dryjd\\Desktop\\subtracker\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj",
+        "packagesPath": "C:\\Users\\dryjd\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dryjd\\Desktop\\subtracker\\subtrackers\\SubscriptionTracker\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\OEM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\dryjd\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -44,7 +44,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -84,7 +85,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

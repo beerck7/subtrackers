@@ -1,23 +1,93 @@
 <UserControl x:Class="SubscriptionTracker.SettingsView"
- xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
- xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="Transparent">
+    <Grid Margin="50,40,50,0">
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" Foreground="#3b82f6" FontSize="18" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                <TextBlock Text="SubTrack" Foreground="White" FontSize="16" FontWeight="Bold" VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,30">
+                <TextBlock Text="Ustawienia" Foreground="White" FontSize="32" FontWeight="SemiBold"/>
+                <TextBlock Text="Preferencje aplikacji i konfiguracja konta" Foreground="#8A8A93" FontSize="13" Margin="0,5,0,0"/>
+            </StackPanel>
 
-    <Grid Background="#1B1B2B">
-
-        <StackPanel Margin="20">
-
-            <TextBlock Text="Ustawienia"
-                       Foreground="White"
-                       FontSize="26"
-                       FontWeight="Bold"/>
-
-            <Border Background="#24243A" CornerRadius="10" Padding="20" Margin="0,20,0,0">
+            <Border Background="#1E1E24" CornerRadius="12" Padding="25" BorderBrush="#2A2A35" BorderThickness="1" Margin="0,0,0,20">
                 <StackPanel>
-                    <TextBlock Text="Ciemny motyw" Foreground="White"/>
-                    <CheckBox IsChecked="True"/>
+                    <TextBlock Text="Profil użytkownika" Foreground="White" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,20"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Alex Developer" Foreground="White" FontWeight="Bold" FontSize="16"/>
+                            <TextBlock Text="alex@example.com" Foreground="#8A8A93" FontSize="13"/>
+                        </StackPanel>
+                        <Button Grid.Column="1" Content="Edytuj" Background="#16161B" Foreground="White" BorderBrush="#33333F" BorderThickness="1" Padding="20,8" Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
                 </StackPanel>
             </Border>
 
+            <Border Background="#1E1E24" CornerRadius="12" Padding="25" BorderBrush="#2A2A35" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="Preferencje" Foreground="White" FontWeight="SemiBold" FontSize="16" Margin="0,0,0,20"/>
+                    
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Ciemny motyw" Foreground="White" FontWeight="SemiBold" FontSize="14"/>
+                            <TextBlock Text="Wygląd aplikacji" Foreground="#8A8A93" FontSize="12"/>
+                        </StackPanel>
+                        <!-- Fake toggle -->
+                        <Border Grid.Column="1" Width="40" Height="22" CornerRadius="11" Background="#3b82f6" VerticalAlignment="Center">
+                            <Ellipse Width="16" Height="16" Fill="White" HorizontalAlignment="Right" Margin="0,0,3,0"/>
+                        </Border>
+                    </Grid>
+                    
+                    <Rectangle Height="1" Fill="#2A2A35" Margin="0,5,0,15"/>
+                    
+                    <Grid Margin="0,0,0,15">
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Powiadomienia" Foreground="White" FontWeight="SemiBold" FontSize="14"/>
+                            <TextBlock Text="Alerty o nadchodzących płatnościach" Foreground="#8A8A93" FontSize="12"/>
+                        </StackPanel>
+                        <Border Grid.Column="1" Width="40" Height="22" CornerRadius="11" Background="#3b82f6" VerticalAlignment="Center">
+                            <Ellipse Width="16" Height="16" Fill="White" HorizontalAlignment="Right" Margin="0,0,3,0"/>
+                        </Border>
+                    </Grid>
+
+                    <Rectangle Height="1" Fill="#2A2A35" Margin="0,5,0,15"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+                        <TextBlock Text="Waluta domyślna" Foreground="White" FontWeight="SemiBold" FontSize="14" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="PLN (zł)" Foreground="#8A8A93" FontSize="14" VerticalAlignment="Center"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Button Background="#16161B" Foreground="#ef4444" BorderBrush="#ef4444" BorderThickness="1" Margin="0,20,0,0" Padding="0,15" Cursor="Hand">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+                <TextBlock Text="Usuń dane konta" FontWeight="SemiBold"/>
+            </Button>
+            
         </StackPanel>
     </Grid>
 </UserControl>
