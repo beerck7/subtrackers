@@ -28,11 +28,11 @@ namespace SubscriptionTracker.Data
 
             // Dane początkowe (Seed)
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Streaming" },
-                new Category { Id = 2, Name = "Muzyka" },
-                new Category { Id = 3, Name = "Oprogramowanie" },
-                new Category { Id = 4, Name = "Gry" },
-                new Category { Id = 5, Name = "Inne" }
+                new Category { Id = 1, Name = "Streaming", Color = "#22c55e" },
+                new Category { Id = 2, Name = "Muzyka", Color = "#f43f5e" },
+                new Category { Id = 3, Name = "Oprogramowanie", Color = "#3b82f6" },
+                new Category { Id = 4, Name = "Gry", Color = "#eab308" },
+                new Category { Id = 5, Name = "Inne", Color = "#a855f7" }
             );
         }
     }

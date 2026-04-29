@@ -15,120 +15,52 @@
                 <TextBlock Text="Organizuj i śledź budżet" Foreground="#8A8A93" FontSize="13" Margin="0,5,0,0"/>
             </StackPanel>
 
-            <!-- KATEGORIE KARTY W GRIDZIE 2x2 -->
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="15"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="15"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,30">
+                <TextBox Width="250" Height="40" Padding="10,0" Margin="0,0,10,0"
+                         Background="#1E1E24" Foreground="White" BorderBrush="#2A2A35" BorderThickness="1"
+                         VerticalContentAlignment="Center"
+                         Text="{Binding NewCategoryName, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="Nazwa nowej kategorii" />
+                <Button Content="Dodaj kategorię" Width="120" Height="40"
+                        Background="#3b82f6" Foreground="White" BorderThickness="0"
+                        Cursor="Hand" Command="{Binding AddCategoryCommand}" />
+            </StackPanel>
 
-                <!-- KATEGORIA 1: Oprogramowanie -->
-                <Border Grid.Row="0" Grid.Column="0" Background="#1E1E24" CornerRadius="12" Padding="25" BorderBrush="#2A2A35" BorderThickness="1">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Ellipse Width="12" Height="12" Fill="#3b82f6" VerticalAlignment="Center" Margin="0,0,15,0" />
-                        
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock Text="Oprogramowanie" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                            <TextBlock Text="8 Usług" Foreground="#8A8A93" FontSize="12"/>
-                        </StackPanel>
+            <!-- KATEGORIE LISTA -->
+            <ItemsControl ItemsSource="{Binding Categories}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="2" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="#1E1E24" CornerRadius="12" Padding="25" Margin="5" BorderBrush="#2A2A35" BorderThickness="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                
+                                <Ellipse Width="12" Height="12" Fill="{Binding Color}" VerticalAlignment="Center" Margin="0,0,15,0" />
+                                
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Name}" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                    <TextBlock Text="{Binding SubscriptionsCountText}" Foreground="#8A8A93" FontSize="12"/>
+                                </StackPanel>
 
-                        <TextBlock Grid.Column="2" 
-                                   Text="850,00 PLN" 
-                                   Foreground="White" 
-                                   FontSize="18" 
-                                   FontWeight="Bold" 
-                                   VerticalAlignment="Center"/>
-                    </Grid>
-                </Border>
-
-                <!-- KATEGORIA 2: Streaming -->
-                <Border Grid.Row="0" Grid.Column="2" Background="#1E1E24" CornerRadius="12" Padding="25" BorderBrush="#2A2A35" BorderThickness="1">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Ellipse Width="12" Height="12" Fill="#22c55e" VerticalAlignment="Center" Margin="0,0,15,0" />
-                        
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock Text="Streaming" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                            <TextBlock Text="5 Usług" Foreground="#8A8A93" FontSize="12"/>
-                        </StackPanel>
-
-                        <TextBlock Grid.Column="2" 
-                                   Text="180,00 PLN" 
-                                   Foreground="White" 
-                                   FontSize="18" 
-                                   FontWeight="Bold" 
-                                   VerticalAlignment="Center"/>
-                    </Grid>
-                </Border>
-
-                <!-- KATEGORIA 3: Gry -->
-                <Border Grid.Row="2" Grid.Column="0" Background="#1E1E24" CornerRadius="12" Padding="25" BorderBrush="#2A2A35" BorderThickness="1">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Ellipse Width="12" Height="12" Fill="#eab308" VerticalAlignment="Center" Margin="0,0,15,0" />
-                        
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock Text="Gry" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                            <TextBlock Text="3 Usługi" Foreground="#8A8A93" FontSize="12"/>
-                        </StackPanel>
-
-                        <TextBlock Grid.Column="2" 
-                                   Text="240,00 PLN" 
-                                   Foreground="White" 
-                                   FontSize="18" 
-                                   FontWeight="Bold" 
-                                   VerticalAlignment="Center"/>
-                    </Grid>
-                </Border>
-                
-                <!-- KATEGORIA 4: Inne -->
-                <Border Grid.Row="2" Grid.Column="2" Background="#1E1E24" CornerRadius="12" Padding="25" BorderBrush="#2A2A35" BorderThickness="1">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        
-                        <Ellipse Width="12" Height="12" Fill="#a855f7" VerticalAlignment="Center" Margin="0,0,15,0" />
-                        
-                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock Text="Inne" Foreground="White" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                            <TextBlock Text="12 Usług" Foreground="#8A8A93" FontSize="12"/>
-                        </StackPanel>
-
-                        <TextBlock Grid.Column="2" 
-                                   Text="575,90 PLN" 
-                                   Foreground="White" 
-                                   FontSize="18" 
-                                   FontWeight="Bold" 
-                                   VerticalAlignment="Center"/>
-                    </Grid>
-                </Border>
-
-            </Grid>
+                                <TextBlock Grid.Column="2" 
+                                           Text="{Binding FormattedTotalCost}" 
+                                           Foreground="White" 
+                                           FontSize="18" 
+                                           FontWeight="Bold" 
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
         </StackPanel>
     </Grid>
 </UserControl>
