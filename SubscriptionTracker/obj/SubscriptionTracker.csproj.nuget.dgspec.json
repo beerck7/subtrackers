@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dryjd\\Desktop\\subtracker\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj": {}
+    "C:\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dryjd\\Desktop\\subtracker\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj": {
+    "C:\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dryjd\\Desktop\\subtracker\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj",
+        "projectUniqueName": "C:\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj",
         "projectName": "SubscriptionTracker",
-        "projectPath": "C:\\Users\\dryjd\\Desktop\\subtracker\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj",
-        "packagesPath": "C:\\Users\\dryjd\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dryjd\\Desktop\\subtracker\\subtrackers\\SubscriptionTracker\\obj\\",
+        "projectPath": "C:\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj",
+        "packagesPath": "C:\\Users\\Bercik\\.nuget\\packages\\",
+        "outputPath": "C:\\subtrackers\\SubscriptionTracker\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\dryjd\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Bercik\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,13 +39,16 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.300"
+        }
       },
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "dependencies": {
+            "CommunityToolkit.Mvvm": {
+              "target": "Package",
+              "version": "[8.4.2, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.4, )"
@@ -85,7 +83,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

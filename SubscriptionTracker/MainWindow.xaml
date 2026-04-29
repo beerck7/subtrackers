@@ -31,7 +31,7 @@
     </Window.Resources>
 
     <Grid>
-        <ContentControl x:Name="MainContent" Margin="0,0,0,0" />
+        <ContentControl x:Name="MainContent" Content="{Binding CurrentView}" Margin="0,0,0,0" />
 
         <!-- DOLNE MENU (Floating) -->
         <Border VerticalAlignment="Bottom" HorizontalAlignment="Center"
@@ -53,7 +53,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Panel główny -->
-                <Button Grid.Column="0" ToolTip="Panel główny" Style="{StaticResource NavButton}" Foreground="#3b82f6" Click="ShowDashboard">
+                <Button Grid.Column="0" ToolTip="Panel główny" Style="{StaticResource NavButton}" Foreground="#3b82f6" Command="{Binding NavigateCommand}" CommandParameter="Dashboard">
                     <StackPanel>
                         <TextBlock Text="&#xE80A;" FontFamily="Segoe MDL2 Assets" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,4"/>
                         <TextBlock Text="Panel główny" FontSize="10" HorizontalAlignment="Center" />
@@ -61,7 +61,7 @@
                 </Button>
 
                 <!-- Subskrypcje -->
-                <Button Grid.Column="1" ToolTip="Subskrypcje" Style="{StaticResource NavButton}" Click="ShowSubscriptions">
+                <Button Grid.Column="1" ToolTip="Subskrypcje" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="Subscriptions">
                     <StackPanel>
                         <TextBlock Text="&#xE8C7;" FontFamily="Segoe MDL2 Assets" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,4"/>
                         <TextBlock Text="Subskrypcje" FontSize="10" HorizontalAlignment="Center"/>
@@ -69,7 +69,7 @@
                 </Button>
 
                 <!-- Kategorie -->
-                <Button Grid.Column="2" ToolTip="Kategorie" Style="{StaticResource NavButton}" Click="ShowCategories">
+                <Button Grid.Column="2" ToolTip="Kategorie" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="Categories">
                     <StackPanel>
                         <TextBlock Text="&#xE8EC;" FontFamily="Segoe MDL2 Assets" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,4"/>
                         <TextBlock Text="Kategorie" FontSize="10" HorizontalAlignment="Center"/>
@@ -77,7 +77,7 @@
                 </Button>
 
                 <!-- Ustawienia -->
-                <Button Grid.Column="3" ToolTip="Ustawienia" Style="{StaticResource NavButton}" Click="ShowSettings">
+                <Button Grid.Column="3" ToolTip="Ustawienia" Style="{StaticResource NavButton}" Command="{Binding NavigateCommand}" CommandParameter="Settings">
                     <StackPanel>
                         <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,4"/>
                         <TextBlock Text="Ustawienia" FontSize="10" HorizontalAlignment="Center"/>

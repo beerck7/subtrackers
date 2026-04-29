@@ -2,26 +2,20 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using SubscriptionTracker.Models;
 
 namespace SubscriptionTracker
 {
     public partial class SubscriptionsView : UserControl
     {
-        private ObservableCollection<SubscriptionItem> _allSubscriptions;
-        public ObservableCollection<SubscriptionItem> DisplayedSubscriptions { get; set; }
+        private ObservableCollection<Subscription> _allSubscriptions;
+        public ObservableCollection<Subscription> DisplayedSubscriptions { get; set; }
 
         public SubscriptionsView()
         {
             InitializeComponent();
-            _allSubscriptions = new ObservableCollection<SubscriptionItem>
-            {
-                new SubscriptionItem { Initials="N", IconColor="#e50914", Name="Netflix Premium", Category="Streaming", Cycle="Miesięcznie", Price=60.00m },
-                new SubscriptionItem { Initials="A", IconColor="#ff0000", Name="Adobe Creative Cloud", Category="Oprogramowanie", Cycle="Miesięcznie", Price=249.99m },
-                new SubscriptionItem { Initials="S", IconColor="#22c55e", Name="Spotify Premium", Category="Streaming", Cycle="Miesięcznie", Price=19.99m },
-                new SubscriptionItem { Initials="G", IconColor="#333333", Name="GitHub Pro", Category="Programowanie", Cycle="Rocznie", Price=30.00m }
-            };
-
-            DisplayedSubscriptions = new ObservableCollection<SubscriptionItem>(_allSubscriptions);
+            _allSubscriptions = new ObservableCollection<Subscription>();
+            DisplayedSubscriptions = new ObservableCollection<Subscription>(_allSubscriptions);
             SubscriptionsList.ItemsSource = DisplayedSubscriptions;
         }
 
@@ -49,8 +43,7 @@ namespace SubscriptionTracker
             addWindow.Owner = Window.GetWindow(this);
             if (addWindow.ShowDialog() == true)
             {
-                _allSubscriptions.Add(addWindow.NewSubscription);
-                DisplayedSubscriptions.Add(addWindow.NewSubscription);
+                // To be implemented in Etap 3
             }
         }
     }

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-X:\PROJEKT WPF\SubscriptionTracker\obj\Debug\net8.0-windows\
+C:\subtrackers\SubscriptionTracker\obj\Debug\net8.0-windows\
 SubscriptionTracker
 none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
-X:\PROJEKT WPF\SubscriptionTracker\App.xaml
-11407045341
+C:\subtrackers\SubscriptionTracker\App.xaml
+6771551868
 
-6-708504263
-198915248976
-MainWindow.xaml;
+151959926529
+217-1468492941
+AddSubscriptionWindow.xaml;CategoriesView.xaml;DashboardView.xaml;MainWindow.xaml;SettingsView.xaml;SubscriptionsView.xaml;
 
-True
+False
 

@@ -1,11 +1,12 @@
 using System.Windows;
 using System.Windows.Controls;
+using SubscriptionTracker.Models;
 
 namespace SubscriptionTracker
 {
     public partial class AddSubscriptionWindow : Window
     {
-        public SubscriptionItem NewSubscription { get; private set; }
+        public Subscription NewSubscription { get; private set; }
 
         public AddSubscriptionWindow()
         {
@@ -31,19 +32,12 @@ namespace SubscriptionTracker
             string cycle = ((ComboBoxItem)CycleComboBox.SelectedItem).Content.ToString();
             decimal.TryParse(PriceTextBox.Text.Replace(".", ","), out decimal price);
 
-            string color = "#3b82f6";
-            if (category == "Streaming") color = "#22c55e";
-            if (category == "Gry") color = "#eab308";
-            if (category == "Oprogramowanie") color = "#ff0000";
-
-            NewSubscription = new SubscriptionItem
+            NewSubscription = new Subscription
             {
                 Name = name,
-                Category = category,
                 Cycle = cycle,
-                Price = price,
-                Initials = name.Length > 0 ? name.Substring(0, 1).ToUpper() : "?",
-                IconColor = color
+                Price = price
+                // The rest will be done in Etap 3
             };
 
             DialogResult = true;
