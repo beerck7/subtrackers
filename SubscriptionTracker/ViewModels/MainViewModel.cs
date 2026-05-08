@@ -9,15 +9,20 @@ namespace SubscriptionTracker.ViewModels
         [ObservableProperty]
         private UserControl _currentView;
 
+        [ObservableProperty]
+        private string _activeViewName;
+
         public MainViewModel()
         {
             // Set initial view
-            CurrentView = new DashboardView();
+            Navigate("Dashboard");
         }
 
         [RelayCommand]
         private void Navigate(string viewName)
         {
+            ActiveViewName = viewName;
+            
             switch (viewName)
             {
                 case "Dashboard":

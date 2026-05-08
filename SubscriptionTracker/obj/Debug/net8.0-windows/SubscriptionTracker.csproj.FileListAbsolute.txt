@@ -405,3 +405,5 @@ C:\subtrackers\SubscriptionTracker\obj\Debug\net8.0-windows\refint\SubscriptionT
 C:\subtrackers\SubscriptionTracker\obj\Debug\net8.0-windows\SubscriptionTracker.pdb
 C:\subtrackers\SubscriptionTracker\obj\Debug\net8.0-windows\SubscriptionTracker.genruntimeconfig.cache
 C:\subtrackers\SubscriptionTracker\obj\Debug\net8.0-windows\ref\SubscriptionTracker.dll
+C:\subtrackers\SubscriptionTracker\obj\Debug\net8.0-windows\SubscriptionTracker_MarkupCompile.lref
+C:\subtrackers\SubscriptionTracker\obj\Debug\net8.0-windows\App.baml

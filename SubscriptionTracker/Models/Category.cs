@@ -10,7 +10,7 @@ namespace SubscriptionTracker.Models
         [Required(ErrorMessage = "Nazwa kategorii jest wymagana")]
         public string Name { get; set; }
 
-        public string Color { get; set; } = "#3b82f6"; // Domyślny kolor
+        public string Color { get; set; } = "#3b82f6";
 
         public ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
     }

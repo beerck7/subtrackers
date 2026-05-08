@@ -1,9 +1,148 @@
-﻿<Application x:Class="SubscriptionTracker.App"
+<Application x:Class="SubscriptionTracker.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:SubscriptionTracker"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        
+        <!-- ================= COLORS & BRUSHES ================= -->
+        <SolidColorBrush x:Key="AppBackground" Color="#0F0F12" />
+        <SolidColorBrush x:Key="CardBackground" Color="#1E1E24" />
+        <SolidColorBrush x:Key="CardBorder" Color="#2A2A35" />
+        <SolidColorBrush x:Key="InputBackground" Color="#16161B" />
+        
+        <SolidColorBrush x:Key="PrimaryBrush" Color="#3b82f6" />
+        <SolidColorBrush x:Key="PrimaryHoverBrush" Color="#2563eb" />
+        
+        <SolidColorBrush x:Key="SuccessBrush" Color="#22c55e" />
+        <SolidColorBrush x:Key="SuccessHoverBrush" Color="#16a34a" />
+        
+        <SolidColorBrush x:Key="DangerBrush" Color="#ef4444" />
+        <SolidColorBrush x:Key="DangerHoverBrush" Color="#dc2828" />
+        
+        <SolidColorBrush x:Key="TextPrimary" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="TextSecondary" Color="#8A8A93" />
+
+        <!-- ================= BASE STYLES ================= -->
+        
+        <!-- Standard Card Style -->
+        <Style x:Key="CardStyle" TargetType="Border">
+            <Setter Property="Background" Value="{StaticResource CardBackground}" />
+            <Setter Property="BorderBrush" Value="{StaticResource CardBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="25" />
+            <!-- Shadow effect for depth -->
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" BlurRadius="15" Opacity="0.2" ShadowDepth="4" Direction="270" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern Button Base -->
+        <Style x:Key="ModernButtonBase" TargetType="Button">
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                                Background="{TemplateBinding Background}" 
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="0.9" TargetName="border" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="0.97" ScaleY="0.97" CenterX="0.5" CenterY="0.5" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Primary Button -->
+        <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource ModernButtonBase}">
+            <Setter Property="Background" Value="{StaticResource PrimaryBrush}" />
+            <Setter Property="Padding" Value="15,10" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <!-- Success Button -->
+        <Style x:Key="SuccessButton" TargetType="Button" BasedOn="{StaticResource ModernButtonBase}">
+            <Setter Property="Background" Value="{StaticResource SuccessBrush}" />
+            <Setter Property="Padding" Value="15,10" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <!-- Danger Button -->
+        <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource ModernButtonBase}">
+            <Setter Property="Background" Value="{StaticResource DangerBrush}" />
+            <Setter Property="Padding" Value="15,10" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <!-- Outline Button -->
+        <Style x:Key="OutlineButton" TargetType="Button" BasedOn="{StaticResource ModernButtonBase}">
+            <Setter Property="Background" Value="{StaticResource InputBackground}" />
+            <Setter Property="BorderBrush" Value="{StaticResource CardBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="15,10" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+
+        <!-- Modern TextBox -->
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="{StaticResource InputBackground}" />
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+            <Setter Property="BorderBrush" Value="{StaticResource CardBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="12,10" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="CaretBrush" Value="{StaticResource TextPrimary}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                CornerRadius="6">
+                            <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource PrimaryBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="BorderBrush" Value="#444455" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Modern ComboBox (simplified style) -->
+        <Style x:Key="ModernComboBox" TargetType="ComboBox">
+            <Setter Property="Background" Value="{StaticResource InputBackground}" />
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+            <Setter Property="BorderBrush" Value="{StaticResource CardBorder}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="12,8" />
+        </Style>
+        
     </Application.Resources>
 </Application>

@@ -20,13 +20,13 @@ namespace SubscriptionTracker.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Relacja
+           
             modelBuilder.Entity<Subscription>()
                 .HasOne(s => s.Category)
                 .WithMany(c => c.Subscriptions)
                 .HasForeignKey(s => s.CategoryId);
 
-            // Dane początkowe (Seed)
+            
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Streaming", Color = "#22c55e" },
                 new Category { Id = 2, Name = "Muzyka", Color = "#f43f5e" },

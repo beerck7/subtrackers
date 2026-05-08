@@ -26,5 +26,25 @@ namespace SubscriptionTracker.Services
                 await db.SaveChangesAsync();
             }
         }
+
+        public async Task<List<Subscription>> GetSubscriptionsAsync()
+        {
+            using (var db = new AppDbContext())
+            {
+                return await db.Subscriptions
+                    .Include(s => s.Category)
+                    .ToListAsync();
+            }
+        }
+
+        public async Task AddSubscriptionAsync(Subscription subscription)
+        {
+            using (var db = new AppDbContext())
+            {
+                db.Subscriptions.Add(subscription);
+                db.Entry(subscription.Category).State = EntityState.Unchanged;
+                await db.SaveChangesAsync();
+            }
+        }
     }
 }

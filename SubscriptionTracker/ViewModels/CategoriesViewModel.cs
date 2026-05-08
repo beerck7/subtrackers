@@ -48,13 +48,13 @@ namespace SubscriptionTracker.ViewModels
             var category = new Category
             {
                 Name = NewCategoryName,
-                Color = "#3b82f6" // Default blue
+                Color = "#3b82f6"
             };
 
             await _dataService.AddCategoryAsync(category);
             NewCategoryName = string.Empty;
             
-            // Odśwież listę
+         
             await LoadCategoriesAsync();
         }
     }

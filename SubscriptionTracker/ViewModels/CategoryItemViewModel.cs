@@ -17,7 +17,7 @@ namespace SubscriptionTracker.ViewModels
         public string Color => _category.Color;
 
         public int SubscriptionsCount => _category.Subscriptions.Count;
-        public string SubscriptionsCountText => $"{SubscriptionsCount} Usług"; // Uproszczenie gramatyki dla MVP
+        public string SubscriptionsCountText => $"{SubscriptionsCount} Usług";
 
         public decimal TotalCost => _category.Subscriptions.Sum(s => s.Price);
         public string FormattedTotalCost => $"{TotalCost:0.00} PLN";
