@@ -25,7 +25,7 @@
             </Grid>
             
             <TextBlock Text="Nazwa usługi (np. Spotify)" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
-            <TextBox Style="{StaticResource ModernTextBox}" Margin="0,0,0,20" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Style="{StaticResource ModernTextBox}" Tag="Wpisz nazwę subskrypcji (np. Netflix)..." Margin="0,0,0,20" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBlock Text="Kategoria" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
             <ComboBox Style="{StaticResource ModernComboBox}" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" DisplayMemberPath="Name" Margin="0,0,0,20" />
@@ -53,7 +53,7 @@
             </Grid>
 
             <TextBlock Text="Cena (PLN)" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
-            <TextBox Style="{StaticResource ModernTextBox}" Margin="0,0,0,40" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
+            <TextBox Style="{StaticResource ModernTextBox}" Tag="Wpisz kwotę płatności (np. 29.99)..." Margin="0,0,0,40" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Grid>
                 <Grid.ColumnDefinitions>
