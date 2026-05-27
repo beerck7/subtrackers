@@ -14,7 +14,6 @@ namespace SubscriptionTracker.ViewModels
 
         public MainViewModel()
         {
-            // Set initial view
             Navigate("Dashboard");
         }
 
