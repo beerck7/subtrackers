@@ -119,11 +119,12 @@ namespace SubscriptionTracker.ViewModels
             {
                 _editingSubscription.Name = Name;
                 _editingSubscription.Price = Price;
-                _editingSubscription.Cycle = Cycle;
+                _editingSubscription.Cycle = Cycle ?? "Miesięcznie";
                 _editingSubscription.StartDate = StartDate;
                 _editingSubscription.NextPaymentDate = NextPaymentDate;
                 _editingSubscription.Category = null;
                 _editingSubscription.CategoryId = SelectedCategory != null ? SelectedCategory.Id : 0;
+                _editingSubscription.Note ??= "";
 
                 await _dataService.UpdateSubscriptionAsync(_editingSubscription);
             }
@@ -133,11 +134,12 @@ namespace SubscriptionTracker.ViewModels
                 {
                     Name = Name,
                     Price = Price,
-                    Cycle = Cycle,
+                    Cycle = Cycle ?? "Miesięcznie",
                     StartDate = StartDate,
                     NextPaymentDate = NextPaymentDate,
                     CategoryId = SelectedCategory != null ? SelectedCategory.Id : 0,
-                    Status = "Aktywna"
+                    Status = "Aktywna",
+                    Note = ""
                 };
 
                 await _dataService.AddSubscriptionAsync(sub);
