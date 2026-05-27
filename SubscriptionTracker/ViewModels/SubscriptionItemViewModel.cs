@@ -35,7 +35,18 @@ namespace SubscriptionTracker.ViewModels
         public string StatusText => Status == "Aktywna" ? "Aktywna" : "Wstrzymana";
         public string StatusBrush => Status == "Aktywna" ? "#22c55e" : "#ef4444";
         
-        public string Note => string.IsNullOrWhiteSpace(_subscription.Note) ? "Brak dodatkowych notatek." : _subscription.Note;
+        public string Note
+        {
+            get => _subscription.Note ?? "";
+            set
+            {
+                if (_subscription.Note != value)
+                {
+                    _subscription.Note = value;
+                    OnPropertyChanged(nameof(Note));
+                }
+            }
+        }
 
         [RelayCommand]
         private void ToggleExpand()
@@ -54,6 +65,14 @@ namespace SubscriptionTracker.ViewModels
 
             var service = new Services.DataService();
             await service.UpdateSubscriptionAsync(_subscription);
+        }
+
+        [RelayCommand]
+        private async Task SaveNoteAsync()
+        {
+            var service = new Services.DataService();
+            await service.UpdateSubscriptionAsync(_subscription);
+            CustomMessageBox.Show("Notatka została pomyślnie zapisana!", "Zapisano", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
         }
     }
 }
