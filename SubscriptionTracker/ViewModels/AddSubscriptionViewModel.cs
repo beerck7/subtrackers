@@ -14,17 +14,38 @@ namespace SubscriptionTracker.ViewModels
     public partial class AddSubscriptionViewModel : ObservableValidator
     {
         private readonly DataService _dataService;
+        private readonly Subscription _editingSubscription;
 
-        public AddSubscriptionViewModel()
+        public bool IsEditMode => _editingSubscription != null;
+        public string TitleText => IsEditMode ? "Edytuj subskrypcję" : "Dodaj nową subskrypcję";
+        public string ButtonText => IsEditMode ? "Zapisz zmiany" : "Dodaj subskrypcję";
+
+        public AddSubscriptionViewModel() : this(null)
+        {
+        }
+
+        public AddSubscriptionViewModel(Subscription subscriptionToEdit)
         {
             _dataService = new DataService();
             Categories = new ObservableCollection<Category>();
-            LoadCategoriesCommand.Execute(null);
+            _editingSubscription = subscriptionToEdit;
 
-            // Default values
-            StartDate = DateTime.Now;
-            NextPaymentDate = DateTime.Now.AddMonths(1);
-            Cycle = "Miesięcznie";
+            if (IsEditMode)
+            {
+                Name = _editingSubscription.Name;
+                Price = _editingSubscription.Price;
+                Cycle = _editingSubscription.Cycle;
+                StartDate = _editingSubscription.StartDate;
+                NextPaymentDate = _editingSubscription.NextPaymentDate;
+            }
+            else
+            {
+                StartDate = DateTime.Now;
+                NextPaymentDate = DateTime.Now.AddMonths(1);
+                Cycle = "Miesięcznie";
+            }
+
+            LoadCategoriesCommand.Execute(null);
         }
 
         [ObservableProperty]
@@ -68,6 +89,11 @@ namespace SubscriptionTracker.ViewModels
             var cats = await _dataService.GetCategoriesAsync();
             Categories.Clear();
             foreach (var c in cats) Categories.Add(c);
+
+            if (IsEditMode && _editingSubscription != null)
+            {
+                SelectedCategory = Categories.FirstOrDefault(c => c.Id == _editingSubscription.CategoryId);
+            }
         }
 
         [RelayCommand]
@@ -81,19 +107,34 @@ namespace SubscriptionTracker.ViewModels
                 return;
             }
 
-            var sub = new Subscription
+            if (IsEditMode && _editingSubscription != null)
             {
-                Name = Name,
-                Price = Price,
-                Cycle = Cycle,
-                StartDate = StartDate,
-                NextPaymentDate = NextPaymentDate,
-                Category = SelectedCategory,
-                CategoryId = SelectedCategory.Id,
-                Status = "Aktywna"
-            };
+                _editingSubscription.Name = Name;
+                _editingSubscription.Price = Price;
+                _editingSubscription.Cycle = Cycle;
+                _editingSubscription.StartDate = StartDate;
+                _editingSubscription.NextPaymentDate = NextPaymentDate;
+                _editingSubscription.Category = SelectedCategory;
+                _editingSubscription.CategoryId = SelectedCategory.Id;
 
-            await _dataService.AddSubscriptionAsync(sub);
+                await _dataService.UpdateSubscriptionAsync(_editingSubscription);
+            }
+            else
+            {
+                var sub = new Subscription
+                {
+                    Name = Name,
+                    Price = Price,
+                    Cycle = Cycle,
+                    StartDate = StartDate,
+                    NextPaymentDate = NextPaymentDate,
+                    Category = SelectedCategory,
+                    CategoryId = SelectedCategory.Id,
+                    Status = "Aktywna"
+                };
+
+                await _dataService.AddSubscriptionAsync(sub);
+            }
             
             window.DialogResult = true;
         }

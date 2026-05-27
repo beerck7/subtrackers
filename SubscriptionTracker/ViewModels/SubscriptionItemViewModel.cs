@@ -12,6 +12,8 @@ namespace SubscriptionTracker.ViewModels
             _subscription = subscription;
         }
 
+        public Subscription Model => _subscription;
+
         public string Name => _subscription.Name;
         public string Category => _subscription.Category?.Name ?? "Brak";
         public string Cycle => _subscription.Cycle;

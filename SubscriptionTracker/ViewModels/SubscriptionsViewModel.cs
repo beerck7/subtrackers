@@ -1,9 +1,11 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using SubscriptionTracker.Models;
 using SubscriptionTracker.Services;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SubscriptionTracker.ViewModels
 {
@@ -65,9 +67,36 @@ namespace SubscriptionTracker.ViewModels
         {
             var addWindow = new AddSubscriptionWindow();
             
-            // To pass parent window for centering, but let's just show it.
             if (addWindow.ShowDialog() == true)
             {
+                await LoadSubscriptionsAsync();
+            }
+        }
+
+        [RelayCommand]
+        private async Task EditSubscriptionAsync(SubscriptionItemViewModel item)
+        {
+            if (item == null) return;
+            var editWindow = new AddSubscriptionWindow(item.Model);
+            if (editWindow.ShowDialog() == true)
+            {
+                await LoadSubscriptionsAsync();
+            }
+        }
+
+        [RelayCommand]
+        private async Task DeleteSubscriptionAsync(SubscriptionItemViewModel item)
+        {
+            if (item == null) return;
+            var result = MessageBox.Show(
+                $"Czy na pewno chcesz usunąć subskrypcję {item.Name}?",
+                "Potwierdzenie",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                await _dataService.DeleteSubscriptionAsync(item.Model.Id);
                 await LoadSubscriptionsAsync();
             }
         }

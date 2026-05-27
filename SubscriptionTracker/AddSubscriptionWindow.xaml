@@ -14,7 +14,7 @@
         </Border.Effect>
         <StackPanel>
             <Grid Margin="0,0,0,30">
-                <TextBlock Text="Dodaj nową subskrypcję" Foreground="{StaticResource TextPrimary}" FontSize="22" FontWeight="Bold"/>
+                <TextBlock Text="{Binding TitleText}" Foreground="{StaticResource TextPrimary}" FontSize="22" FontWeight="Bold"/>
                 <Button Content="&#xE711;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource TextSecondary}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=AddWindow}" FontSize="16">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
@@ -62,7 +62,7 @@
                     <ColumnDefinition Width="180"/>
                 </Grid.ColumnDefinitions>
                 <Button Content="Anuluj" Style="{StaticResource OutlineButton}" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=AddWindow}" />
-                <Button Grid.Column="2" Content="Dodaj subskrypcję" Style="{StaticResource SuccessButton}" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=AddWindow}" />
+                <Button Grid.Column="2" Content="{Binding ButtonText}" Style="{StaticResource SuccessButton}" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=AddWindow}" />
             </Grid>
         </StackPanel>
     </Border>

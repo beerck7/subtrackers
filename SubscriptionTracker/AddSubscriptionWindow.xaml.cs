@@ -5,10 +5,14 @@ namespace SubscriptionTracker
 {
     public partial class AddSubscriptionWindow : Window
     {
-        public AddSubscriptionWindow()
+        public AddSubscriptionWindow() : this(null)
+        {
+        }
+
+        public AddSubscriptionWindow(Models.Subscription subscriptionToEdit)
         {
             InitializeComponent();
-            DataContext = new AddSubscriptionViewModel();
+            DataContext = new AddSubscriptionViewModel(subscriptionToEdit);
         }
     }
 }

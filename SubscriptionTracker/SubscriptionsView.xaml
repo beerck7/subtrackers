@@ -52,15 +52,17 @@
                         </Border>
 
                         <!-- Nagłówki tabeli -->
-                        <Grid Margin="15,0,15,15">
+                        <Grid Margin="60,0,15,15">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="2*"/>
                                 <ColumnDefinition Width="1.5*" />
-                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="Auto" MinWidth="80"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Text="Nazwa usługi" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="SemiBold"/>
                             <TextBlock Grid.Column="1" Text="Cykl rozliczeniowy" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Left"/>
-                            <TextBlock Grid.Column="2" Text="Cena" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Right"/>
+                            <TextBlock Grid.Column="2" Text="Cena" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Right" Margin="0,0,30,0"/>
+                            <TextBlock Grid.Column="3" Text="Akcje" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="SemiBold" HorizontalAlignment="Right" Margin="0,0,15,0"/>
                         </Grid>
 
                         <Rectangle Height="1" Fill="{StaticResource CardBorder}" Margin="0,0,0,15"/>
@@ -76,7 +78,8 @@
                                                     <ColumnDefinition Width="Auto"/>
                                                     <ColumnDefinition Width="2*"/>
                                                     <ColumnDefinition Width="1.5*" />
-                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition Width="1*" />
+                                                    <ColumnDefinition Width="Auto" MinWidth="80"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Border Width="45" Height="45" CornerRadius="10" Background="{Binding IconColor}" Margin="0,0,15,0">
                                                     <TextBlock Text="{Binding Initials}" Foreground="{StaticResource TextPrimary}" FontWeight="Bold" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -86,7 +89,34 @@
                                                     <TextBlock Text="{Binding Category}" Foreground="{StaticResource TextSecondary}" FontSize="13"/>
                                                 </StackPanel>
                                                 <TextBlock Grid.Column="2" Text="{Binding Cycle}" Foreground="{StaticResource TextPrimary}" FontSize="14" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="3" Text="{Binding FormattedPrice}" Foreground="{StaticResource TextPrimary}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                                                <TextBlock Grid.Column="3" Text="{Binding FormattedPrice}" Foreground="{StaticResource TextPrimary}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,30,0"/>
+                                                
+                                                <StackPanel Grid.Column="4" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                    <Button Command="{Binding DataContext.EditSubscriptionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Cursor="Hand" ToolTip="Edytuj" Margin="0,0,15,0">
+                                                        <Button.Template>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <TextBlock x:Name="btnTxt" Text="&#xE70F;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource TextSecondary}" FontSize="14" VerticalAlignment="Center"/>
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter TargetName="btnTxt" Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+                                                        </Button.Template>
+                                                    </Button>
+                                                    <Button Command="{Binding DataContext.DeleteSubscriptionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Cursor="Hand" ToolTip="Usuń">
+                                                        <Button.Template>
+                                                            <ControlTemplate TargetType="Button">
+                                                                <TextBlock x:Name="btnTxt" Text="&#xE74D;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource TextSecondary}" FontSize="14" VerticalAlignment="Center"/>
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                                        <Setter TargetName="btnTxt" Property="Foreground" Value="{StaticResource DangerBrush}"/>
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+                                                        </Button.Template>
+                                                    </Button>
+                                                </StackPanel>
                                             </Grid>
                                         </Border>
                                         <Rectangle Height="1" Fill="{StaticResource CardBorder}" Margin="0,5,0,10"/>

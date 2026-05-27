@@ -46,5 +46,28 @@ namespace SubscriptionTracker.Services
                 await db.SaveChangesAsync();
             }
         }
+
+        public async Task UpdateSubscriptionAsync(Subscription subscription)
+        {
+            using (var db = new AppDbContext())
+            {
+                db.Subscriptions.Update(subscription);
+                db.Entry(subscription.Category).State = EntityState.Unchanged;
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteSubscriptionAsync(int id)
+        {
+            using (var db = new AppDbContext())
+            {
+                var sub = await db.Subscriptions.FindAsync(id);
+                if (sub != null)
+                {
+                    db.Subscriptions.Remove(sub);
+                    await db.SaveChangesAsync();
+                }
+            }
+        }
     }
 }
