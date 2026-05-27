@@ -1,4 +1,5 @@
 using System.Windows.Controls;
+using SubscriptionTracker.ViewModels;
 
 namespace SubscriptionTracker
 {
@@ -7,6 +8,7 @@ namespace SubscriptionTracker
         public SettingsView()
         {
             InitializeComponent();
+            DataContext = new SettingsViewModel();
         }
     }
 }

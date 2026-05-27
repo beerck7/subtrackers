@@ -38,5 +38,10 @@ namespace SubscriptionTracker.ViewModels
                     break;
             }
         }
+        [RelayCommand]
+        private void Shutdown()
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
     }
 }

@@ -14,7 +14,7 @@ namespace SubscriptionTracker.ViewModels
         private readonly DataService _dataService;
 
         [ObservableProperty]
-        private string _monthlyCostsText = "0,00 PLN";
+        private string _monthlyCostsText = "0,00";
 
         [ObservableProperty]
         private string _activeSubscriptionsCountText = "0 Usług";
@@ -58,7 +58,7 @@ namespace SubscriptionTracker.ViewModels
                     totalMonthly += sub.Price;
                 }
             }
-            MonthlyCostsText = $"{totalMonthly:0.00} PLN";
+            MonthlyCostsText = $"{totalMonthly:0.00} {Services.AppSettings.DefaultCurrency}";
 
             ActiveSubscriptionsCountText = $"{activeSubs.Count} Usług";
 
@@ -106,7 +106,7 @@ namespace SubscriptionTracker.ViewModels
                             Name = cat.Name,
                             Color = cat.Color ?? "#808080",
                             Percentage = (double)pct,
-                            FormattedCostWithPercentage = $"{catMonthly:0.00} PLN ({pct:0}%)"
+                            FormattedCostWithPercentage = $"{catMonthly:0.00} {Services.AppSettings.DefaultCurrency} ({pct:0}%)"
                         });
                     }
                 }

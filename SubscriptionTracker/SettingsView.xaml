@@ -57,16 +57,62 @@
                 <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
                     <StackPanel>
                         <TextBlock Text="Profil użytkownika" Foreground="{StaticResource TextPrimary}" FontWeight="SemiBold" FontSize="18" Margin="0,0,0,20"/>
+                        
+                        <!-- Widok wyświetlania danych profilu -->
                         <Grid>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsEditing}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel>
-                                <TextBlock Text="Alex Developer" Foreground="{StaticResource TextPrimary}" FontWeight="Bold" FontSize="18"/>
-                                <TextBlock Text="alex@example.com" Foreground="{StaticResource TextSecondary}" FontSize="14" Margin="0,4,0,0"/>
+                                <TextBlock Text="{Binding UserName}" Foreground="{StaticResource TextPrimary}" FontWeight="Bold" FontSize="18"/>
+                                <TextBlock Text="{Binding UserEmail}" Foreground="{StaticResource TextSecondary}" FontSize="14" Margin="0,4,0,0"/>
                             </StackPanel>
-                            <Button Grid.Column="1" Content="Edytuj" Style="{StaticResource OutlineButton}" Width="100"/>
+                            <Button Grid.Column="1" Content="Edytuj" Command="{Binding ToggleEditCommand}" Style="{StaticResource OutlineButton}" Width="100"/>
+                        </Grid>
+                        
+                        <!-- Widok edycji danych profilu -->
+                        <Grid>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsEditing}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <StackPanel Grid.Row="0" Margin="0,0,0,10">
+                                <TextBlock Text="Nazwa użytkownika" Foreground="{StaticResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                                <TextBox Style="{StaticResource ModernTextBox}" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="1" Margin="0,0,0,15">
+                                <TextBlock Text="Adres e-mail" Foreground="{StaticResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                                <TextBox Style="{StaticResource ModernTextBox}" Text="{Binding UserEmail, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                            
+                            <StackPanel Grid.Row="2" Orientation="Horizontal">
+                                <Button Content="Zapisz" Command="{Binding SaveProfileCommand}" Style="{StaticResource SuccessButton}" Width="100" Margin="0,0,10,0"/>
+                                <Button Content="Anuluj" Command="{Binding ToggleEditCommand}" Style="{StaticResource OutlineButton}" Width="100"/>
+                            </StackPanel>
                         </Grid>
                     </StackPanel>
                 </Border>
@@ -81,7 +127,7 @@
                                 <TextBlock Text="Ciemny motyw" Foreground="{StaticResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
                                 <TextBlock Text="Wygląd aplikacji" Foreground="{StaticResource TextSecondary}" FontSize="13" Margin="0,4,0,0"/>
                             </StackPanel>
-                            <CheckBox Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="True" VerticalAlignment="Center"/>
+                            <CheckBox Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="{Binding IsDarkTheme, Mode=TwoWay}" VerticalAlignment="Center"/>
                         </Grid>
                         
                         <Rectangle Height="1" Fill="{StaticResource CardBorder}" Margin="0,15,0,20"/>
@@ -92,7 +138,7 @@
                                 <TextBlock Text="Powiadomienia" Foreground="{StaticResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
                                 <TextBlock Text="Alerty o nadchodzących płatnościach" Foreground="{StaticResource TextSecondary}" FontSize="13" Margin="0,4,0,0"/>
                             </StackPanel>
-                            <CheckBox Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="True" VerticalAlignment="Center"/>
+                            <CheckBox Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="{Binding AreNotificationsEnabled, Mode=TwoWay}" VerticalAlignment="Center"/>
                         </Grid>
 
                         <Rectangle Height="1" Fill="{StaticResource CardBorder}" Margin="0,15,0,20"/>
@@ -100,12 +146,12 @@
                         <Grid>
                             <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                             <TextBlock Text="Waluta domyślna" Foreground="{StaticResource TextPrimary}" FontWeight="SemiBold" FontSize="15" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="PLN (zł)" Foreground="{StaticResource TextSecondary}" FontSize="15" VerticalAlignment="Center"/>
+                            <ComboBox Grid.Column="1" Style="{StaticResource ModernComboBox}" Width="100" ItemsSource="{Binding CurrencyOptions}" SelectedItem="{Binding DefaultCurrency, Mode=TwoWay}" VerticalAlignment="Center"/>
                         </Grid>
                     </StackPanel>
                 </Border>
 
-                <Button Content="Usuń dane konta" Style="{StaticResource DangerButton}" Margin="0,30,0,0" Padding="0,15" />
+                <Button Content="Usuń dane konta" Style="{StaticResource DangerButton}" Command="{Binding DeleteAllDataCommand}" Margin="0,30,0,0" Padding="0,15" />
                 
             </StackPanel>
         </Grid>

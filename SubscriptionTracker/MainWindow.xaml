@@ -127,7 +127,7 @@
                 <Rectangle Grid.Column="4" Width="1" Fill="{StaticResource CardBorder}" Margin="10,5"/>
 
                 <!-- Wyloguj -->
-                <Button Grid.Column="5" ToolTip="Wyloguj" Style="{StaticResource NavButton}">
+                <Button Grid.Column="5" ToolTip="Wyloguj" Style="{StaticResource NavButton}" Command="{Binding ShutdownCommand}">
                     <StackPanel>
                         <TextBlock Text="&#xE8D8;" FontFamily="Segoe MDL2 Assets" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,4"/>
                         <TextBlock Text="Wyloguj" FontSize="11" HorizontalAlignment="Center"/>

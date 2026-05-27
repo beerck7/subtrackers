@@ -22,6 +22,6 @@ namespace SubscriptionTracker.ViewModels
         public string SubscriptionsCountText => $"{SubscriptionsCount} Usług";
 
         public decimal TotalCost => _category.Subscriptions.Sum(s => s.Price);
-        public string FormattedTotalCost => $"{TotalCost:0.00} PLN";
+        public string FormattedTotalCost => $"{TotalCost:0.00} {Services.AppSettings.DefaultCurrency}";
     }
 }

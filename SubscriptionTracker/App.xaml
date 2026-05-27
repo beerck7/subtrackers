@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:SubscriptionTracker"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         
         <!-- ================= COLORS & BRUSHES ================= -->
         <SolidColorBrush x:Key="AppBackground" Color="#0F0F12" />
