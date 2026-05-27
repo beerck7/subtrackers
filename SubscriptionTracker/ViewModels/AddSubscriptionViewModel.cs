@@ -122,8 +122,8 @@ namespace SubscriptionTracker.ViewModels
                 _editingSubscription.Cycle = Cycle;
                 _editingSubscription.StartDate = StartDate;
                 _editingSubscription.NextPaymentDate = NextPaymentDate;
-                _editingSubscription.Category = SelectedCategory;
-                _editingSubscription.CategoryId = SelectedCategory.Id;
+                _editingSubscription.Category = null;
+                _editingSubscription.CategoryId = SelectedCategory != null ? SelectedCategory.Id : 0;
 
                 await _dataService.UpdateSubscriptionAsync(_editingSubscription);
             }
@@ -136,8 +136,7 @@ namespace SubscriptionTracker.ViewModels
                     Cycle = Cycle,
                     StartDate = StartDate,
                     NextPaymentDate = NextPaymentDate,
-                    Category = SelectedCategory,
-                    CategoryId = SelectedCategory.Id,
+                    CategoryId = SelectedCategory != null ? SelectedCategory.Id : 0,
                     Status = "Aktywna"
                 };
 
