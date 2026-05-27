@@ -213,19 +213,35 @@
 
 
                             <Grid Width="150" Height="150" HorizontalAlignment="Center">
+                                <!-- Dynamic Donut Chart Segments (Premium Look) -->
+                                <ItemsControl ItemsSource="{Binding CategoryExpenses}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <Grid />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Path Data="{Binding PathData}" 
+                                                  Stroke="{Binding Color}" 
+                                                  StrokeThickness="18" 
+                                                  StrokeEndLineCap="Round" 
+                                                  StrokeStartLineCap="Round"
+                                                  ToolTip="{Binding FormattedCostWithPercentage}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
 
-                                <Ellipse Fill="{DynamicResource CardBorder}" Width="150" Height="150"/>
+                                <!-- Sleek Background Ring -->
+                                <Ellipse Stroke="#1A1A22" StrokeThickness="18" Width="120" Height="120" IsHitTestVisible="False"/>
 
-                                <Ellipse Fill="{DynamicResource CardBackground}" Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <!-- Center Cutout -->
+                                <Ellipse Fill="{DynamicResource CardBackground}" Width="98" Height="98" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
 
-                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False">
                                     <TextBlock Text="Miesięcznie" Foreground="{DynamicResource TextSecondary}" FontSize="11" HorizontalAlignment="Center"/>
-
                                     <TextBlock Text="{Binding MonthlyCostsText}" Foreground="{DynamicResource TextPrimary}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
-
                                 </StackPanel>
-
                             </Grid>
 
 

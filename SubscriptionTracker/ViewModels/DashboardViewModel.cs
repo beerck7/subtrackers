@@ -83,6 +83,8 @@ namespace SubscriptionTracker.ViewModels
             if (totalMonthly > 0)
             {
                 var categories = await _dataService.GetCategoriesAsync();
+                var categoryList = new System.Collections.Generic.List<CategoryExpenseItem>();
+                
                 foreach (var cat in categories)
                 {
                     decimal catMonthly = 0;
@@ -101,14 +103,48 @@ namespace SubscriptionTracker.ViewModels
                     if (catMonthly > 0)
                     {
                         decimal pct = (catMonthly / totalMonthly) * 100;
-                        CategoryExpenses.Add(new CategoryExpenseItem
+                        categoryList.Add(new CategoryExpenseItem
                         {
                             Name = cat.Name,
                             Color = cat.Color ?? "#808080",
                             Percentage = (double)pct,
-                            FormattedCostWithPercentage = $"{catMonthly:0.00} {Services.AppSettings.DefaultCurrency} ({pct:0}%)"
+                            FormattedCostWithPercentage = $"{catMonthly:0.00} {Services.AppSettings.DefaultCurrency} ({pct:0}%)",
+                            PathData = ""
                         });
                     }
+                }
+                
+                // Calculate dynamic arcs for our beautiful premium donut chart
+                double currentAngle = -Math.PI / 2.0; // Start at the top (-90 degrees)
+                foreach (var item in categoryList)
+                {
+                    double sweepAngle = (item.Percentage / 100.0) * 2.0 * Math.PI;
+                    
+                    double cx = 75.0;
+                    double cy = 75.0;
+                    double r = 60.0;
+                    
+                    double startAngle = currentAngle;
+                    double endAngle = currentAngle + sweepAngle;
+                    
+                    if (item.Percentage >= 99.9)
+                    {
+                        endAngle = startAngle + 2.0 * Math.PI - 0.001;
+                    }
+                    
+                    double startX = cx + r * Math.Cos(startAngle);
+                    double startY = cy + r * Math.Sin(startAngle);
+                    double endX = cx + r * Math.Cos(endAngle);
+                    double endY = cy + r * Math.Sin(endAngle);
+                    
+                    int isLargeArc = (item.Percentage > 50.0) ? 1 : 0;
+                    
+                    item.PathData = string.Format(System.Globalization.CultureInfo.InvariantCulture,
+                        "M {0:F2},{1:F2} A {2:F2},{2:F2} 0 {3} 1 {4:F2},{5:F2}",
+                        startX, startY, r, isLargeArc, endX, endY);
+                        
+                    currentAngle = endAngle;
+                    CategoryExpenses.Add(item);
                 }
             }
         }
@@ -120,5 +156,6 @@ namespace SubscriptionTracker.ViewModels
         public string Color { get; set; }
         public double Percentage { get; set; }
         public string FormattedCostWithPercentage { get; set; }
+        public string PathData { get; set; }
     }
 }

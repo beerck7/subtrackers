@@ -48,6 +48,32 @@ namespace SubscriptionTracker.ViewModels
             LoadCategoriesCommand.Execute(null);
         }
 
+        public ObservableCollection<string> CycleOptions { get; } = new() { "Miesięcznie", "Rocznie" };
+
+        partial void OnCycleChanged(string value)
+        {
+            if (value == "Rocznie")
+            {
+                NextPaymentDate = StartDate.AddYears(1);
+            }
+            else if (value == "Miesięcznie")
+            {
+                NextPaymentDate = StartDate.AddMonths(1);
+            }
+        }
+
+        partial void OnStartDateChanged(DateTime value)
+        {
+            if (Cycle == "Rocznie")
+            {
+                NextPaymentDate = value.AddYears(1);
+            }
+            else if (Cycle == "Miesięcznie")
+            {
+                NextPaymentDate = value.AddMonths(1);
+            }
+        }
+
         [ObservableProperty]
         private ObservableCollection<Category> _categories;
 
