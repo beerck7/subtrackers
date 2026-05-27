@@ -4,7 +4,7 @@
              Background="Transparent">
     <UserControl.Resources>
         <Style x:Key="ToggleSwitchStyle" TargetType="CheckBox">
-            <Setter Property="Background" Value="{StaticResource CardBorder}"/>
+            <Setter Property="Background" Value="{DynamicResource CardBorder}"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
@@ -47,16 +47,16 @@
             <StackPanel MaxWidth="1000" HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                     <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <TextBlock Text="SubTrack" Foreground="{StaticResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock Text="SubTrack" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
                 </StackPanel>
                 <StackPanel Margin="0,0,0,30">
-                    <TextBlock Text="Ustawienia" Foreground="{StaticResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
-                    <TextBlock Text="Preferencje aplikacji i konfiguracja konta" Foreground="{StaticResource TextSecondary}" FontSize="14" Margin="0,5,0,0"/>
+                    <TextBlock Text="Ustawienia" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
+                    <TextBlock Text="Preferencje aplikacji i konfiguracja konta" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,0"/>
                 </StackPanel>
 
                 <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
                     <StackPanel>
-                        <TextBlock Text="Profil użytkownika" Foreground="{StaticResource TextPrimary}" FontWeight="SemiBold" FontSize="18" Margin="0,0,0,20"/>
+                        <TextBlock Text="Profil użytkownika" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="18" Margin="0,0,0,20"/>
                         
                         <!-- Widok wyświetlania danych profilu -->
                         <Grid>
@@ -75,8 +75,8 @@
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <StackPanel>
-                                <TextBlock Text="{Binding UserName}" Foreground="{StaticResource TextPrimary}" FontWeight="Bold" FontSize="18"/>
-                                <TextBlock Text="{Binding UserEmail}" Foreground="{StaticResource TextSecondary}" FontSize="14" Margin="0,4,0,0"/>
+                                <TextBlock Text="{Binding UserName}" Foreground="{DynamicResource TextPrimary}" FontWeight="Bold" FontSize="18"/>
+                                <TextBlock Text="{Binding UserEmail}" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,4,0,0"/>
                             </StackPanel>
                             <Button Grid.Column="1" Content="Edytuj" Command="{Binding ToggleEditCommand}" Style="{StaticResource OutlineButton}" Width="100"/>
                         </Grid>
@@ -100,12 +100,12 @@
                             </Grid.RowDefinitions>
                             
                             <StackPanel Grid.Row="0" Margin="0,0,0,10">
-                                <TextBlock Text="Nazwa użytkownika" Foreground="{StaticResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                                <TextBlock Text="Nazwa użytkownika" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
                                 <TextBox Style="{StaticResource ModernTextBox}" Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                             
                             <StackPanel Grid.Row="1" Margin="0,0,0,15">
-                                <TextBlock Text="Adres e-mail" Foreground="{StaticResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                                <TextBlock Text="Adres e-mail" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
                                 <TextBox Style="{StaticResource ModernTextBox}" Text="{Binding UserEmail, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                             
@@ -119,33 +119,33 @@
 
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
-                        <TextBlock Text="Preferencje" Foreground="{StaticResource TextPrimary}" FontWeight="SemiBold" FontSize="18" Margin="0,0,0,20"/>
+                        <TextBlock Text="Preferencje" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="18" Margin="0,0,0,20"/>
                         
                         <Grid Margin="0,0,0,15">
                             <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Ciemny motyw" Foreground="{StaticResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
-                                <TextBlock Text="Wygląd aplikacji" Foreground="{StaticResource TextSecondary}" FontSize="13" Margin="0,4,0,0"/>
+                                <TextBlock Text="Ciemny motyw" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
+                                <TextBlock Text="Wygląd aplikacji" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,4,0,0"/>
                             </StackPanel>
                             <CheckBox Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="{Binding IsDarkTheme, Mode=TwoWay}" VerticalAlignment="Center"/>
                         </Grid>
                         
-                        <Rectangle Height="1" Fill="{StaticResource CardBorder}" Margin="0,15,0,20"/>
+                        <Rectangle Height="1" Fill="{DynamicResource CardBorder}" Margin="0,15,0,20"/>
                         
                         <Grid Margin="0,0,0,15">
                             <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Powiadomienia" Foreground="{StaticResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
-                                <TextBlock Text="Alerty o nadchodzących płatnościach" Foreground="{StaticResource TextSecondary}" FontSize="13" Margin="0,4,0,0"/>
+                                <TextBlock Text="Powiadomienia" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
+                                <TextBlock Text="Alerty o nadchodzących płatnościach" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,4,0,0"/>
                             </StackPanel>
                             <CheckBox Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="{Binding AreNotificationsEnabled, Mode=TwoWay}" VerticalAlignment="Center"/>
                         </Grid>
 
-                        <Rectangle Height="1" Fill="{StaticResource CardBorder}" Margin="0,15,0,20"/>
+                        <Rectangle Height="1" Fill="{DynamicResource CardBorder}" Margin="0,15,0,20"/>
 
                         <Grid>
                             <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-                            <TextBlock Text="Waluta domyślna" Foreground="{StaticResource TextPrimary}" FontWeight="SemiBold" FontSize="15" VerticalAlignment="Center"/>
+                            <TextBlock Text="Waluta domyślna" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15" VerticalAlignment="Center"/>
                             <ComboBox Grid.Column="1" Style="{StaticResource ModernComboBox}" Width="100" ItemsSource="{Binding CurrencyOptions}" SelectedItem="{Binding DefaultCurrency, Mode=TwoWay}" VerticalAlignment="Center"/>
                         </Grid>
                     </StackPanel>

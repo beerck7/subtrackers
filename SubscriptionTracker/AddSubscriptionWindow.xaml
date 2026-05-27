@@ -8,14 +8,14 @@
         WindowStyle="None"
         AllowsTransparency="True"
         FontFamily="Segoe UI">
-    <Border BorderBrush="{StaticResource CardBorder}" BorderThickness="1" CornerRadius="12" Background="{StaticResource CardBackground}" Padding="30" Margin="10">
+    <Border BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" CornerRadius="12" Background="{DynamicResource CardBackground}" Padding="30" Margin="10">
         <Border.Effect>
             <DropShadowEffect Color="Black" BlurRadius="25" Opacity="0.4" ShadowDepth="10" Direction="270" />
         </Border.Effect>
         <StackPanel>
             <Grid Margin="0,0,0,30">
-                <TextBlock Text="{Binding TitleText}" Foreground="{StaticResource TextPrimary}" FontSize="22" FontWeight="Bold"/>
-                <Button Content="&#xE711;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource TextSecondary}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=AddWindow}" FontSize="16">
+                <TextBlock Text="{Binding TitleText}" Foreground="{DynamicResource TextPrimary}" FontSize="22" FontWeight="Bold"/>
+                <Button Content="&#xE711;" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource TextSecondary}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=AddWindow}" FontSize="16">
                     <Button.Template>
                         <ControlTemplate TargetType="Button">
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -24,13 +24,13 @@
                 </Button>
             </Grid>
             
-            <TextBlock Text="Nazwa usługi (np. Spotify)" Foreground="{StaticResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
+            <TextBlock Text="Nazwa usługi (np. Spotify)" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
             <TextBox Style="{StaticResource ModernTextBox}" Margin="0,0,0,20" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <TextBlock Text="Kategoria" Foreground="{StaticResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
+            <TextBlock Text="Kategoria" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
             <ComboBox Style="{StaticResource ModernComboBox}" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" DisplayMemberPath="Name" Margin="0,0,0,20" />
 
-            <TextBlock Text="Cykl rozliczeniowy" Foreground="{StaticResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
+            <TextBlock Text="Cykl rozliczeniowy" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
             <ComboBox Style="{StaticResource ModernComboBox}" SelectedValuePath="Content" SelectedValue="{Binding Cycle}" Margin="0,0,0,20">
                 <ComboBoxItem Content="Miesięcznie" />
                 <ComboBoxItem Content="Rocznie"/>
@@ -43,16 +43,16 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <StackPanel>
-                    <TextBlock Text="Data rozpoczęcia" Foreground="{StaticResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
-                    <DatePicker SelectedDate="{Binding StartDate}" BorderBrush="{StaticResource CardBorder}" BorderThickness="1" Background="{StaticResource InputBackground}" Padding="5" />
+                    <TextBlock Text="Data rozpoczęcia" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
+                    <DatePicker SelectedDate="{Binding StartDate}" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Background="{DynamicResource InputBackground}" Padding="5" />
                 </StackPanel>
                 <StackPanel Grid.Column="2">
-                    <TextBlock Text="Następna płatność" Foreground="{StaticResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
-                    <DatePicker SelectedDate="{Binding NextPaymentDate}" BorderBrush="{StaticResource CardBorder}" BorderThickness="1" Background="{StaticResource InputBackground}" Padding="5" />
+                    <TextBlock Text="Następna płatność" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
+                    <DatePicker SelectedDate="{Binding NextPaymentDate}" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Background="{DynamicResource InputBackground}" Padding="5" />
                 </StackPanel>
             </Grid>
 
-            <TextBlock Text="Cena (PLN)" Foreground="{StaticResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
+            <TextBlock Text="Cena (PLN)" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
             <TextBox Style="{StaticResource ModernTextBox}" Margin="0,0,0,40" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Grid>

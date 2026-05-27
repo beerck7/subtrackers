@@ -28,8 +28,8 @@
         
         <!-- Standard Card Style -->
         <Style x:Key="CardStyle" TargetType="Border">
-            <Setter Property="Background" Value="{StaticResource CardBackground}" />
-            <Setter Property="BorderBrush" Value="{StaticResource CardBorder}" />
+            <Setter Property="Background" Value="{DynamicResource CardBackground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorder}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="CornerRadius" Value="12" />
             <Setter Property="Padding" Value="25" />
@@ -43,7 +43,7 @@
 
         <!-- Modern Button Base -->
         <Style x:Key="ModernButtonBase" TargetType="Button">
-            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Template">
@@ -98,8 +98,8 @@
 
         <!-- Outline Button -->
         <Style x:Key="OutlineButton" TargetType="Button" BasedOn="{StaticResource ModernButtonBase}">
-            <Setter Property="Background" Value="{StaticResource InputBackground}" />
-            <Setter Property="BorderBrush" Value="{StaticResource CardBorder}" />
+            <Setter Property="Background" Value="{DynamicResource InputBackground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorder}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Padding" Value="15,10" />
             <Setter Property="FontWeight" Value="SemiBold" />
@@ -107,13 +107,13 @@
 
         <!-- Modern TextBox -->
         <Style x:Key="ModernTextBox" TargetType="TextBox">
-            <Setter Property="Background" Value="{StaticResource InputBackground}" />
-            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
-            <Setter Property="BorderBrush" Value="{StaticResource CardBorder}" />
+            <Setter Property="Background" Value="{DynamicResource InputBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorder}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Padding" Value="12,10" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
-            <Setter Property="CaretBrush" Value="{StaticResource TextPrimary}" />
+            <Setter Property="CaretBrush" Value="{DynamicResource TextPrimary}" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
@@ -138,8 +138,8 @@
 
         <!-- Modern ComboBoxItem Style -->
         <Style TargetType="ComboBoxItem">
-            <Setter Property="Background" Value="{StaticResource CardBackground}" />
-            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+            <Setter Property="Background" Value="{DynamicResource CardBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
             <Setter Property="Padding" Value="12,10" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Template">
@@ -150,12 +150,12 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="{StaticResource InputBackground}" />
+                                <Setter TargetName="border" Property="Background" Value="{DynamicResource InputBackground}" />
                                 <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryBrush}" />
-                                <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+                                <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -165,9 +165,9 @@
 
         <!-- Modern ComboBox Style -->
         <Style x:Key="ModernComboBox" TargetType="ComboBox">
-            <Setter Property="Background" Value="{StaticResource InputBackground}" />
-            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
-            <Setter Property="BorderBrush" Value="{StaticResource CardBorder}" />
+            <Setter Property="Background" Value="{DynamicResource InputBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorder}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Padding" Value="12,8" />
             <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -197,7 +197,7 @@
                                                 <TextBlock Grid.Column="1" 
                                                            Text="&#xE70D;" 
                                                            FontFamily="Segoe MDL2 Assets" 
-                                                           Foreground="{StaticResource TextSecondary}" 
+                                                           Foreground="{DynamicResource TextSecondary}" 
                                                            FontSize="10" 
                                                            HorizontalAlignment="Center" 
                                                            VerticalAlignment="Center" />
@@ -230,8 +230,8 @@
                                       MinWidth="{TemplateBinding ActualWidth}" 
                                       MaxHeight="{TemplateBinding MaxDropDownHeight}">
                                     <Border x:Name="DropDownBorder" 
-                                            Background="{StaticResource CardBackground}" 
-                                            BorderBrush="{StaticResource CardBorder}" 
+                                            Background="{DynamicResource CardBackground}" 
+                                            BorderBrush="{DynamicResource CardBorder}" 
                                             BorderThickness="1" 
                                             CornerRadius="6" 
                                             Margin="0,3,0,0">
@@ -253,7 +253,7 @@
         <!-- DatePickerTextBox Style -->
         <Style TargetType="DatePickerTextBox">
             <Setter Property="Background" Value="Transparent" />
-            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Padding" Value="2,0,0,0"/>
             <Setter Property="Template">
@@ -267,9 +267,9 @@
 
         <!-- Modern DatePicker Style -->
         <Style TargetType="DatePicker">
-            <Setter Property="Background" Value="{StaticResource InputBackground}" />
-            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
-            <Setter Property="BorderBrush" Value="{StaticResource CardBorder}" />
+            <Setter Property="Background" Value="{DynamicResource InputBackground}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorder}" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="Padding" Value="12,10" />
             <Setter Property="Template">
@@ -291,14 +291,14 @@
                                                    HorizontalContentAlignment="Stretch" 
                                                    VerticalContentAlignment="Center" 
                                                    Background="Transparent" 
-                                                   Foreground="{StaticResource TextPrimary}" 
+                                                   Foreground="{DynamicResource TextPrimary}" 
                                                    BorderThickness="0" />
                                 <Button x:Name="PART_Button" 
                                         Grid.Column="1" 
                                         Content="&#xE787;" 
                                         FontFamily="Segoe MDL2 Assets" 
                                         FontSize="14" 
-                                        Foreground="{StaticResource TextSecondary}" 
+                                        Foreground="{DynamicResource TextSecondary}" 
                                         Background="Transparent" 
                                         BorderThickness="0" 
                                         Width="24" 
@@ -325,10 +325,10 @@
 
         <!-- Modern Calendar Style -->
         <Style TargetType="Calendar">
-            <Setter Property="Background" Value="{StaticResource CardBackground}" />
-            <Setter Property="BorderBrush" Value="{StaticResource CardBorder}" />
+            <Setter Property="Background" Value="{DynamicResource CardBackground}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorder}" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimary}" />
         </Style>
         
     </Application.Resources>

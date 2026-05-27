@@ -13,6 +13,8 @@ namespace SubscriptionTracker.ViewModels
 {
     public partial class SettingsViewModel : ObservableObject
     {
+        private bool _isInitialized;
+
         [ObservableProperty]
         private string _userName;
 
@@ -35,12 +37,15 @@ namespace SubscriptionTracker.ViewModels
 
         public SettingsViewModel()
         {
-            UserName = AppSettings.UserName;
-            UserEmail = AppSettings.UserEmail;
-            IsDarkTheme = AppSettings.IsDarkTheme;
-            AreNotificationsEnabled = AppSettings.AreNotificationsEnabled;
-            DefaultCurrency = AppSettings.DefaultCurrency;
-            IsEditing = false;
+            // Assign fields directly to backing variables to prevent event firing during instantiation
+            _userName = AppSettings.UserName;
+            _userEmail = AppSettings.UserEmail;
+            _isDarkTheme = AppSettings.IsDarkTheme;
+            _areNotificationsEnabled = AppSettings.AreNotificationsEnabled;
+            _defaultCurrency = AppSettings.DefaultCurrency;
+            _isEditing = false;
+            
+            _isInitialized = true;
         }
 
         [RelayCommand]
@@ -74,6 +79,8 @@ namespace SubscriptionTracker.ViewModels
 
         partial void OnIsDarkThemeChanged(bool value)
         {
+            if (!_isInitialized) return;
+
             AppSettings.IsDarkTheme = value;
             AppSettings.Save();
 
@@ -90,6 +97,8 @@ namespace SubscriptionTracker.ViewModels
 
         partial void OnAreNotificationsEnabledChanged(bool value)
         {
+            if (!_isInitialized) return;
+
             AppSettings.AreNotificationsEnabled = value;
             AppSettings.Save();
 
@@ -99,6 +108,8 @@ namespace SubscriptionTracker.ViewModels
 
         partial void OnDefaultCurrencyChanged(string value)
         {
+            if (!_isInitialized) return;
+
             if (!string.IsNullOrEmpty(value))
             {
                 AppSettings.DefaultCurrency = value;
@@ -140,12 +151,12 @@ namespace SubscriptionTracker.ViewModels
         {
             try
             {
-                ((SolidColorBrush)app.Resources["AppBackground"]).Color = (Color)ColorConverter.ConvertFromString("#F4F6F9");
-                ((SolidColorBrush)app.Resources["CardBackground"]).Color = (Color)ColorConverter.ConvertFromString("#FFFFFF");
-                ((SolidColorBrush)app.Resources["CardBorder"]).Color = (Color)ColorConverter.ConvertFromString("#E2E8F0");
-                ((SolidColorBrush)app.Resources["InputBackground"]).Color = (Color)ColorConverter.ConvertFromString("#EDF2F7");
-                ((SolidColorBrush)app.Resources["TextPrimary"]).Color = (Color)ColorConverter.ConvertFromString("#1A202C");
-                ((SolidColorBrush)app.Resources["TextSecondary"]).Color = (Color)ColorConverter.ConvertFromString("#718096");
+                app.Resources["AppBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F4F6F9"));
+                app.Resources["CardBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
+                app.Resources["CardBorder"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E2E8F0"));
+                app.Resources["InputBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#EDF2F7"));
+                app.Resources["TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1A202C"));
+                app.Resources["TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#718096"));
             }
             catch { }
         }
@@ -154,12 +165,12 @@ namespace SubscriptionTracker.ViewModels
         {
             try
             {
-                ((SolidColorBrush)app.Resources["AppBackground"]).Color = (Color)ColorConverter.ConvertFromString("#0F0F12");
-                ((SolidColorBrush)app.Resources["CardBackground"]).Color = (Color)ColorConverter.ConvertFromString("#1E1E24");
-                ((SolidColorBrush)app.Resources["CardBorder"]).Color = (Color)ColorConverter.ConvertFromString("#2A2A35");
-                ((SolidColorBrush)app.Resources["InputBackground"]).Color = (Color)ColorConverter.ConvertFromString("#16161B");
-                ((SolidColorBrush)app.Resources["TextPrimary"]).Color = (Color)ColorConverter.ConvertFromString("#FFFFFF");
-                ((SolidColorBrush)app.Resources["TextSecondary"]).Color = (Color)ColorConverter.ConvertFromString("#8A8A93");
+                app.Resources["AppBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#0F0F12"));
+                app.Resources["CardBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1E1E24"));
+                app.Resources["CardBorder"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#2A2A35"));
+                app.Resources["InputBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#16161B"));
+                app.Resources["TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
+                app.Resources["TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#8A8A93"));
             }
             catch { }
         }

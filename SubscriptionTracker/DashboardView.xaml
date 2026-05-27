@@ -8,11 +8,11 @@
                 
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                     <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <TextBlock Text="SubTrack" Foreground="{StaticResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock Text="SubTrack" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
                 </StackPanel>
                 
-                <TextBlock Text="Podsumowanie" Foreground="{StaticResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
-                <TextBlock Text="{Binding TodayDateText}" Foreground="{StaticResource TextSecondary}" FontSize="14" Margin="0,5,0,35"/>
+                <TextBlock Text="Podsumowanie" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
+                <TextBlock Text="{Binding TodayDateText}" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,35"/>
 
                 <WrapPanel Margin="0,0,0,10">
 
@@ -22,8 +22,8 @@
                                 <TextBlock Text="&#xE7C3;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Miesięczne koszty" Foreground="{StaticResource TextSecondary}" FontSize="14" Margin="0,0,0,4"/>
-                                <TextBlock Text="{Binding MonthlyCostsText}" Foreground="{StaticResource TextPrimary}" FontSize="32" FontWeight="Bold" Margin="0,0,0,4"/>
+                                <TextBlock Text="Miesięczne koszty" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,0,0,4"/>
+                                <TextBlock Text="{Binding MonthlyCostsText}" Foreground="{DynamicResource TextPrimary}" FontSize="32" FontWeight="Bold" Margin="0,0,0,4"/>
                                 <TextBlock Text="Suma kosztów cyklicznych" Foreground="{StaticResource SuccessBrush}" FontSize="13"/>
                             </StackPanel>
                         </StackPanel>
@@ -35,9 +35,9 @@
                                 <TextBlock Text="&#xE73E;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Aktywne subskrypcje" Foreground="{StaticResource TextSecondary}" FontSize="14" Margin="0,0,0,4"/>
-                                <TextBlock Text="{Binding ActiveSubscriptionsCountText}" Foreground="{StaticResource TextPrimary}" FontSize="32" FontWeight="Bold" Margin="0,0,0,4"/>
-                                <TextBlock Text="{Binding NewSubscriptionsThisMonthText}" Foreground="{StaticResource TextSecondary}" FontSize="13"/>
+                                <TextBlock Text="Aktywne subskrypcje" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,0,0,4"/>
+                                <TextBlock Text="{Binding ActiveSubscriptionsCountText}" Foreground="{DynamicResource TextPrimary}" FontSize="32" FontWeight="Bold" Margin="0,0,0,4"/>
+                                <TextBlock Text="{Binding NewSubscriptionsThisMonthText}" Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>
@@ -47,7 +47,7 @@
 
                     <Border Style="{StaticResource CardStyle}" Width="500" Margin="0,0,20,20">
                         <StackPanel>
-                            <TextBlock Text="Nadchodzące płatności" Foreground="{StaticResource TextPrimary}" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,25"/>
+                            <TextBlock Text="Nadchodzące płatności" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,25"/>
                             
                             <ItemsControl ItemsSource="{Binding UpcomingPayments}">
                                 <ItemsControl.ItemTemplate>
@@ -61,22 +61,22 @@
                                                     <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Border Width="45" Height="45" CornerRadius="10" Background="{Binding IconColor}" Margin="0,0,15,0">
-                                                    <TextBlock Text="{Binding Initials}" Foreground="{StaticResource TextPrimary}" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Initials}" Foreground="{DynamicResource TextPrimary}" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                 </Border>
                                                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                                    <TextBlock Text="{Binding Name}" Foreground="{StaticResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
-                                                    <TextBlock Text="{Binding NextPaymentDateFormatted}" Foreground="{StaticResource TextSecondary}" FontSize="13"/>
+                                                    <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
+                                                    <TextBlock Text="{Binding NextPaymentDateFormatted}" Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
                                                 </StackPanel>
-                                                <TextBlock Grid.Column="2" Text="{Binding Category}" Foreground="{StaticResource TextSecondary}" FontSize="14" VerticalAlignment="Center" Margin="0,0,30,0"/>
-                                                <TextBlock Grid.Column="3" Text="{Binding FormattedPrice}" Foreground="{StaticResource TextPrimary}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="2" Text="{Binding Category}" Foreground="{DynamicResource TextSecondary}" FontSize="14" VerticalAlignment="Center" Margin="0,0,30,0"/>
+                                                <TextBlock Grid.Column="3" Text="{Binding FormattedPrice}" Foreground="{DynamicResource TextPrimary}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center"/>
                                             </Grid>
-                                            <Rectangle Height="1" Fill="{StaticResource CardBorder}" Margin="0,5,0,15"/>
+                                            <Rectangle Height="1" Fill="{DynamicResource CardBorder}" Margin="0,5,0,15"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                             
-                            <TextBlock Text="Brak nadchodzących płatności" Foreground="{StaticResource TextSecondary}" FontSize="14" HorizontalAlignment="Center" Margin="0,20,0,20">
+                            <TextBlock Text="Brak nadchodzących płatności" Foreground="{DynamicResource TextSecondary}" FontSize="14" HorizontalAlignment="Center" Margin="0,20,0,20">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Visibility" Value="Collapsed"/>
@@ -93,14 +93,14 @@
 
                     <Border Style="{StaticResource CardStyle}" Width="380" Margin="0,0,20,20">
                         <StackPanel>
-                            <TextBlock Text="Wydatki wg kategorii" Foreground="{StaticResource TextPrimary}" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,30"/>
+                            <TextBlock Text="Wydatki wg kategorii" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,30"/>
                             
                             <Grid Width="150" Height="150" HorizontalAlignment="Center">
-                                <Ellipse Fill="{StaticResource CardBorder}" Width="150" Height="150"/>
-                                <Ellipse Fill="{StaticResource CardBackground}" Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <Ellipse Fill="{DynamicResource CardBorder}" Width="150" Height="150"/>
+                                <Ellipse Fill="{DynamicResource CardBackground}" Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                                    <TextBlock Text="Miesięcznie" Foreground="{StaticResource TextSecondary}" FontSize="11" HorizontalAlignment="Center"/>
-                                    <TextBlock Text="{Binding MonthlyCostsText}" Foreground="{StaticResource TextPrimary}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="Miesięcznie" Foreground="{DynamicResource TextSecondary}" FontSize="11" HorizontalAlignment="Center"/>
+                                    <TextBlock Text="{Binding MonthlyCostsText}" Foreground="{DynamicResource TextPrimary}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
                                 </StackPanel>
                             </Grid>
                             
@@ -115,10 +115,10 @@
                                                     <ColumnDefinition Width="Auto"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Ellipse Width="10" Height="10" Fill="{Binding Color}" VerticalAlignment="Center" Margin="0,0,10,0"/>
-                                                <TextBlock Grid.Column="1" Text="{Binding Name}" Foreground="{StaticResource TextPrimary}" FontSize="13" FontWeight="SemiBold"/>
-                                                <TextBlock Grid.Column="2" Text="{Binding FormattedCostWithPercentage}" Foreground="{StaticResource TextSecondary}" FontSize="13" FontWeight="Bold"/>
+                                                <TextBlock Grid.Column="1" Text="{Binding Name}" Foreground="{DynamicResource TextPrimary}" FontSize="13" FontWeight="SemiBold"/>
+                                                <TextBlock Grid.Column="2" Text="{Binding FormattedCostWithPercentage}" Foreground="{DynamicResource TextSecondary}" FontSize="13" FontWeight="Bold"/>
                                             </Grid>
-                                            <ProgressBar Height="4" Margin="0,6,0,0" Minimum="0" Maximum="100" Value="{Binding Percentage}" Foreground="{Binding Color}" Background="{StaticResource InputBackground}" BorderThickness="0">
+                                            <ProgressBar Height="4" Margin="0,6,0,0" Minimum="0" Maximum="100" Value="{Binding Percentage}" Foreground="{Binding Color}" Background="{DynamicResource InputBackground}" BorderThickness="0">
                                                 <ProgressBar.Template>
                                                     <ControlTemplate TargetType="ProgressBar">
                                                         <Grid>
@@ -133,7 +133,7 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
 
-                            <TextBlock Text="Brak danych do wyświetlenia" Foreground="{StaticResource TextSecondary}" FontSize="14" HorizontalAlignment="Center" Margin="0,20,0,20">
+                            <TextBlock Text="Brak danych do wyświetlenia" Foreground="{DynamicResource TextSecondary}" FontSize="14" HorizontalAlignment="Center" Margin="0,20,0,20">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="Visibility" Value="Collapsed"/>

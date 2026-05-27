@@ -8,12 +8,12 @@
                 
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                     <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <TextBlock Text="SubTrack" Foreground="{StaticResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock Text="SubTrack" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <StackPanel Margin="0,0,0,30">
-                    <TextBlock Text="Kategorie" Foreground="{StaticResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
-                    <TextBlock Text="Organizuj i śledź budżet" Foreground="{StaticResource TextSecondary}" FontSize="14" Margin="0,5,0,0"/>
+                    <TextBlock Text="Kategorie" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
+                    <TextBlock Text="Organizuj i śledź budżet" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,0"/>
                 </StackPanel>
 
                 <WrapPanel Margin="0,0,0,30">
@@ -47,13 +47,13 @@
                                     <Ellipse Width="16" Height="16" Fill="{Binding Color}" VerticalAlignment="Center" Margin="0,0,20,0" />
                                     
                                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding Name}" Foreground="{StaticResource TextPrimary}" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,4"/>
-                                        <TextBlock Text="{Binding SubscriptionsCountText}" Foreground="{StaticResource TextSecondary}" FontSize="13"/>
+                                        <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,4"/>
+                                        <TextBlock Text="{Binding SubscriptionsCountText}" Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
                                     </StackPanel>
 
                                     <TextBlock Grid.Column="2" 
                                                Text="{Binding FormattedTotalCost}" 
-                                               Foreground="{StaticResource TextPrimary}" 
+                                               Foreground="{DynamicResource TextPrimary}" 
                                                FontSize="22" 
                                                FontWeight="Bold" 
                                                VerticalAlignment="Center"
@@ -62,7 +62,7 @@
                                     <Button Grid.Column="3" Command="{Binding DataContext.DeleteCategoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Cursor="Hand" ToolTip="Usuń" VerticalAlignment="Center">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
-                                                <TextBlock x:Name="btnTxt" Text="&#xE74D;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource TextSecondary}" FontSize="14" VerticalAlignment="Center"/>
+                                                <TextBlock x:Name="btnTxt" Text="&#xE74D;" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource TextSecondary}" FontSize="14" VerticalAlignment="Center"/>
                                                 <ControlTemplate.Triggers>
                                                     <Trigger Property="IsMouseOver" Value="True">
                                                         <Setter TargetName="btnTxt" Property="Foreground" Value="{StaticResource DangerBrush}"/>
