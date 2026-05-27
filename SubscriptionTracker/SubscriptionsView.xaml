@@ -54,7 +54,8 @@
                             </Border>
 
                             <!-- Kategoria -->
-                            <ComboBox ItemsSource="{Binding FilterCategories}" 
+                            <ComboBox Style="{StaticResource ModernComboBox}"
+                                      ItemsSource="{Binding FilterCategories}" 
                                       SelectedItem="{Binding SelectedCategory}" 
                                       DisplayMemberPath="Name" 
                                       Width="180" 
@@ -66,7 +67,8 @@
                                       BorderBrush="{StaticResource CardBorder}" />
 
                             <!-- Status -->
-                            <ComboBox ItemsSource="{Binding StatusOptions}" 
+                            <ComboBox Style="{StaticResource ModernComboBox}"
+                                      ItemsSource="{Binding StatusOptions}" 
                                       SelectedItem="{Binding SelectedStatus}" 
                                       Width="140" 
                                       Height="38" 
@@ -77,7 +79,8 @@
                                       BorderBrush="{StaticResource CardBorder}" />
 
                             <!-- Sortowanie -->
-                            <ComboBox ItemsSource="{Binding SortOptions}" 
+                            <ComboBox Style="{StaticResource ModernComboBox}"
+                                      ItemsSource="{Binding SortOptions}" 
                                       SelectedItem="{Binding SelectedSortOption}" 
                                       Width="210" 
                                       Height="38" 
