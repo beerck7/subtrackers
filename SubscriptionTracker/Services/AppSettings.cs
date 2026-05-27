@@ -7,8 +7,8 @@ namespace SubscriptionTracker.Services
     {
         private static readonly string SettingsFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "settings.txt");
 
-        public static string UserName { get; set; } = "Norbert Student";
-        public static string UserEmail { get; set; } = "z.norbert0104@gmail.com";
+        public static string UserName { get; set; } = "Jan Kowalski";
+        public static string UserEmail { get; set; } = "j.kowalski@student.pl";
         public static bool IsDarkTheme { get; set; } = true;
         public static bool AreNotificationsEnabled { get; set; } = true;
         public static string DefaultCurrency { get; set; } = "PLN";
