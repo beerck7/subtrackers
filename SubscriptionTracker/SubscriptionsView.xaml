@@ -27,29 +27,66 @@
                 <Border Style="{StaticResource CardStyle}">
                     <StackPanel>
                         
-                        <!-- Szukaj -->
-                        <Border Background="{StaticResource InputBackground}" CornerRadius="6" BorderBrush="{StaticResource CardBorder}" BorderThickness="1" Padding="15,10" Margin="0,0,0,25">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Text="&#xE721;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                <TextBlock x:Name="SearchPlaceholder" Grid.Column="1" Text="Szukaj subskrypcji po nazwie..." Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center" IsHitTestVisible="False">
-                                    <TextBlock.Style>
-                                        <Style TargetType="TextBlock">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Text.Length, ElementName=SearchTextBox}" Value="0">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
-                                <TextBox x:Name="SearchTextBox" Grid.Column="1" Background="Transparent" Foreground="{StaticResource TextPrimary}" BorderThickness="0" VerticalAlignment="Center" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" CaretBrush="{StaticResource TextPrimary}"/>
-                            </Grid>
-                        </Border>
+                        <!-- Filtry i Szukaj -->
+                        <WrapPanel Margin="0,0,0,25">
+                            <!-- Szukaj -->
+                            <Border Background="{StaticResource InputBackground}" CornerRadius="6" BorderBrush="{StaticResource CardBorder}" BorderThickness="1" Padding="15,10" Width="260" Margin="0,0,15,10">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="&#xE721;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="16" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="SearchPlaceholder" Grid.Column="1" Text="Szukaj subskrypcji..." Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center" IsHitTestVisible="False">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Text.Length, ElementName=SearchTextBox}" Value="0">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBox x:Name="SearchTextBox" Grid.Column="1" Background="Transparent" Foreground="{StaticResource TextPrimary}" BorderThickness="0" VerticalAlignment="Center" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" CaretBrush="{StaticResource TextPrimary}"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Kategoria -->
+                            <ComboBox ItemsSource="{Binding FilterCategories}" 
+                                      SelectedItem="{Binding SelectedCategory}" 
+                                      DisplayMemberPath="Name" 
+                                      Width="180" 
+                                      Height="38" 
+                                      Margin="0,0,15,10" 
+                                      VerticalContentAlignment="Center" 
+                                      Background="{StaticResource InputBackground}" 
+                                      Foreground="{StaticResource TextPrimary}" 
+                                      BorderBrush="{StaticResource CardBorder}" />
+
+                            <!-- Status -->
+                            <ComboBox ItemsSource="{Binding StatusOptions}" 
+                                      SelectedItem="{Binding SelectedStatus}" 
+                                      Width="140" 
+                                      Height="38" 
+                                      Margin="0,0,15,10" 
+                                      VerticalContentAlignment="Center" 
+                                      Background="{StaticResource InputBackground}" 
+                                      Foreground="{StaticResource TextPrimary}" 
+                                      BorderBrush="{StaticResource CardBorder}" />
+
+                            <!-- Sortowanie -->
+                            <ComboBox ItemsSource="{Binding SortOptions}" 
+                                      SelectedItem="{Binding SelectedSortOption}" 
+                                      Width="210" 
+                                      Height="38" 
+                                      Margin="0,0,0,10" 
+                                      VerticalContentAlignment="Center" 
+                                      Background="{StaticResource InputBackground}" 
+                                      Foreground="{StaticResource TextPrimary}" 
+                                      BorderBrush="{StaticResource CardBorder}" />
+                        </WrapPanel>
 
                         <!-- Nagłówki tabeli -->
                         <Grid Margin="60,0,15,15">

@@ -20,19 +20,42 @@ namespace SubscriptionTracker.ViewModels
         [ObservableProperty]
         private string _searchText = "";
 
+        [ObservableProperty]
+        private ObservableCollection<Category> _filterCategories;
+
+        [ObservableProperty]
+        private Category _selectedCategory;
+
+        [ObservableProperty]
+        private string _selectedStatus = "Wszystkie";
+
+        [ObservableProperty]
+        private string _selectedSortOption = "Domyślnie";
+
+        public ObservableCollection<string> StatusOptions { get; } = new() { "Wszystkie", "Aktywna", "Nieaktywna" };
+        
+        public ObservableCollection<string> SortOptions { get; } = new() { 
+            "Domyślnie", 
+            "Cena: od najniższej", 
+            "Cena: od najwyższej", 
+            "Data płatności: najwcześniej", 
+            "Data płatności: najpóźniej" 
+        };
+
         public SubscriptionsViewModel()
         {
             _dataService = new DataService();
             _allSubscriptions = new ObservableCollection<SubscriptionItemViewModel>();
             DisplayedSubscriptions = new ObservableCollection<SubscriptionItemViewModel>();
+            FilterCategories = new ObservableCollection<Category>();
 
             LoadSubscriptionsCommand.Execute(null);
         }
 
-        partial void OnSearchTextChanged(string value)
-        {
-            FilterList();
-        }
+        partial void OnSearchTextChanged(string value) => FilterList();
+        partial void OnSelectedCategoryChanged(Category value) => FilterList();
+        partial void OnSelectedStatusChanged(string value) => FilterList();
+        partial void OnSelectedSortOptionChanged(string value) => FilterList();
 
         [RelayCommand]
         private async Task LoadSubscriptionsAsync()
@@ -43,22 +66,71 @@ namespace SubscriptionTracker.ViewModels
             {
                 _allSubscriptions.Add(new SubscriptionItemViewModel(sub));
             }
+
+            var cats = await _dataService.GetCategoriesAsync();
+            FilterCategories.Clear();
+            
+            var allCatsDummy = new Category { Id = 0, Name = "Wszystkie kategorie" };
+            FilterCategories.Add(allCatsDummy);
+            foreach (var c in cats)
+            {
+                FilterCategories.Add(c);
+            }
+
+            if (SelectedCategory == null)
+            {
+                SelectedCategory = allCatsDummy;
+            }
+            else
+            {
+                var existing = FilterCategories.FirstOrDefault(c => c.Id == SelectedCategory.Id);
+                SelectedCategory = existing ?? allCatsDummy;
+            }
+
             FilterList();
         }
 
         private void FilterList()
         {
-            if (string.IsNullOrWhiteSpace(SearchText))
+            var query = _allSubscriptions.AsEnumerable();
+
+            if (!string.IsNullOrWhiteSpace(SearchText))
             {
-                DisplayedSubscriptions.Clear();
-                foreach (var item in _allSubscriptions) DisplayedSubscriptions.Add(item);
+                var lower = SearchText.ToLower();
+                query = query.Where(s => s.Name.ToLower().Contains(lower));
             }
-            else
+
+            if (SelectedCategory != null && SelectedCategory.Id != 0)
             {
-                var lowerQuery = SearchText.ToLower();
-                var filtered = _allSubscriptions.Where(s => s.Name.ToLower().Contains(lowerQuery)).ToList();
-                DisplayedSubscriptions.Clear();
-                foreach (var item in filtered) DisplayedSubscriptions.Add(item);
+                query = query.Where(s => s.Model.CategoryId == SelectedCategory.Id);
+            }
+
+            if (SelectedStatus != "Wszystkie")
+            {
+                query = query.Where(s => s.Model.Status == SelectedStatus);
+            }
+
+            if (SelectedSortOption == "Cena: od najniższej")
+            {
+                query = query.OrderBy(s => s.Model.Price);
+            }
+            else if (SelectedSortOption == "Cena: od najwyższej")
+            {
+                query = query.OrderByDescending(s => s.Model.Price);
+            }
+            else if (SelectedSortOption == "Data płatności: najwcześniej")
+            {
+                query = query.OrderBy(s => s.Model.NextPaymentDate);
+            }
+            else if (SelectedSortOption == "Data płatności: najpóźniej")
+            {
+                query = query.OrderByDescending(s => s.Model.NextPaymentDate);
+            }
+
+            DisplayedSubscriptions.Clear();
+            foreach (var item in query)
+            {
+                DisplayedSubscriptions.Add(item);
             }
         }
 
@@ -66,7 +138,6 @@ namespace SubscriptionTracker.ViewModels
         private async Task OpenAddSubscriptionDialogAsync()
         {
             var addWindow = new AddSubscriptionWindow();
-            
             if (addWindow.ShowDialog() == true)
             {
                 await LoadSubscriptionsAsync();

@@ -107,6 +107,14 @@ namespace SubscriptionTracker.ViewModels
                 return;
             }
 
+            var subs = await _dataService.GetSubscriptionsAsync();
+            bool alreadyExists = subs.Any(s => s.Name.Equals(Name, StringComparison.OrdinalIgnoreCase) && (!IsEditMode || s.Id != _editingSubscription.Id));
+            if (alreadyExists)
+            {
+                MessageBox.Show("Subskrypcja o tej nazwie już istnieje w systemie.", "Błąd walidacji", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             if (IsEditMode && _editingSubscription != null)
             {
                 _editingSubscription.Name = Name;
