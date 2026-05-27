@@ -7,6 +7,7 @@ namespace SubscriptionTracker
         public DashboardView()
         {
             InitializeComponent();
+            DataContext = new ViewModels.DashboardViewModel();
         }
     }
 }

@@ -20,5 +20,6 @@ namespace SubscriptionTracker.ViewModels
         
         public string Initials => string.IsNullOrWhiteSpace(Name) ? "?" : Name.Substring(0, 1).ToUpper();
         public string IconColor => _subscription.Category?.Color ?? "#808080";
+        public string NextPaymentDateFormatted => _subscription.NextPaymentDate.ToString("dd.MM.yyyy");
     }
 }
