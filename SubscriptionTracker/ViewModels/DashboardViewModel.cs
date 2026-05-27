@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using SubscriptionTracker.Models;
 using SubscriptionTracker.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace SubscriptionTracker.ViewModels
     public partial class DashboardViewModel : ObservableObject
     {
         private readonly DataService _dataService;
+        private decimal _totalMonthlyCostCalculated = 0;
+        private List<CategoryExpenseItemRaw> _rawCategoryExpenses = new();
 
         [ObservableProperty]
         private string _monthlyCostsText = "0,00";
@@ -24,6 +27,12 @@ namespace SubscriptionTracker.ViewModels
 
         [ObservableProperty]
         private string _todayDateText = "Dzisiejsza data: ";
+
+        [ObservableProperty]
+        private string _expensePeriodLabel = "Miesięcznie";
+
+        [ObservableProperty]
+        private bool _isYearlyView = false;
 
         [ObservableProperty]
         private ObservableCollection<SubscriptionItemViewModel> _upcomingPayments;
@@ -41,24 +50,35 @@ namespace SubscriptionTracker.ViewModels
         }
 
         [RelayCommand]
+        private void SetMonthly()
+        {
+            IsYearlyView = false;
+        }
+
+        [RelayCommand]
+        private void SetYearly()
+        {
+            IsYearlyView = true;
+        }
+
+        [RelayCommand]
         private async Task LoadDashboardDataAsync()
         {
             var subs = await _dataService.GetSubscriptionsAsync();
             var activeSubs = subs.Where(s => s.Status == "Aktywna" || string.IsNullOrEmpty(s.Status)).ToList();
 
-            decimal totalMonthly = 0;
+            _totalMonthlyCostCalculated = 0;
             foreach (var sub in activeSubs)
             {
                 if (sub.Cycle == "Rocznie")
                 {
-                    totalMonthly += sub.Price / 12;
+                    _totalMonthlyCostCalculated += sub.Price / 12;
                 }
                 else
                 {
-                    totalMonthly += sub.Price;
+                    _totalMonthlyCostCalculated += sub.Price;
                 }
             }
-            MonthlyCostsText = $"{totalMonthly:0.00} {Services.AppSettings.DefaultCurrency}";
 
             ActiveSubscriptionsCountText = $"{activeSubs.Count} Usług";
 
@@ -79,12 +99,10 @@ namespace SubscriptionTracker.ViewModels
                 UpcomingPayments.Add(item);
             }
 
-            CategoryExpenses.Clear();
-            if (totalMonthly > 0)
+            _rawCategoryExpenses.Clear();
+            if (_totalMonthlyCostCalculated > 0)
             {
                 var categories = await _dataService.GetCategoriesAsync();
-                var categoryList = new System.Collections.Generic.List<CategoryExpenseItem>();
-                
                 foreach (var cat in categories)
                 {
                     decimal catMonthly = 0;
@@ -102,24 +120,50 @@ namespace SubscriptionTracker.ViewModels
 
                     if (catMonthly > 0)
                     {
-                        decimal pct = (catMonthly / totalMonthly) * 100;
-                        categoryList.Add(new CategoryExpenseItem
+                        _rawCategoryExpenses.Add(new CategoryExpenseItemRaw
                         {
                             Name = cat.Name,
                             Color = cat.Color ?? "#808080",
-                            Percentage = (double)pct,
-                            FormattedCostWithPercentage = $"{catMonthly:0.00} {Services.AppSettings.DefaultCurrency} ({pct:0}%)",
-                            PathData = ""
+                            MonthlyCost = catMonthly
                         });
                     }
                 }
-                
-                // Calculate dynamic arcs for our beautiful premium donut chart
-                double currentAngle = -Math.PI / 2.0; // Start at the top (-90 degrees)
-                foreach (var item in categoryList)
+            }
+
+            UpdateExpenseDisplay();
+        }
+
+        partial void OnIsYearlyViewChanged(bool value)
+        {
+            UpdateExpenseDisplay();
+        }
+
+        private void UpdateExpenseDisplay()
+        {
+            ExpensePeriodLabel = IsYearlyView ? "Rocznie" : "Miesięcznie";
+            
+            decimal displayTotal = IsYearlyView ? _totalMonthlyCostCalculated * 12 : _totalMonthlyCostCalculated;
+            MonthlyCostsText = $"{displayTotal:0.00} {Services.AppSettings.DefaultCurrency}";
+            
+            CategoryExpenses.Clear();
+            if (_totalMonthlyCostCalculated > 0)
+            {
+                double currentAngle = -Math.PI / 2.0; // Start at top
+                foreach (var raw in _rawCategoryExpenses)
                 {
-                    double sweepAngle = (item.Percentage / 100.0) * 2.0 * Math.PI;
+                    decimal displayCost = IsYearlyView ? raw.MonthlyCost * 12 : raw.MonthlyCost;
+                    double pct = (double)((raw.MonthlyCost / _totalMonthlyCostCalculated) * 100M);
                     
+                    var item = new CategoryExpenseItem
+                    {
+                        Name = raw.Name,
+                        Color = raw.Color,
+                        Percentage = pct,
+                        FormattedCostWithPercentage = $"{displayCost:0.00} {Services.AppSettings.DefaultCurrency} ({pct:0}%)"
+                    };
+                    
+                    // Arc path calculation
+                    double sweepAngle = (pct / 100.0) * 2.0 * Math.PI;
                     double cx = 75.0;
                     double cy = 75.0;
                     double r = 60.0;
@@ -127,7 +171,7 @@ namespace SubscriptionTracker.ViewModels
                     double startAngle = currentAngle;
                     double endAngle = currentAngle + sweepAngle;
                     
-                    if (item.Percentage >= 99.9)
+                    if (pct >= 99.9)
                     {
                         endAngle = startAngle + 2.0 * Math.PI - 0.001;
                     }
@@ -137,7 +181,7 @@ namespace SubscriptionTracker.ViewModels
                     double endX = cx + r * Math.Cos(endAngle);
                     double endY = cy + r * Math.Sin(endAngle);
                     
-                    int isLargeArc = (item.Percentage > 50.0) ? 1 : 0;
+                    int isLargeArc = (pct > 50.0) ? 1 : 0;
                     
                     item.PathData = string.Format(System.Globalization.CultureInfo.InvariantCulture,
                         "M {0:F2},{1:F2} A {2:F2},{2:F2} 0 {3} 1 {4:F2},{5:F2}",
@@ -147,6 +191,13 @@ namespace SubscriptionTracker.ViewModels
                     CategoryExpenses.Add(item);
                 }
             }
+        }
+
+        private class CategoryExpenseItemRaw
+        {
+            public string Name { get; set; }
+            public string Color { get; set; }
+            public decimal MonthlyCost { get; set; }
         }
     }
 
