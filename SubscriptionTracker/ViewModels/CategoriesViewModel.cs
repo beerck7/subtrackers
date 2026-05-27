@@ -41,7 +41,7 @@ namespace SubscriptionTracker.ViewModels
         {
             if (string.IsNullOrWhiteSpace(NewCategoryName))
             {
-                MessageBox.Show("Podaj nazwę kategorii.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+                CustomMessageBox.Show("Podaj nazwę kategorii.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -62,7 +62,7 @@ namespace SubscriptionTracker.ViewModels
         {
             if (item == null) return;
 
-            var result = MessageBox.Show(
+            var result = CustomMessageBox.Show(
                 $"Czy na pewno chcesz usunąć kategorię {item.Name}?",
                 "Potwierdzenie",
                 MessageBoxButton.YesNo,
@@ -77,7 +77,7 @@ namespace SubscriptionTracker.ViewModels
                 }
                 else
                 {
-                    MessageBox.Show(
+                    CustomMessageBox.Show(
                         "Nie można usunąć kategorii, do której są przypisane aktywne subskrypcje.",
                         "Błąd",
                         MessageBoxButton.OK,

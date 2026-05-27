@@ -159,7 +159,7 @@ namespace SubscriptionTracker.ViewModels
         private async Task DeleteSubscriptionAsync(SubscriptionItemViewModel item)
         {
             if (item == null) return;
-            var result = MessageBox.Show(
+            var result = CustomMessageBox.Show(
                 $"Czy na pewno chcesz usunąć subskrypcję {item.Name}?",
                 "Potwierdzenie",
                 MessageBoxButton.YesNo,

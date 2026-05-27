@@ -103,7 +103,7 @@ namespace SubscriptionTracker.ViewModels
             if (HasErrors)
             {
                 var firstError = string.Join("\n", GetErrors().Select(e => e.ErrorMessage));
-                MessageBox.Show(firstError, "Błąd walidacji", MessageBoxButton.OK, MessageBoxImage.Warning);
+                CustomMessageBox.Show(firstError, "Błąd walidacji", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -111,7 +111,7 @@ namespace SubscriptionTracker.ViewModels
             bool alreadyExists = subs.Any(s => !string.IsNullOrEmpty(s.Name) && string.Equals(s.Name, Name, StringComparison.OrdinalIgnoreCase) && (!IsEditMode || s.Id != _editingSubscription.Id));
             if (alreadyExists)
             {
-                MessageBox.Show("Subskrypcja o tej nazwie już istnieje w systemie.", "Błąd walidacji", MessageBoxButton.OK, MessageBoxImage.Warning);
+                CustomMessageBox.Show("Subskrypcja o tej nazwie już istnieje w systemie.", "Błąd walidacji", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 

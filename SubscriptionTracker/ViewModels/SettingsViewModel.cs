@@ -65,7 +65,7 @@ namespace SubscriptionTracker.ViewModels
         {
             if (string.IsNullOrWhiteSpace(UserName) || string.IsNullOrWhiteSpace(UserEmail))
             {
-                MessageBox.Show("Nazwa i e-mail nie mogą być puste.", "Błąd zapisu", MessageBoxButton.OK, MessageBoxImage.Warning);
+                CustomMessageBox.Show("Nazwa i e-mail nie mogą być puste.", "Błąd zapisu", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -74,7 +74,7 @@ namespace SubscriptionTracker.ViewModels
             AppSettings.Save();
             IsEditing = false;
 
-            MessageBox.Show("Profil użytkownika został pomyślnie zaktualizowany!", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
+            CustomMessageBox.Show("Profil użytkownika został pomyślnie zaktualizowany!", "Sukces", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         partial void OnIsDarkThemeChanged(bool value)
@@ -103,7 +103,7 @@ namespace SubscriptionTracker.ViewModels
             AppSettings.Save();
 
             string status = value ? "włączone" : "wyłączone";
-            MessageBox.Show($"Powiadomienia o płatnościach zostały {status}.", "Ustawienia powiadomień", MessageBoxButton.OK, MessageBoxImage.Information);
+            CustomMessageBox.Show($"Powiadomienia o płatnościach zostały {status}.", "Ustawienia powiadomień", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         partial void OnDefaultCurrencyChanged(string value)
@@ -120,7 +120,7 @@ namespace SubscriptionTracker.ViewModels
         [RelayCommand]
         private async Task DeleteAllDataAsync()
         {
-            var result = MessageBox.Show(
+            var result = CustomMessageBox.Show(
                 "Czy na pewno chcesz usunąć wszystkie subskrypcje i kategorie z bazy danych?\nTej operacji nie można cofnąć!",
                 "Potwierdzenie usunięcia danych",
                 MessageBoxButton.YesNo,
@@ -143,7 +143,7 @@ namespace SubscriptionTracker.ViewModels
                     await db.SaveChangesAsync();
                 }
 
-                MessageBox.Show("Wszystkie dane zostały wyczyszczone. Przywrócono domyślne kategorie.", "Wyczyszczono dane", MessageBoxButton.OK, MessageBoxImage.Information);
+                CustomMessageBox.Show("Wszystkie dane zostały wyczyszczone. Przywrócono domyślne kategorie.", "Wyczyszczono dane", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
