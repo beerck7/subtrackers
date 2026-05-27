@@ -69,5 +69,26 @@ namespace SubscriptionTracker.Services
                 }
             }
         }
+
+        public async Task<bool> DeleteCategoryAsync(int id)
+        {
+            using (var db = new AppDbContext())
+            {
+                var hasSubscriptions = await db.Subscriptions.AnyAsync(s => s.CategoryId == id);
+                if (hasSubscriptions)
+                {
+                    return false;
+                }
+
+                var cat = await db.Categories.FindAsync(id);
+                if (cat != null)
+                {
+                    db.Categories.Remove(cat);
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+                return false;
+            }
+        }
     }
 }

@@ -41,6 +41,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     
                                     <Ellipse Width="16" Height="16" Fill="{Binding Color}" VerticalAlignment="Center" Margin="0,0,20,0" />
@@ -55,7 +56,21 @@
                                                Foreground="{StaticResource TextPrimary}" 
                                                FontSize="22" 
                                                FontWeight="Bold" 
-                                               VerticalAlignment="Center"/>
+                                               VerticalAlignment="Center"
+                                               Margin="0,0,15,0"/>
+
+                                    <Button Grid.Column="3" Command="{Binding DataContext.DeleteCategoryCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Cursor="Hand" ToolTip="Usuń" VerticalAlignment="Center">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <TextBlock x:Name="btnTxt" Text="&#xE74D;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource TextSecondary}" FontSize="14" VerticalAlignment="Center"/>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="btnTxt" Property="Foreground" Value="{StaticResource DangerBrush}"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
                                 </Grid>
                             </Border>
                             <DataTemplate.Triggers>

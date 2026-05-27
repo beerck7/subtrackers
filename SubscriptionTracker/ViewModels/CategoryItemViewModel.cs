@@ -13,6 +13,8 @@ namespace SubscriptionTracker.ViewModels
             _category = category;
         }
 
+        public Category Model => _category;
+
         public string Name => _category.Name;
         public string Color => _category.Color;
 

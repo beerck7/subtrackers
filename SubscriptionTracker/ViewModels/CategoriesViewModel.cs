@@ -54,8 +54,36 @@ namespace SubscriptionTracker.ViewModels
             await _dataService.AddCategoryAsync(category);
             NewCategoryName = string.Empty;
             
-         
             await LoadCategoriesAsync();
+        }
+
+        [RelayCommand]
+        private async Task DeleteCategoryAsync(CategoryItemViewModel item)
+        {
+            if (item == null) return;
+
+            var result = MessageBox.Show(
+                $"Czy na pewno chcesz usunąć kategorię {item.Name}?",
+                "Potwierdzenie",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result == MessageBoxResult.Yes)
+            {
+                bool deleted = await _dataService.DeleteCategoryAsync(item.Model.Id);
+                if (deleted)
+                {
+                    await LoadCategoriesAsync();
+                }
+                else
+                {
+                    MessageBox.Show(
+                        "Nie można usunąć kategorii, do której są przypisane aktywne subskrypcje.",
+                        "Błąd",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Warning);
+                }
+            }
         }
     }
 }
