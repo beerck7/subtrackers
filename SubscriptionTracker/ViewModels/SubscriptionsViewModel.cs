@@ -97,7 +97,7 @@ namespace SubscriptionTracker.ViewModels
             if (!string.IsNullOrWhiteSpace(SearchText))
             {
                 var lower = SearchText.ToLower();
-                query = query.Where(s => s.Name.ToLower().Contains(lower));
+                query = query.Where(s => !string.IsNullOrEmpty(s.Name) && s.Name.ToLower().Contains(lower));
             }
 
             if (SelectedCategory != null && SelectedCategory.Id != 0)
