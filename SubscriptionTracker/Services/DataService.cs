@@ -42,7 +42,10 @@ namespace SubscriptionTracker.Services
             using (var db = new AppDbContext())
             {
                 db.Subscriptions.Add(subscription);
-                db.Entry(subscription.Category).State = EntityState.Unchanged;
+                if (subscription.Category != null)
+                {
+                    db.Entry(subscription.Category).State = EntityState.Unchanged;
+                }
                 await db.SaveChangesAsync();
             }
         }
@@ -52,7 +55,10 @@ namespace SubscriptionTracker.Services
             using (var db = new AppDbContext())
             {
                 db.Subscriptions.Update(subscription);
-                db.Entry(subscription.Category).State = EntityState.Unchanged;
+                if (subscription.Category != null)
+                {
+                    db.Entry(subscription.Category).State = EntityState.Unchanged;
+                }
                 await db.SaveChangesAsync();
             }
         }

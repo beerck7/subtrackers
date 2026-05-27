@@ -108,7 +108,7 @@ namespace SubscriptionTracker.ViewModels
             }
 
             var subs = await _dataService.GetSubscriptionsAsync();
-            bool alreadyExists = subs.Any(s => s.Name.Equals(Name, StringComparison.OrdinalIgnoreCase) && (!IsEditMode || s.Id != _editingSubscription.Id));
+            bool alreadyExists = subs.Any(s => !string.IsNullOrEmpty(s.Name) && string.Equals(s.Name, Name, StringComparison.OrdinalIgnoreCase) && (!IsEditMode || s.Id != _editingSubscription.Id));
             if (alreadyExists)
             {
                 MessageBox.Show("Subskrypcja o tej nazwie już istnieje w systemie.", "Błąd walidacji", MessageBoxButton.OK, MessageBoxImage.Warning);
