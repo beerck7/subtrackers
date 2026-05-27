@@ -1,4 +1,5 @@
 <Window x:Class="SubscriptionTracker.AddSubscriptionWindow"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Name="AddWindow"

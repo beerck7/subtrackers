@@ -1,159 +1,317 @@
-<UserControl x:Class="SubscriptionTracker.SettingsView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="Transparent">
-    <UserControl.Resources>
-        <Style x:Key="ToggleSwitchStyle" TargetType="CheckBox">
-            <Setter Property="Background" Value="{DynamicResource CardBorder}"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Cursor" Value="Hand"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="CheckBox">
-                        <Border x:Name="border" Width="44" Height="24" CornerRadius="12" Background="{TemplateBinding Background}">
-                            <Ellipse x:Name="thumb" Width="18" Height="18" Fill="White" HorizontalAlignment="Left" Margin="3,0,0,0">
-                                <Ellipse.RenderTransform>
-                                    <TranslateTransform x:Name="thumbTransform" X="0" />
-                                </Ellipse.RenderTransform>
-                            </Ellipse>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryBrush}" />
-                                <Trigger.EnterActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="thumbTransform" Storyboard.TargetProperty="X" To="20" Duration="0:0:0.15" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.EnterActions>
-                                <Trigger.ExitActions>
-                                    <BeginStoryboard>
-                                        <Storyboard>
-                                            <DoubleAnimation Storyboard.TargetName="thumbTransform" Storyboard.TargetProperty="X" To="0" Duration="0:0:0.15" />
-                                        </Storyboard>
-                                    </BeginStoryboard>
-                                </Trigger.ExitActions>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
-
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <Grid Margin="20,20,20,90">
-            <StackPanel MaxWidth="1000" HorizontalAlignment="Center">
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
-                    <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <TextBlock Text="SubTrack" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
-                </StackPanel>
-                <StackPanel Margin="0,0,0,30">
-                    <TextBlock Text="Ustawienia" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
-                    <TextBlock Text="Preferencje aplikacji i konfiguracja konta" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,0"/>
-                </StackPanel>
-
-                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
-                    <StackPanel>
-                        <TextBlock Text="Profil użytkownika" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="18" Margin="0,0,0,20"/>
-
-                        <!-- Widok wyświetlania danych profilu -->
-                        <Grid>
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsEditing}" Value="True">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <StackPanel>
-                                <TextBlock Text="{Binding UserName}" Foreground="{DynamicResource TextPrimary}" FontWeight="Bold" FontSize="18"/>
-                                <TextBlock Text="{Binding UserEmail}" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,4,0,0"/>
-                            </StackPanel>
-                            <Button Grid.Column="1" Content="Edytuj" Command="{Binding ToggleEditCommand}" Style="{StaticResource OutlineButton}" Width="100"/>
-                        </Grid>
-
-                        <!-- Widok edycji danych profilu -->
-                        <Grid>
-                            <Grid.Style>
-                                <Style TargetType="Grid">
-                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsEditing}" Value="True">
-                                            <Setter Property="Visibility" Value="Visible"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Grid.Style>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-
-                            <StackPanel Grid.Row="0" Margin="0,0,0,10">
-                                <TextBlock Text="Nazwa użytkownika" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
-                                <TextBox Style="{StaticResource ModernTextBox}" Tag="Wpisz swoje imię..." Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
-                            </StackPanel>
-
-                            <StackPanel Grid.Row="1" Margin="0,0,0,15">
-                                <TextBlock Text="Adres e-mail" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
-                                <TextBox Style="{StaticResource ModernTextBox}" Tag="Wpisz swój adres e-mail..." Text="{Binding UserEmail, UpdateSourceTrigger=PropertyChanged}"/>
-                            </StackPanel>
-
-                            <StackPanel Grid.Row="2" Orientation="Horizontal">
-                                <Button Content="Zapisz" Command="{Binding SaveProfileCommand}" Style="{StaticResource SuccessButton}" Width="100" Margin="0,0,10,0"/>
-                                <Button Content="Anuluj" Command="{Binding ToggleEditCommand}" Style="{StaticResource OutlineButton}" Width="100"/>
-                            </StackPanel>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-                <Border Style="{StaticResource CardStyle}">
-                    <StackPanel>
-                        <TextBlock Text="Preferencje" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="18" Margin="0,0,0,20"/>
-
-                        <Grid Margin="0,0,0,15">
-                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-                            <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Ciemny motyw" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
-                                <TextBlock Text="Wygląd aplikacji" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,4,0,0"/>
-                            </StackPanel>
-                            <CheckBox Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="{Binding IsDarkTheme, Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </Grid>
-
-                        <Rectangle Height="1" Fill="{DynamicResource CardBorder}" Margin="0,15,0,20"/>
-
-                        <Grid Margin="0,0,0,15">
-                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-                            <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="Powiadomienia" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
-                                <TextBlock Text="Alerty o nadchodzących płatnościach" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,4,0,0"/>
-                            </StackPanel>
-                            <CheckBox Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="{Binding AreNotificationsEnabled, Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </Grid>
-
-                        <Rectangle Height="1" Fill="{DynamicResource CardBorder}" Margin="0,15,0,20"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
-                            <TextBlock Text="Waluta domyślna" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15" VerticalAlignment="Center"/>
-                            <ComboBox Grid.Column="1" Style="{StaticResource ModernComboBox}" Width="100" ItemsSource="{Binding CurrencyOptions}" SelectedItem="{Binding DefaultCurrency, Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </Grid>
-                    </StackPanel>
-                </Border>
-
-                <Button Content="Usuń dane konta" Style="{StaticResource DangerButton}" Command="{Binding DeleteAllDataCommand}" Margin="0,30,0,0" Padding="0,15" />
-
-            </StackPanel>
-        </Grid>
-    </ScrollViewer>
+<UserControl x:Class="SubscriptionTracker.SettingsView"
+
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+             Background="Transparent">
+
+    <UserControl.Resources>
+
+        <Style x:Key="ToggleSwitchStyle" TargetType="CheckBox">
+
+            <Setter Property="Background" Value="{DynamicResource CardBorder}"/>
+
+            <Setter Property="BorderThickness" Value="0"/>
+
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="CheckBox">
+
+                        <Border x:Name="border" Width="44" Height="24" CornerRadius="12" Background="{TemplateBinding Background}">
+
+                            <Ellipse x:Name="thumb" Width="18" Height="18" Fill="White" HorizontalAlignment="Left" Margin="3,0,0,0">
+
+                                <Ellipse.RenderTransform>
+
+                                    <TranslateTransform x:Name="thumbTransform" X="0" />
+
+                                </Ellipse.RenderTransform>
+
+                            </Ellipse>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsChecked" Value="True">
+
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryBrush}" />
+
+                                <Trigger.EnterActions>
+
+                                    <BeginStoryboard>
+
+                                        <Storyboard>
+
+                                            <DoubleAnimation Storyboard.TargetName="thumbTransform" Storyboard.TargetProperty="X" To="20" Duration="0:0:0.15" />
+
+                                        </Storyboard>
+
+                                    </BeginStoryboard>
+
+                                </Trigger.EnterActions>
+
+                                <Trigger.ExitActions>
+
+                                    <BeginStoryboard>
+
+                                        <Storyboard>
+
+                                            <DoubleAnimation Storyboard.TargetName="thumbTransform" Storyboard.TargetProperty="X" To="0" Duration="0:0:0.15" />
+
+                                        </Storyboard>
+
+                                    </BeginStoryboard>
+
+                                </Trigger.ExitActions>
+
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
+    </UserControl.Resources>
+
+
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+
+        <Grid Margin="20,20,20,90">
+
+            <StackPanel MaxWidth="1600" HorizontalAlignment="Stretch">
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+
+                    <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
+
+                    <TextBlock Text="SubTrack" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+
+                </StackPanel>
+
+                <StackPanel Margin="0,0,0,30">
+
+                    <TextBlock Text="Ustawienia" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
+
+                    <TextBlock Text="Preferencje aplikacji i konfiguracja konta" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,0"/>
+
+                </StackPanel>
+
+
+
+                <Border Style="{StaticResource CardStyle}" Margin="0,0,0,20">
+
+                    <StackPanel>
+
+                        <TextBlock Text="Profil użytkownika" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="18" Margin="0,0,0,20"/>
+
+
+
+                        <!-- Widok wyświetlania danych profilu -->
+
+                        <Grid>
+
+                            <Grid.Style>
+
+                                <Style TargetType="Grid">
+
+                                    <Setter Property="Visibility" Value="Visible"/>
+
+                                    <Style.Triggers>
+
+                                        <DataTrigger Binding="{Binding IsEditing}" Value="True">
+
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+
+                                        </DataTrigger>
+
+                                    </Style.Triggers>
+
+                                </Style>
+
+                            </Grid.Style>
+
+                            <Grid.ColumnDefinitions>
+
+                                <ColumnDefinition Width="*"/>
+
+                                <ColumnDefinition Width="Auto"/>
+
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel>
+
+                                <TextBlock Text="{Binding UserName}" Foreground="{DynamicResource TextPrimary}" FontWeight="Bold" FontSize="18"/>
+
+                                <TextBlock Text="{Binding UserEmail}" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,4,0,0"/>
+
+                            </StackPanel>
+
+                            <Button Grid.Column="1" Content="Edytuj" Command="{Binding ToggleEditCommand}" Style="{StaticResource OutlineButton}" Width="100"/>
+
+                        </Grid>
+
+
+
+                        <!-- Widok edycji danych profilu -->
+
+                        <Grid>
+
+                            <Grid.Style>
+
+                                <Style TargetType="Grid">
+
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+
+                                    <Style.Triggers>
+
+                                        <DataTrigger Binding="{Binding IsEditing}" Value="True">
+
+                                            <Setter Property="Visibility" Value="Visible"/>
+
+                                        </DataTrigger>
+
+                                    </Style.Triggers>
+
+                                </Style>
+
+                            </Grid.Style>
+
+                            <Grid.RowDefinitions>
+
+                                <RowDefinition Height="Auto"/>
+
+                                <RowDefinition Height="Auto"/>
+
+                                <RowDefinition Height="Auto"/>
+
+                            </Grid.RowDefinitions>
+
+
+
+                            <StackPanel Grid.Row="0" Margin="0,0,0,10">
+
+                                <TextBlock Text="Nazwa użytkownika" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
+
+                                <TextBox Style="{StaticResource ModernTextBox}" Tag="Wpisz swoje imię..." Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            </StackPanel>
+
+
+
+                            <StackPanel Grid.Row="1" Margin="0,0,0,15">
+
+                                <TextBlock Text="Adres e-mail" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
+
+                                <TextBox Style="{StaticResource ModernTextBox}" Tag="Wpisz swój adres e-mail..." Text="{Binding UserEmail, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            </StackPanel>
+
+
+
+                            <StackPanel Grid.Row="2" Orientation="Horizontal">
+
+                                <Button Content="Zapisz" Command="{Binding SaveProfileCommand}" Style="{StaticResource SuccessButton}" Width="100" Margin="0,0,10,0"/>
+
+                                <Button Content="Anuluj" Command="{Binding ToggleEditCommand}" Style="{StaticResource OutlineButton}" Width="100"/>
+
+                            </StackPanel>
+
+                        </Grid>
+
+                    </StackPanel>
+
+                </Border>
+
+
+
+                <Border Style="{StaticResource CardStyle}">
+
+                    <StackPanel>
+
+                        <TextBlock Text="Preferencje" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="18" Margin="0,0,0,20"/>
+
+
+
+                        <Grid Margin="0,0,0,15">
+
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+
+                            <StackPanel VerticalAlignment="Center">
+
+                                <TextBlock Text="Ciemny motyw" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
+
+                                <TextBlock Text="Wygląd aplikacji" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,4,0,0"/>
+
+                            </StackPanel>
+
+                            <CheckBox Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="{Binding IsDarkTheme, Mode=TwoWay}" VerticalAlignment="Center"/>
+
+                        </Grid>
+
+
+
+                        <Rectangle Height="1" Fill="{DynamicResource CardBorder}" Margin="0,15,0,20"/>
+
+
+
+                        <Grid Margin="0,0,0,15">
+
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+
+                            <StackPanel VerticalAlignment="Center">
+
+                                <TextBlock Text="Powiadomienia" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
+
+                                <TextBlock Text="Alerty o nadchodzących płatnościach" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,4,0,0"/>
+
+                            </StackPanel>
+
+                            <CheckBox Grid.Column="1" Style="{StaticResource ToggleSwitchStyle}" IsChecked="{Binding AreNotificationsEnabled, Mode=TwoWay}" VerticalAlignment="Center"/>
+
+                        </Grid>
+
+
+
+                        <Rectangle Height="1" Fill="{DynamicResource CardBorder}" Margin="0,15,0,20"/>
+
+
+
+                        <Grid>
+
+                            <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="Auto"/></Grid.ColumnDefinitions>
+
+                            <TextBlock Text="Waluta domyślna" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15" VerticalAlignment="Center"/>
+
+                            <ComboBox Grid.Column="1" Style="{StaticResource ModernComboBox}" Width="100" ItemsSource="{Binding CurrencyOptions}" SelectedItem="{Binding DefaultCurrency, Mode=TwoWay}" VerticalAlignment="Center"/>
+
+                        </Grid>
+
+                    </StackPanel>
+
+                </Border>
+
+
+
+                <Button Content="Usuń dane konta" Style="{StaticResource DangerButton}" Command="{Binding DeleteAllDataCommand}" Margin="0,30,0,0" Padding="0,15" />
+
+
+
+            </StackPanel>
+
+        </Grid>
+
+    </ScrollViewer>
+
 </UserControl>

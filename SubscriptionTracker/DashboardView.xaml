@@ -10,7 +10,7 @@
 
         <Grid Margin="20,20,20,90">
 
-            <StackPanel MaxWidth="1000" HorizontalAlignment="Center">
+            <StackPanel MaxWidth="1600" HorizontalAlignment="Stretch">
 
 
 

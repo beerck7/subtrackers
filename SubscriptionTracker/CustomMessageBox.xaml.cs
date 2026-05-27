@@ -17,6 +17,11 @@ namespace SubscriptionTracker
         public static MessageBoxResult Show(string messageBoxText, string caption = "SubTrack", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None)
         {
             var msgBox = new CustomMessageBox();
+            if (Application.Current != null && Application.Current.MainWindow != null)
+            {
+                msgBox.Owner = Application.Current.MainWindow;
+                msgBox.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            }
             msgBox.TxtMessage.Text = messageBoxText;
             msgBox.TxtTitle.Text = string.IsNullOrWhiteSpace(caption) ? "SubTrack" : caption;
 
