@@ -10,6 +10,20 @@ namespace SubscriptionTracker
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            DispatcherUnhandledException += App_DispatcherUnhandledException;
+        }
+
+        private void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        {
+            try
+            {
+                System.IO.File.WriteAllText("crash_log.txt", e.Exception.ToString());
+            }
+            catch { }
+        }
+
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
@@ -17,6 +31,7 @@ namespace SubscriptionTracker
             using (var db = new Data.AppDbContext())
             {
                 db.Database.EnsureCreated();
+                Services.DataSeeder.SeedData(db);
             }
 
             // Apply saved theme
