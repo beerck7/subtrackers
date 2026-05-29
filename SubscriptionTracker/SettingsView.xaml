@@ -302,6 +302,26 @@
 
                 </Border>
 
+                <Border Style="{StaticResource CardStyle}" Margin="0,20,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Raporty i Eksport" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="18" Margin="0,0,0,20"/>
+                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel VerticalAlignment="Center" Margin="0,0,20,0">
+                                <TextBlock Text="Eksportuj raport finansowy" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
+                                <TextBlock Text="Generuje interaktywne zestawienie wszystkich Twoich subskrypcji, szczegółów podziału kosztów oraz pełnej historii płatności w premium formacie HTML." Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            
+                            <Button Grid.Column="1" Content="Generuj Raport HTML" Command="{Binding ExportReportCommand}" Style="{StaticResource SuccessButton}" Padding="15,10" VerticalAlignment="Center"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
 
 
                 <Button Content="Usuń dane konta" Style="{StaticResource DangerButton}" Command="{Binding DeleteAllDataCommand}" Margin="0,30,0,0" Padding="0,15" />

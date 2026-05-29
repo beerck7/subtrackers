@@ -12,6 +12,9 @@ namespace SubscriptionTracker.Models
 
         public string Color { get; set; } = "#3b82f6";
 
+        public int UserId { get; set; }
+        public User User { get; set; }
+
         public ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
     }
 }

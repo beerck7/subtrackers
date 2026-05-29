@@ -9,6 +9,8 @@ namespace SubscriptionTracker.Data
     {
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<PaymentLog> PaymentLogs { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,20 +22,45 @@ namespace SubscriptionTracker.Data
         {
             base.OnModelCreating(modelBuilder);
 
-           
+            // Unique Username index
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Username)
+                .IsUnique();
+
+            // Subscription -> Category relation
             modelBuilder.Entity<Subscription>()
                 .HasOne(s => s.Category)
                 .WithMany(c => c.Subscriptions)
-                .HasForeignKey(s => s.CategoryId);
+                .HasForeignKey(s => s.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
 
-            
-            modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Streaming", Color = "#22c55e" },
-                new Category { Id = 2, Name = "Muzyka", Color = "#f43f5e" },
-                new Category { Id = 3, Name = "Oprogramowanie", Color = "#3b82f6" },
-                new Category { Id = 4, Name = "Gry", Color = "#eab308" },
-                new Category { Id = 5, Name = "Inne", Color = "#a855f7" }
-            );
+            // User -> Subscription relation
+            modelBuilder.Entity<Subscription>()
+                .HasOne(s => s.User)
+                .WithMany(u => u.Subscriptions)
+                .HasForeignKey(s => s.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // User -> Category relation
+            modelBuilder.Entity<Category>()
+                .HasOne(c => c.User)
+                .WithMany(u => u.Categories)
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Subscription -> PaymentLog relation
+            modelBuilder.Entity<PaymentLog>()
+                .HasOne(p => p.Subscription)
+                .WithMany(s => s.PaymentLogs)
+                .HasForeignKey(p => p.SubscriptionId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // User -> PaymentLog relation
+            modelBuilder.Entity<PaymentLog>()
+                .HasOne(p => p.User)
+                .WithMany()
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
