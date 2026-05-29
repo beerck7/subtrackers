@@ -1,1816 +1,794 @@
-<UserControl x:Class="SubscriptionTracker.DashboardView"
-
-
-
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-
-
-
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-
-
-
-             Background="Transparent">
-
-
-
-    <UserControl.Resources>
-
-
-
-        <!-- SegmentRadioButton Style -->
-
-
-
-        <Style x:Key="SegmentRadioButton" TargetType="RadioButton">
-
-
-
-            <Setter Property="Template">
-
-
-
-                <Setter.Value>
-
-
-
-                    <ControlTemplate TargetType="RadioButton">
-
-
-
-                        <Border x:Name="border" CornerRadius="12" Padding="12,6" Background="Transparent">
-
-
-
-                            <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="{DynamicResource TextSecondary}" TextBlock.FontWeight="SemiBold" TextBlock.FontSize="11"/>
-
-
-
-                        </Border>
-
-
-
-                        <ControlTemplate.Triggers>
-
-
-
-                            <Trigger Property="IsChecked" Value="True">
-
-
-
-                                <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryBrush}"/>
-
-
-
-                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="White"/>
-
-
-
-                            </Trigger>
-
-
-
-                            <Trigger Property="IsMouseOver" Value="True">
-
-
-
-                                <Setter TargetName="border" Property="Cursor" Value="Hand"/>
-
-
-
-                            </Trigger>
-
-
-
-                            <MultiTrigger>
-
-
-
-                                <MultiTrigger.Conditions>
-
-
-
-                                    <Condition Property="IsMouseOver" Value="True"/>
-
-
-
-                                    <Condition Property="IsChecked" Value="False"/>
-
-
-
-                                </MultiTrigger.Conditions>
-
-
-
-                                <Setter TargetName="border" Property="Background" Value="#252530"/>
-
-
-
-                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{DynamicResource TextPrimary}"/>
-
-
-
-                            </MultiTrigger>
-
-
-
-                        </ControlTemplate.Triggers>
-
-
-
-                    </ControlTemplate>
-
-
-
-                </Setter.Value>
-
-
-
-            </Setter>
-
-
-
-        </Style>
-
-
-
-    </UserControl.Resources>
-
-
-
-
-
-
-
-    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-
-
-
-
-
-
-
-        <Grid Margin="20,20,20,90">
-
-
-
-
-
-
-
-            <StackPanel MaxWidth="1600" HorizontalAlignment="Stretch">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
-
-
-
-
-
-
-
-                    <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
-
-
-
-
-
-
-
-                    <TextBlock Text="SubTrack" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
-
-
-
-
-
-
-
-                </StackPanel>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <TextBlock Text="Podsumowanie" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
-
-
-
-
-
-
-
-                <TextBlock Text="{Binding TodayDateText}" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,35"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                <!-- Górny panel podsumowań (Symetryczny Grid o równych proporcjach) -->
-
-
-
-
-
-
-
-                <Grid Margin="0,0,0,10">
-
-
-
-
-
-
-
-                    <Grid.ColumnDefinitions>
-
-
-
-
-
-
-
-                        <ColumnDefinition Width="*"/>
-
-
-
-
-
-
-
-                        <ColumnDefinition Width="*"/>
-
-
-
-
-
-
-
-                    </Grid.ColumnDefinitions>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <Border Grid.Column="0" Style="{StaticResource CardStyle}" Margin="0,0,10,20">
-
-
-
-
-
-
-
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-
-
-
-
-
-
-
-                            <Border Width="50" Height="50" CornerRadius="12" Background="#161b26" VerticalAlignment="Center" Margin="0,0,20,0">
-
-
-
-
-
-
-
-                                <TextBlock Text="&#xE7C3;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-
-
-
-
-
-
-                            </Border>
-
-
-
-
-
-
-
-                            <StackPanel VerticalAlignment="Center">
-
-
-
-
-
-
-
-                                <TextBlock Text="Miesięczne koszty" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,0,0,4"/>
-
-
-
-
-
-
-
-                                <TextBlock Text="{Binding MonthlyCostsText}" Foreground="{DynamicResource TextPrimary}" FontSize="32" FontWeight="Bold" Margin="0,0,0,4"/>
-
-
-
-
-
-
-
-                                <TextBlock Text="Suma kosztów cyklicznych" Foreground="{StaticResource SuccessBrush}" FontSize="13"/>
-
-
-
-
-
-
-
-                            </StackPanel>
-
-
-
-
-
-
-
-                        </StackPanel>
-
-
-
-
-
-
-
-                    </Border>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="10,0,0,20">
-
-
-
-
-
-
-
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-
-
-
-
-
-
-
-                            <Border Width="50" Height="50" CornerRadius="12" Background="#1a1c23" VerticalAlignment="Center" Margin="0,0,20,0">
-
-
-
-
-
-
-
-                                <TextBlock Text="&#xE73E;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-
-
-
-
-
-
-                            </Border>
-
-
-
-
-
-
-
-                            <StackPanel VerticalAlignment="Center">
-
-
-
-
-
-
-
-                                <TextBlock Text="Aktywne subskrypcje" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,0,0,4"/>
-
-
-
-
-
-
-
-                                <TextBlock Text="{Binding ActiveSubscriptionsCountText}" Foreground="{DynamicResource TextPrimary}" FontSize="32" FontWeight="Bold" Margin="0,0,0,4"/>
-
-
-
-
-
-
-
-                                <TextBlock Text="{Binding NewSubscriptionsThisMonthText}" Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
-
-
-
-
-
-
-
-                            </StackPanel>
-
-
-
-
-
-
-
-                        </StackPanel>
-
-
-
-
-
-
-
-                    </Border>
-
-
-
-
-
-
-
-                </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                
-                <!-- ================= FUTURISTIC GALAXY CONTROL CENTER ================= -->
-                <Border Style="{StaticResource CardStyle}" Margin="0,10,0,25" Background="#141419">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        
-                        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,20">
-                            <TextBlock Text="&#xE91C;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="18" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                            <TextBlock Text="KOSMICZNY UKŁAD SUBSKRYPCJI &amp; SYMULATOR" Foreground="{DynamicResource TextPrimary}" FontSize="15" FontWeight="Bold" VerticalAlignment="Center"/>
-                        </StackPanel>
-
-                        <Grid Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="420"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <!-- Kolumna 1: Układ Solarny Subskrypcji -->
-                            <Border Grid.Column="0" Background="#0A0A0E" CornerRadius="12" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Padding="10">
-                                <Grid>
-                                    <Canvas Width="400" Height="320" Background="Transparent" ClipToBounds="True">
-                                        <!-- Concentric Orbits (Dashed Circles) -->
-                                        <!-- Inner Orbit (Radius 50) -->
-                                        <Ellipse Width="100" Height="100" Stroke="#23232E" StrokeThickness="1" StrokeDashArray="4 4" Canvas.Left="150" Canvas.Top="110"/>
-                                        <TextBlock Text="&lt; 7 DNI" Foreground="#555565" FontSize="9" FontWeight="Bold" Canvas.Left="183" Canvas.Top="103"/>
-                                        
-                                        <!-- Middle Orbit (Radius 95) -->
-                                        <Ellipse Width="190" Height="190" Stroke="#23232E" StrokeThickness="1" StrokeDashArray="6 4" Canvas.Left="105" Canvas.Top="65"/>
-                                        <TextBlock Text="&lt; 21 DNI" Foreground="#555565" FontSize="9" FontWeight="Bold" Canvas.Left="178" Canvas.Top="57"/>
-                                        
-                                        <!-- Outer Orbit (Radius 140) -->
-                                        <Ellipse Width="280" Height="280" Stroke="#23232E" StrokeThickness="1" StrokeDashArray="8 4" Canvas.Left="60" Canvas.Top="20"/>
-                                        <TextBlock Text="POWYŻEJ" Foreground="#555565" FontSize="9" FontWeight="Bold" Canvas.Left="181" Canvas.Top="10"/>
-
-                                        <!-- Center Sun (User's Wallet / Budget Center) -->
-                                        <Border Width="38" Height="38" CornerRadius="19" Canvas.Left="181" Canvas.Top="141" BorderBrush="{StaticResource PrimaryBrush}" BorderThickness="2" ToolTip="Twój portfel / Centrum finansowe">
-                                            <Border.Background>
-                                                <RadialGradientBrush>
-                                                    <GradientStop Color="#2563eb" Offset="0"/>
-                                                    <GradientStop Color="#0F172A" Offset="1"/>
-                                                </RadialGradientBrush>
-                                            </Border.Background>
-                                            <TextBlock Text="&#xE80F;" FontFamily="Segoe MDL2 Assets" Foreground="White" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-
-                                        <!-- Dynamic Orbiting Planets -->
-                                        <ItemsControl ItemsSource="{Binding OrbitalPlanets}">
-                                            <ItemsControl.ItemsPanel>
-                                                <ItemsPanelTemplate>
-                                                    <Canvas/>
-                                                </ItemsPanelTemplate>
-                                            </ItemsControl.ItemsPanel>
-                                            <ItemsControl.ItemContainerStyle>
-                                                <Style TargetType="ContentPresenter">
-                                                    <Setter Property="Canvas.Left" Value="{Binding X}"/>
-                                                    <Setter Property="Canvas.Top" Value="{Binding Y}"/>
-                                                </Style>
-                                            </ItemsControl.ItemContainerStyle>
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Grid ToolTip="{Binding ToolTipText}">
-                                                        <!-- Highlight halo ring when active -->
-                                                        <Ellipse x:Name="halo" Width="{Binding Size}" Height="{Binding Size}" Stroke="{Binding Color}" StrokeThickness="2" Margin="-3">
-                                                            <Ellipse.Style>
-                                                                <Style TargetType="Ellipse">
-                                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
-                                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </Ellipse.Style>
-                                                            <Ellipse.Effect>
-                                                                <BlurEffect Radius="6"/>
-                                                            </Ellipse.Effect>
-                                                        </Ellipse>
-
-                                                        <!-- Planet Button -->
-                                                        <Button Command="{Binding DataContext.SelectPlanetCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" Padding="0" Width="{Binding Size}" Height="{Binding Size}">
-                                                            <Button.Template>
-                                                                <ControlTemplate TargetType="Button">
-                                                                    <Border Background="Transparent">
-                                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                    </Border>
-                                                                </ControlTemplate>
-                                                            </Button.Template>
-                                                            <Button.Content>
-                                                                <Border Width="{Binding Size}" Height="{Binding Size}" CornerRadius="{Binding Size}" Background="{Binding Color}" BorderBrush="White" BorderThickness="1">
-                                                                    <TextBlock Text="{Binding Initials}" Foreground="White" FontWeight="Bold" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                </Border>
-                                                            </Button.Content>
-                                                        </Button>
-                                                    </Grid>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </Canvas>
-                                </Grid>
-                            </Border>
-
-                            <!-- Kolumna 2: HUD Szczegółów Planety & Symulator w Czasie -->
-                            <Grid Grid.Column="1" Margin="25,0,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-
-                                <!-- Górna część: Detale wybranej subskrypcji -->
-                                <Border Grid.Row="0" Background="#1B1B22" CornerRadius="10" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Padding="15" Margin="0,0,0,15">
-                                    <Grid>
-                                        <!-- Placeholders if no planet is selected -->
-                                        <TextBlock Text="Wybierz planetę-subskrypcję w układzie, aby zobaczyć szczegóły" Foreground="{DynamicResource TextSecondary}" FontSize="13" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20">
-                                            <TextBlock.Style>
-                                                <Style TargetType="TextBlock">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding SelectedPlanet}" Value="{x:Null}">
-                                                            <Setter Property="Visibility" Value="Visible"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </TextBlock.Style>
-                                        </TextBlock>
-
-                                        <!-- Actual details HUD -->
-                                        <Grid>
-                                            <Grid.Style>
-                                                <Style TargetType="Grid">
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding SelectedPlanet}" Value="{x:Null}">
-                                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Grid.Style>
-                                            
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-
-                                            <!-- Left side details -->
-                                            <StackPanel Grid.Column="0">
-                                                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                                                    <!-- Category color highlight block -->
-                                                    <Border Width="12" Height="12" CornerRadius="6" Background="{Binding SelectedPlanet.Color}" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                                                    <TextBlock Text="{Binding SelectedPlanet.Name}" Foreground="White" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
-                                                    <Border Background="#252533" CornerRadius="4" Padding="6,2" Margin="10,0,0,0" VerticalAlignment="Center">
-                                                        <TextBlock Text="{Binding SelectedPlanet.Cycle}" Foreground="{DynamicResource TextSecondary}" FontSize="11" FontWeight="SemiBold"/>
-                                                    </Border>
-                                                </StackPanel>
-
-                                                <TextBlock Foreground="{DynamicResource TextPrimary}" FontSize="13" TextWrapping="Wrap" Margin="0,0,0,5">
-                                                    <Run Text="Pozostało dni do płatności: " Foreground="{DynamicResource TextSecondary}"/>
-                                                    <Run Text="{Binding SelectedPlanet.DaysLeft}" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}"/>
-                                                    <Run Text=" dni" Foreground="{DynamicResource TextSecondary}"/>
-                                                </TextBlock>
-
-                                                <!-- Split details if shared -->
-                                                <StackPanel Visibility="{Binding SelectedPlanet.IsShared, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                                    <TextBlock Foreground="{DynamicResource TextPrimary}" FontSize="13" TextWrapping="Wrap">
-                                                        <Run Text="Subskrypcja współdzielona. Twój koszt: " Foreground="{DynamicResource TextSecondary}"/>
-                                                        <Run Text="{Binding SelectedPlanet.SplitPrice, StringFormat={}{0:0.00}}" FontWeight="Bold" Foreground="{StaticResource SuccessBrush}"/>
-                                                        <Run Text=" PLN / os. (pełna kwota: " Foreground="{DynamicResource TextSecondary}"/>
-                                                        <Run Text="{Binding SelectedPlanet.Price, StringFormat={}{0:0.00}}" FontWeight="Bold"/>
-                                                        <Run Text=" PLN)." Foreground="{DynamicResource TextSecondary}"/>
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </StackPanel>
-
-                                            <!-- Right side Action button inside galaxy details -->
-                                            <Button Grid.Column="1" Command="{Binding LogPlanetPaymentCommand}" CommandParameter="{Binding SelectedPlanet}" Style="{StaticResource SuccessButton}" Padding="15,10" VerticalAlignment="Center" Content="✓ Opłać teraz" FontSize="12"/>
-                                        </Grid>
-                                    </Grid>
-                                </Border>
-
-                                <!-- Dolna część: Time-Travel Simulator -->
-                                <Border Grid.Row="1" Background="#16161B" CornerRadius="10" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Padding="20,15">
-                                    <StackPanel VerticalAlignment="Center">
-                                        <TextBlock Text="SYMULACJA PODRÓŻY W CZASIE (PROGNOZA BUDŻETOWA)" Foreground="{DynamicResource TextSecondary}" FontSize="11" FontWeight="Bold" Margin="0,0,0,10"/>
-                                        
-                                        <Grid Margin="0,0,0,15">
-                                            <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
-                                            
-                                            <TextBlock Grid.Column="0" Text="1 miesiąc" Foreground="{DynamicResource TextSecondary}" FontSize="12"/>
-                                            
-                                            <!-- Responsive futuristic slider -->
-                                            <Slider Grid.Column="1" Minimum="1" Maximum="12" Value="{Binding ProjectionMonths}" TickFrequency="1" IsSnapToTickEnabled="True" Margin="15,0"/>
-                                            
-                                            <TextBlock Grid.Column="2" Text="12 miesięcy" Foreground="{DynamicResource TextSecondary}" FontSize="12"/>
-                                        </Grid>
-
-                                        <Border Background="#1A1C24" CornerRadius="8" Padding="15,10" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="Auto"/>
-                                                </Grid.ColumnDefinitions>
-
-                                                <StackPanel Grid.Column="0" VerticalAlignment="Center">
-                                                    <TextBlock Foreground="White" FontSize="14" FontWeight="SemiBold">
-                                                        <Run Text="Symulacja budżetowa dla " Foreground="{DynamicResource TextSecondary}"/>
-                                                        <Run Text="{Binding ProjectionMonths}" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}"/>
-                                                        <Run Text=" miesięcy:" Foreground="{DynamicResource TextSecondary}"/>
-                                                    </TextBlock>
-                                                    <TextBlock Text="Prognozowana łączna suma opłat subskrypcji:" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,3,0,0"/>
-                                                </StackPanel>
-
-                                                <TextBlock Grid.Column="1" Text="{Binding ProjectedTotalCostText}" Foreground="{StaticResource SuccessBrush}" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
-                                            </Grid>
-                                        </Border>
-                                    </StackPanel>
-                                </Border>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Border>
-
-
-                <!-- Dolny panel szczegółowy (Symetryczny Grid o proporcjach 1.3:1) -->
-
-
-
-
-
-
-
-                <Grid Margin="0,25,0,0">
-
-
-
-
-
-
-
-                    <Grid.ColumnDefinitions>
-
-
-
-
-
-
-
-                        <ColumnDefinition Width="1.3*"/>
-
-
-
-
-
-
-
-                        <ColumnDefinition Width="1*"/>
-
-
-
-
-
-
-
-                    </Grid.ColumnDefinitions>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <Border Grid.Column="0" Style="{StaticResource CardStyle}" Margin="0,0,10,20">
-
-
-
-
-
-
-
-                        <StackPanel>
-
-
-
-
-
-
-
-                            <TextBlock Text="Nadchodzące płatności" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,25"/>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <ItemsControl ItemsSource="{Binding UpcomingPayments}">
-
-
-
-
-
-
-
-                                <ItemsControl.ItemTemplate>
-
-
-
-
-
-
-
-                                    <DataTemplate>
-
-
-
-
-
-
-
-                                        <StackPanel>
-
-
-
-
-
-
-
-                                            <Grid Margin="0,0,0,15">
-
-
-
-
-
-
-
-                                                <Grid.ColumnDefinitions>
-
-
-
-
-
-
-
-                                                    <ColumnDefinition Width="Auto"/>
-
-
-
-
-
-
-
-                                                    <ColumnDefinition Width="*"/>
-
-
-
-
-
-
-
-                                                    <ColumnDefinition Width="Auto"/>
-
-
-
-
-
-
-
-                                                    <ColumnDefinition Width="Auto"/>
-
-
-
-
-
-
-
-                                                </Grid.ColumnDefinitions>
-
-
-
-
-
-
-
-                                                <Border Width="45" Height="45" CornerRadius="10" Background="{Binding IconColor}" Margin="0,0,15,0">
-
-
-
-
-
-
-
-                                                    <TextBlock Text="{Binding Initials}" Foreground="{DynamicResource TextPrimary}" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
-
-
-
-
-
-
-                                                </Border>
-
-
-
-
-
-
-
-                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
-
-
-
-
-
-
-
-                                                    <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
-
-
-
-
-
-
-
-                                                    <TextBlock Text="{Binding NextPaymentDateFormatted}" Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
-
-
-
-
-
-
-
-                                                </StackPanel>
-
-
-
-
-
-
-
-                                                <TextBlock Grid.Column="2" Text="{Binding Category}" Foreground="{DynamicResource TextSecondary}" FontSize="14" VerticalAlignment="Center" Margin="0,0,30,0"/>
-
-
-
-
-
-
-
-                                                <TextBlock Grid.Column="3" Text="{Binding FormattedPrice}" Foreground="{DynamicResource TextPrimary}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center"/>
-
-
-
-
-
-
-
-                                            </Grid>
-
-
-
-
-
-
-
-                                            <Rectangle Height="1" Fill="{DynamicResource CardBorder}" Margin="0,5,0,15"/>
-
-
-
-
-
-
-
-                                        </StackPanel>
-
-
-
-
-
-
-
-                                    </DataTemplate>
-
-
-
-
-
-
-
-                                </ItemsControl.ItemTemplate>
-
-
-
-
-
-
-
-                            </ItemsControl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <TextBlock Text="Brak nadchodzących płatności" Foreground="{DynamicResource TextSecondary}" FontSize="14" HorizontalAlignment="Center" Margin="0,20,0,20">
-
-
-
-
-
-
-
-                                <TextBlock.Style>
-
-
-
-
-
-
-
-                                    <Style TargetType="TextBlock">
-
-
-
-
-
-
-
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-
-
-
-
-
-
-
-                                        <Style.Triggers>
-
-
-
-
-
-
-
-                                            <DataTrigger Binding="{Binding UpcomingPayments.Count}" Value="0">
-
-
-
-
-
-
-
-                                                <Setter Property="Visibility" Value="Visible"/>
-
-
-
-
-
-
-
-                                            </DataTrigger>
-
-
-
-
-
-
-
-                                        </Style.Triggers>
-
-
-
-
-
-
-
-                                    </Style>
-
-
-
-
-
-
-
-                                </TextBlock.Style>
-
-
-
-
-
-
-
-                            </TextBlock>
-
-
-
-
-
-
-
-                        </StackPanel>
-
-
-
-
-
-
-
-                    </Border>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="10,0,0,20">
-
-
-
-
-
-
-
-                        <StackPanel>
-
-
-
-
-
-
-
-                            <Grid Margin="0,0,0,30">
-
-
-
-                                <Grid.ColumnDefinitions>
-
-
-
-                                    <ColumnDefinition Width="*"/>
-
-
-
-                                    <ColumnDefinition Width="Auto"/>
-
-
-
-                                </Grid.ColumnDefinitions>
-
-
-
-                                
-
-
-
-                                <TextBlock Text="Wydatki wg kategorii" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
-
-
-
-                                
-
-
-
-                                <!-- Segmented Toggle Switch (Miesięcznie / Rocznie) -->
-
-
-
-                                <Border Grid.Column="1" Background="{DynamicResource InputBackground}" CornerRadius="15" Padding="3" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" VerticalAlignment="Center">
-
-
-
-                                    <Grid>
-
-
-
-                                        <Grid.ColumnDefinitions>
-
-
-
-                                            <ColumnDefinition Width="Auto"/>
-
-
-
-                                            <ColumnDefinition Width="Auto"/>
-
-
-
-                                        </Grid.ColumnDefinitions>
-
-
-
-                                        
-
-
-
-                                        <!-- Monthly Button -->
-
-
-
-                                        <RadioButton x:Name="BtnMonthly" Grid.Column="0" GroupName="PeriodGroup" IsChecked="True" Content="Miesięcznie" Style="{StaticResource SegmentRadioButton}"/>
-
-
-
-                                        
-
-
-
-                                        <!-- Yearly Button -->
-
-
-
-                                        <RadioButton x:Name="BtnYearly" Grid.Column="1" GroupName="PeriodGroup" IsChecked="{Binding IsYearlyView}" Content="Rocznie" Style="{StaticResource SegmentRadioButton}"/>
-
-
-
-                                    </Grid>
-
-
-
-                                </Border>
-
-
-
-                            </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <Grid Width="150" Height="150" HorizontalAlignment="Center">
-
-
-
-                                <!-- Dynamic Donut Chart Segments (Premium Look) -->
-
-
-
-                                <ItemsControl ItemsSource="{Binding CategoryExpenses}">
-
-
-
-                                    <ItemsControl.ItemsPanel>
-
-
-
-                                        <ItemsPanelTemplate>
-
-
-
-                                            <Grid />
-
-
-
-                                        </ItemsPanelTemplate>
-
-
-
-                                    </ItemsControl.ItemsPanel>
-
-
-
-                                    <ItemsControl.ItemTemplate>
-
-
-
-                                        <DataTemplate>
-
-
-
-                                            <Path Data="{Binding PathData}" 
-
-
-
-                                                  Stroke="{Binding Color}" 
-
-
-
-                                                  StrokeThickness="18" 
-
-
-
-                                                  StrokeEndLineCap="Round" 
-
-
-
-                                                  StrokeStartLineCap="Round"
-
-
-
-                                                  ToolTip="{Binding FormattedCostWithPercentage}"/>
-
-
-
-                                        </DataTemplate>
-
-
-
-                                    </ItemsControl.ItemTemplate>
-
-
-
-                                </ItemsControl>
-
-
-
-
-
-
-
-                                <!-- Sleek Background Ring -->
-
-
-
-                                <Ellipse Stroke="#1A1A22" StrokeThickness="18" Width="120" Height="120" IsHitTestVisible="False"/>
-
-
-
-
-
-
-
-                                <!-- Center Cutout -->
-
-
-
-                                <Ellipse Fill="{DynamicResource CardBackground}" Width="98" Height="98" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
-
-
-
-
-
-
-
-                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False">
-
-
-
-                                    <TextBlock Text="{Binding ExpensePeriodLabel}" Foreground="{DynamicResource TextSecondary}" FontSize="11" HorizontalAlignment="Center"/>
-
-
-
-                                    <TextBlock Text="{Binding MonthlyCostsText}" Foreground="{DynamicResource TextPrimary}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
-
-
-
-                                </StackPanel>
-
-
-
-                            </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <ItemsControl ItemsSource="{Binding CategoryExpenses}" Margin="0,30,0,0">
-
-
-
-
-
-
-
-                                <ItemsControl.ItemTemplate>
-
-
-
-
-
-
-
-                                    <DataTemplate>
-
-
-
-
-
-
-
-                                        <StackPanel Margin="0,0,0,12">
-
-
-
-
-
-
-
-                                            <Grid>
-
-
-
-
-
-
-
-                                                <Grid.ColumnDefinitions>
-
-
-
-
-
-
-
-                                                    <ColumnDefinition Width="Auto"/>
-
-
-
-
-
-
-
-                                                    <ColumnDefinition Width="*"/>
-
-
-
-
-
-
-
-                                                    <ColumnDefinition Width="Auto"/>
-
-
-
-
-
-
-
-                                                </Grid.ColumnDefinitions>
-
-
-
-
-
-
-
-                                                <Ellipse Width="10" Height="10" Fill="{Binding Color}" VerticalAlignment="Center" Margin="0,0,10,0"/>
-
-
-
-
-
-
-
-                                                <TextBlock Grid.Column="1" Text="{Binding Name}" Foreground="{DynamicResource TextPrimary}" FontSize="13" FontWeight="SemiBold"/>
-
-
-
-
-
-
-
-                                                <TextBlock Grid.Column="2" Text="{Binding FormattedCostWithPercentage}" Foreground="{DynamicResource TextSecondary}" FontSize="13" FontWeight="Bold"/>
-
-
-
-
-
-
-
-                                            </Grid>
-
-
-
-
-
-
-
-                                            <ProgressBar Height="4" Margin="0,6,0,0" Minimum="0" Maximum="100" Value="{Binding Percentage}" Foreground="{Binding Color}" Background="{DynamicResource InputBackground}" BorderThickness="0">
-
-
-
-
-
-
-
-                                                <ProgressBar.Template>
-
-
-
-
-
-
-
-                                                    <ControlTemplate TargetType="ProgressBar">
-
-
-
-
-
-
-
-                                                        <Grid>
-
-
-
-
-
-
-
-                                                            <Border Background="{TemplateBinding Background}" CornerRadius="2"/>
-
-
-
-
-
-
-
-                                                            <Border x:Name="PART_Indicator" Background="{TemplateBinding Foreground}" CornerRadius="2" HorizontalAlignment="Left"/>
-
-
-
-
-
-
-
-                                                        </Grid>
-
-
-
-
-
-
-
-                                                    </ControlTemplate>
-
-
-
-
-
-
-
-                                                </ProgressBar.Template>
-
-
-
-
-
-
-
-                                            </ProgressBar>
-
-
-
-
-
-
-
-                                        </StackPanel>
-
-
-
-
-
-
-
-                                    </DataTemplate>
-
-
-
-
-
-
-
-                                </ItemsControl.ItemTemplate>
-
-
-
-
-
-
-
-                            </ItemsControl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                            <TextBlock Text="Brak danych do wyświetlenia" Foreground="{DynamicResource TextSecondary}" FontSize="14" HorizontalAlignment="Center" Margin="0,20,0,20">
-
-
-
-
-
-
-
-                                <TextBlock.Style>
-
-
-
-
-
-
-
-                                    <Style TargetType="TextBlock">
-
-
-
-
-
-
-
-                                        <Setter Property="Visibility" Value="Collapsed"/>
-
-
-
-
-
-
-
-                                        <Style.Triggers>
-
-
-
-
-
-
-
-                                            <DataTrigger Binding="{Binding CategoryExpenses.Count}" Value="0">
-
-
-
-
-
-
-
-                                                <Setter Property="Visibility" Value="Visible"/>
-
-
-
-
-
-
-
-                                            </DataTrigger>
-
-
-
-
-
-
-
-                                        </Style.Triggers>
-
-
-
-
-
-
-
-                                    </Style>
-
-
-
-
-
-
-
-                                </TextBlock.Style>
-
-
-
-
-
-
-
-                            </TextBlock>
-
-
-
-
-
-
-
-                        </StackPanel>
-
-
-
-
-
-
-
-                    </Border>
-
-
-
-
-
-
-
-                </Grid>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            </StackPanel>
-
-
-
-
-
-
-
-        </Grid>
-
-
-
-
-
-
-
-    </ScrollViewer>
-
-
-
-
-
-
-
-</UserControl>
-
-
-
-
-
-
-
+<UserControl x:Class="SubscriptionTracker.DashboardView"
+
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+
+             Background="Transparent">
+
+    <UserControl.Resources>
+
+        <!-- SegmentRadioButton Style -->
+
+        <Style x:Key="SegmentRadioButton" TargetType="RadioButton">
+
+            <Setter Property="Template">
+
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="RadioButton">
+
+                        <Border x:Name="border" CornerRadius="12" Padding="12,6" Background="Transparent">
+
+                            <ContentPresenter x:Name="contentPresenter" HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.Foreground="{DynamicResource TextSecondary}" TextBlock.FontWeight="SemiBold" TextBlock.FontSize="11"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsChecked" Value="True">
+
+                                <Setter TargetName="border" Property="Background" Value="{StaticResource PrimaryBrush}"/>
+
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="White"/>
+
+                            </Trigger>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+
+                                <Setter TargetName="border" Property="Cursor" Value="Hand"/>
+
+                            </Trigger>
+
+                            <MultiTrigger>
+
+                                <MultiTrigger.Conditions>
+
+                                    <Condition Property="IsMouseOver" Value="True"/>
+
+                                    <Condition Property="IsChecked" Value="False"/>
+
+                                </MultiTrigger.Conditions>
+
+                                <Setter TargetName="border" Property="Background" Value="#252530"/>
+
+                                <Setter TargetName="contentPresenter" Property="TextBlock.Foreground" Value="{DynamicResource TextPrimary}"/>
+
+                            </MultiTrigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+
+            </Setter>
+
+        </Style>
+
+    </UserControl.Resources>
+
+
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+
+
+
+        <Grid Margin="20,20,20,90">
+
+
+
+            <StackPanel MaxWidth="1600" HorizontalAlignment="Stretch">
+
+
+
+
+
+
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+
+
+
+                    <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
+
+
+
+                    <TextBlock Text="SubTrack" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+
+
+
+                </StackPanel>
+
+
+
+
+
+
+
+                <TextBlock Text="Podsumowanie" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
+
+
+
+                <TextBlock Text="{Binding TodayDateText}" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,35"/>
+
+
+
+
+
+
+
+                <!-- Górny panel podsumowań (Symetryczny Grid o równych proporcjach) -->
+
+
+
+                <Grid Margin="0,0,0,10">
+
+
+
+                    <Grid.ColumnDefinitions>
+
+
+
+                        <ColumnDefinition Width="*"/>
+
+
+
+                        <ColumnDefinition Width="*"/>
+
+
+
+                    </Grid.ColumnDefinitions>
+
+
+
+
+
+
+
+                    <Border Grid.Column="0" Style="{StaticResource CardStyle}" Margin="0,0,10,20">
+
+
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+
+
+                            <Border Width="50" Height="50" CornerRadius="12" Background="#161b26" VerticalAlignment="Center" Margin="0,0,20,0">
+
+
+
+                                <TextBlock Text="&#xE7C3;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+
+
+                            </Border>
+
+
+
+                            <StackPanel VerticalAlignment="Center">
+
+
+
+                                <TextBlock Text="Miesięczne koszty" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,0,0,4"/>
+
+
+
+                                <TextBlock Text="{Binding MonthlyCostsText}" Foreground="{DynamicResource TextPrimary}" FontSize="32" FontWeight="Bold" Margin="0,0,0,4"/>
+
+
+
+                                <TextBlock Text="Suma kosztów cyklicznych" Foreground="{StaticResource SuccessBrush}" FontSize="13"/>
+
+
+
+                            </StackPanel>
+
+
+
+                        </StackPanel>
+
+
+
+                    </Border>
+
+
+
+
+
+
+
+                    <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="10,0,0,20">
+
+
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+
+
+                            <Border Width="50" Height="50" CornerRadius="12" Background="#1a1c23" VerticalAlignment="Center" Margin="0,0,20,0">
+
+
+
+                                <TextBlock Text="&#xE73E;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+
+
+                            </Border>
+
+
+
+                            <StackPanel VerticalAlignment="Center">
+
+
+
+                                <TextBlock Text="Aktywne subskrypcje" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,0,0,4"/>
+
+
+
+                                <TextBlock Text="{Binding ActiveSubscriptionsCountText}" Foreground="{DynamicResource TextPrimary}" FontSize="32" FontWeight="Bold" Margin="0,0,0,4"/>
+
+
+
+                                <TextBlock Text="{Binding NewSubscriptionsThisMonthText}" Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
+
+
+
+                            </StackPanel>
+
+
+
+                        </StackPanel>
+
+
+
+                    </Border>
+
+
+
+                </Grid>
+
+
+
+
+
+
+
+                <!-- Dolny panel szczegółowy (Symetryczny Grid o proporcjach 1.3:1) -->
+
+
+
+                <Grid Margin="0,25,0,0">
+
+
+
+                    <Grid.ColumnDefinitions>
+
+
+
+                        <ColumnDefinition Width="1.3*"/>
+
+
+
+                        <ColumnDefinition Width="1*"/>
+
+
+
+                    </Grid.ColumnDefinitions>
+
+
+
+
+
+
+
+                    <Border Grid.Column="0" Style="{StaticResource CardStyle}" Margin="0,0,10,20">
+
+
+
+                        <StackPanel>
+
+
+
+                            <TextBlock Text="Nadchodzące płatności" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,25"/>
+
+
+
+
+
+
+
+                            <ItemsControl ItemsSource="{Binding UpcomingPayments}">
+
+
+
+                                <ItemsControl.ItemTemplate>
+
+
+
+                                    <DataTemplate>
+
+
+
+                                        <StackPanel>
+
+
+
+                                            <Grid Margin="0,0,0,15">
+
+
+
+                                                <Grid.ColumnDefinitions>
+
+
+
+                                                    <ColumnDefinition Width="Auto"/>
+
+
+
+                                                    <ColumnDefinition Width="*"/>
+
+
+
+                                                    <ColumnDefinition Width="Auto"/>
+
+
+
+                                                    <ColumnDefinition Width="Auto"/>
+
+
+
+                                                </Grid.ColumnDefinitions>
+
+
+
+                                                <Border Width="45" Height="45" CornerRadius="10" Background="{Binding IconColor}" Margin="0,0,15,0">
+
+
+
+                                                    <TextBlock Text="{Binding Initials}" Foreground="{DynamicResource TextPrimary}" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+
+
+                                                </Border>
+
+
+
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+
+
+
+                                                    <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
+
+
+
+                                                    <TextBlock Text="{Binding NextPaymentDateFormatted}" Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
+
+
+
+                                                </StackPanel>
+
+
+
+                                                <TextBlock Grid.Column="2" Text="{Binding Category}" Foreground="{DynamicResource TextSecondary}" FontSize="14" VerticalAlignment="Center" Margin="0,0,30,0"/>
+
+
+
+                                                <TextBlock Grid.Column="3" Text="{Binding FormattedPrice}" Foreground="{DynamicResource TextPrimary}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center"/>
+
+
+
+                                            </Grid>
+
+
+
+                                            <Rectangle Height="1" Fill="{DynamicResource CardBorder}" Margin="0,5,0,15"/>
+
+
+
+                                        </StackPanel>
+
+
+
+                                    </DataTemplate>
+
+
+
+                                </ItemsControl.ItemTemplate>
+
+
+
+                            </ItemsControl>
+
+
+
+
+
+
+
+                            <TextBlock Text="Brak nadchodzących płatności" Foreground="{DynamicResource TextSecondary}" FontSize="14" HorizontalAlignment="Center" Margin="0,20,0,20">
+
+
+
+                                <TextBlock.Style>
+
+
+
+                                    <Style TargetType="TextBlock">
+
+
+
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+
+
+
+                                        <Style.Triggers>
+
+
+
+                                            <DataTrigger Binding="{Binding UpcomingPayments.Count}" Value="0">
+
+
+
+                                                <Setter Property="Visibility" Value="Visible"/>
+
+
+
+                                            </DataTrigger>
+
+
+
+                                        </Style.Triggers>
+
+
+
+                                    </Style>
+
+
+
+                                </TextBlock.Style>
+
+
+
+                            </TextBlock>
+
+
+
+                        </StackPanel>
+
+
+
+                    </Border>
+
+
+
+
+
+
+
+                    <Border Grid.Column="1" Style="{StaticResource CardStyle}" Margin="10,0,0,20">
+
+
+
+                        <StackPanel>
+
+
+
+                            <Grid Margin="0,0,0,30">
+
+                                <Grid.ColumnDefinitions>
+
+                                    <ColumnDefinition Width="*"/>
+
+                                    <ColumnDefinition Width="Auto"/>
+
+                                </Grid.ColumnDefinitions>
+
+                                
+
+                                <TextBlock Text="Wydatki wg kategorii" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
+
+                                
+
+                                <!-- Segmented Toggle Switch (Miesięcznie / Rocznie) -->
+
+                                <Border Grid.Column="1" Background="{DynamicResource InputBackground}" CornerRadius="15" Padding="3" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" VerticalAlignment="Center">
+
+                                    <Grid>
+
+                                        <Grid.ColumnDefinitions>
+
+                                            <ColumnDefinition Width="Auto"/>
+
+                                            <ColumnDefinition Width="Auto"/>
+
+                                        </Grid.ColumnDefinitions>
+
+                                        
+
+                                        <!-- Monthly Button -->
+
+                                        <RadioButton x:Name="BtnMonthly" Grid.Column="0" GroupName="PeriodGroup" IsChecked="True" Content="Miesięcznie" Style="{StaticResource SegmentRadioButton}"/>
+
+                                        
+
+                                        <!-- Yearly Button -->
+
+                                        <RadioButton x:Name="BtnYearly" Grid.Column="1" GroupName="PeriodGroup" IsChecked="{Binding IsYearlyView}" Content="Rocznie" Style="{StaticResource SegmentRadioButton}"/>
+
+                                    </Grid>
+
+                                </Border>
+
+                            </Grid>
+
+
+
+
+
+
+
+                            <Grid Width="150" Height="150" HorizontalAlignment="Center">
+
+                                <!-- Dynamic Donut Chart Segments (Premium Look) -->
+
+                                <ItemsControl ItemsSource="{Binding CategoryExpenses}">
+
+                                    <ItemsControl.ItemsPanel>
+
+                                        <ItemsPanelTemplate>
+
+                                            <Grid />
+
+                                        </ItemsPanelTemplate>
+
+                                    </ItemsControl.ItemsPanel>
+
+                                    <ItemsControl.ItemTemplate>
+
+                                        <DataTemplate>
+
+                                            <Path Data="{Binding PathData}" 
+
+                                                  Stroke="{Binding Color}" 
+
+                                                  StrokeThickness="18" 
+
+                                                  StrokeEndLineCap="Round" 
+
+                                                  StrokeStartLineCap="Round"
+
+                                                  ToolTip="{Binding FormattedCostWithPercentage}"/>
+
+                                        </DataTemplate>
+
+                                    </ItemsControl.ItemTemplate>
+
+                                </ItemsControl>
+
+
+
+                                <!-- Sleek Background Ring -->
+
+                                <Ellipse Stroke="#1A1A22" StrokeThickness="18" Width="120" Height="120" IsHitTestVisible="False"/>
+
+
+
+                                <!-- Center Cutout -->
+
+                                <Ellipse Fill="{DynamicResource CardBackground}" Width="98" Height="98" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
+
+
+
+                                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False">
+
+                                    <TextBlock Text="{Binding ExpensePeriodLabel}" Foreground="{DynamicResource TextSecondary}" FontSize="11" HorizontalAlignment="Center"/>
+
+                                    <TextBlock Text="{Binding MonthlyCostsText}" Foreground="{DynamicResource TextPrimary}" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center"/>
+
+                                </StackPanel>
+
+                            </Grid>
+
+
+
+
+
+
+
+                            <ItemsControl ItemsSource="{Binding CategoryExpenses}" Margin="0,30,0,0">
+
+
+
+                                <ItemsControl.ItemTemplate>
+
+
+
+                                    <DataTemplate>
+
+
+
+                                        <StackPanel Margin="0,0,0,12">
+
+
+
+                                            <Grid>
+
+
+
+                                                <Grid.ColumnDefinitions>
+
+
+
+                                                    <ColumnDefinition Width="Auto"/>
+
+
+
+                                                    <ColumnDefinition Width="*"/>
+
+
+
+                                                    <ColumnDefinition Width="Auto"/>
+
+
+
+                                                </Grid.ColumnDefinitions>
+
+
+
+                                                <Ellipse Width="10" Height="10" Fill="{Binding Color}" VerticalAlignment="Center" Margin="0,0,10,0"/>
+
+
+
+                                                <TextBlock Grid.Column="1" Text="{Binding Name}" Foreground="{DynamicResource TextPrimary}" FontSize="13" FontWeight="SemiBold"/>
+
+
+
+                                                <TextBlock Grid.Column="2" Text="{Binding FormattedCostWithPercentage}" Foreground="{DynamicResource TextSecondary}" FontSize="13" FontWeight="Bold"/>
+
+
+
+                                            </Grid>
+
+
+
+                                            <ProgressBar Height="4" Margin="0,6,0,0" Minimum="0" Maximum="100" Value="{Binding Percentage}" Foreground="{Binding Color}" Background="{DynamicResource InputBackground}" BorderThickness="0">
+
+
+
+                                                <ProgressBar.Template>
+
+
+
+                                                    <ControlTemplate TargetType="ProgressBar">
+
+
+
+                                                        <Grid>
+
+
+
+                                                            <Border Background="{TemplateBinding Background}" CornerRadius="2"/>
+
+
+
+                                                            <Border x:Name="PART_Indicator" Background="{TemplateBinding Foreground}" CornerRadius="2" HorizontalAlignment="Left"/>
+
+
+
+                                                        </Grid>
+
+
+
+                                                    </ControlTemplate>
+
+
+
+                                                </ProgressBar.Template>
+
+
+
+                                            </ProgressBar>
+
+
+
+                                        </StackPanel>
+
+
+
+                                    </DataTemplate>
+
+
+
+                                </ItemsControl.ItemTemplate>
+
+
+
+                            </ItemsControl>
+
+
+
+
+
+
+
+                            <TextBlock Text="Brak danych do wyświetlenia" Foreground="{DynamicResource TextSecondary}" FontSize="14" HorizontalAlignment="Center" Margin="0,20,0,20">
+
+
+
+                                <TextBlock.Style>
+
+
+
+                                    <Style TargetType="TextBlock">
+
+
+
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+
+
+
+                                        <Style.Triggers>
+
+
+
+                                            <DataTrigger Binding="{Binding CategoryExpenses.Count}" Value="0">
+
+
+
+                                                <Setter Property="Visibility" Value="Visible"/>
+
+
+
+                                            </DataTrigger>
+
+
+
+                                        </Style.Triggers>
+
+
+
+                                    </Style>
+
+
+
+                                </TextBlock.Style>
+
+
+
+                            </TextBlock>
+
+
+
+                        </StackPanel>
+
+
+
+                    </Border>
+
+
+
+                </Grid>
+
+
+
+
+
+
+
+            </StackPanel>
+
+
+
+        </Grid>
+
+
+
+    </ScrollViewer>
+
+
+
+</UserControl>
+
+
+
