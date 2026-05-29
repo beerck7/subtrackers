@@ -64,7 +64,7 @@ namespace SubscriptionTracker.ViewModels
             _allSubscriptions.Clear();
             foreach (var sub in data)
             {
-                _allSubscriptions.Add(new SubscriptionItemViewModel(sub));
+                _allSubscriptions.Add(new SubscriptionItemViewModel(sub, LoadSubscriptionsAsync));
             }
 
             var cats = await _dataService.GetCategoriesAsync();

@@ -37,12 +37,18 @@ namespace SubscriptionTracker.ViewModels
                 Cycle = _editingSubscription.Cycle;
                 StartDate = _editingSubscription.StartDate;
                 NextPaymentDate = _editingSubscription.NextPaymentDate;
+                IsShared = _editingSubscription.IsShared;
+                NumberOfMembers = _editingSubscription.NumberOfMembers;
+                SharedWith = _editingSubscription.SharedWith;
             }
             else
             {
                 StartDate = DateTime.Now;
                 NextPaymentDate = DateTime.Now.AddMonths(1);
                 Cycle = "Miesięcznie";
+                IsShared = false;
+                NumberOfMembers = 1;
+                SharedWith = string.Empty;
             }
 
             LoadCategoriesCommand.Execute(null);
@@ -87,7 +93,22 @@ namespace SubscriptionTracker.ViewModels
 
         [ObservableProperty]
         [Range(0.01, 99999.99, ErrorMessage = "Cena musi być większa od zera")]
+        [NotifyPropertyChangedFor(nameof(CalculatedSplitPrice))]
         private decimal _price;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedFor(nameof(CalculatedSplitPrice))]
+        private bool _isShared = false;
+
+        [ObservableProperty]
+        [Range(1, 100, ErrorMessage = "Liczba osób musi być między 1 a 100")]
+        [NotifyPropertyChangedFor(nameof(CalculatedSplitPrice))]
+        private int _numberOfMembers = 1;
+
+        [ObservableProperty]
+        private string _sharedWith = string.Empty;
+
+        public decimal CalculatedSplitPrice => IsShared && NumberOfMembers > 1 ? Math.Round(Price / NumberOfMembers, 2) : Price;
 
         [ObservableProperty]
         private string _cycle;
@@ -151,6 +172,9 @@ namespace SubscriptionTracker.ViewModels
                 _editingSubscription.Category = null;
                 _editingSubscription.CategoryId = SelectedCategory != null ? SelectedCategory.Id : 0;
                 _editingSubscription.Note ??= "";
+                _editingSubscription.IsShared = IsShared;
+                _editingSubscription.NumberOfMembers = IsShared ? NumberOfMembers : 1;
+                _editingSubscription.SharedWith = IsShared ? (SharedWith ?? string.Empty) : string.Empty;
 
                 await _dataService.UpdateSubscriptionAsync(_editingSubscription);
             }
@@ -165,7 +189,10 @@ namespace SubscriptionTracker.ViewModels
                     NextPaymentDate = NextPaymentDate,
                     CategoryId = SelectedCategory != null ? SelectedCategory.Id : 0,
                     Status = "Aktywna",
-                    Note = ""
+                    Note = "",
+                    IsShared = IsShared,
+                    NumberOfMembers = IsShared ? NumberOfMembers : 1,
+                    SharedWith = IsShared ? (SharedWith ?? string.Empty) : string.Empty
                 };
 
                 await _dataService.AddSubscriptionAsync(sub);
