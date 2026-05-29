@@ -86,7 +86,7 @@
 
 
 
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                <!--<StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
 
 
 
@@ -98,7 +98,7 @@
 
 
 
-                </StackPanel>
+                </StackPanel>-->
 
 
 
@@ -106,7 +106,7 @@
 
 
 
-                <TextBlock Text="Podsumowanie" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
+                <TextBlock Text="Podsumowanie" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center"/>
 
 
 
@@ -266,11 +266,11 @@
 
 
 
-                        <ColumnDefinition Width="1.3*"/>
+                        <ColumnDefinition Width="323*"/>
 
 
 
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="317*"/>
 
 
 
@@ -484,11 +484,11 @@
 
                                 </Grid.ColumnDefinitions>
 
-                                
+
 
                                 <TextBlock Text="Wydatki wg kategorii" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="SemiBold" VerticalAlignment="Center"/>
 
-                                
+
 
                                 <!-- Segmented Toggle Switch (Miesięcznie / Rocznie) -->
 
@@ -504,13 +504,13 @@
 
                                         </Grid.ColumnDefinitions>
 
-                                        
+
 
                                         <!-- Monthly Button -->
 
                                         <RadioButton x:Name="BtnMonthly" Grid.Column="0" GroupName="PeriodGroup" IsChecked="True" Content="Miesięcznie" Style="{StaticResource SegmentRadioButton}"/>
 
-                                        
+
 
                                         <!-- Yearly Button -->
 

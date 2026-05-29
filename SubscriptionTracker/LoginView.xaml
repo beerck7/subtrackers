@@ -94,11 +94,6 @@
                            Margin="0,0,0,25" />
 
                 <!-- Card header title -->
-                <TextBlock Text="{Binding TitleText}" 
-                           FontSize="18" 
-                           FontWeight="SemiBold" 
-                           Foreground="{DynamicResource TextPrimary}" 
-                           Margin="0,0,0,15" />
 
                 <!-- Inputs -->
                 <StackPanel Margin="0,0,0,15">

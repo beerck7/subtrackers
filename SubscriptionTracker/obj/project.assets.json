@@ -2635,11 +2635,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj",
+      "projectUniqueName": "C:\\wpf\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj",
       "projectName": "SubscriptionTracker",
-      "projectPath": "C:\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj",
+      "projectPath": "C:\\wpf\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj",
       "packagesPath": "C:\\Users\\Bercik\\.nuget\\packages\\",
-      "outputPath": "C:\\subtrackers\\SubscriptionTracker\\obj\\",
+      "outputPath": "C:\\wpf\\subtrackers\\SubscriptionTracker\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Bercik\\AppData\\Roaming\\NuGet\\NuGet.Config",

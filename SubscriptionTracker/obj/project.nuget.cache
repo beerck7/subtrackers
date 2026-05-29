@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ShtNozf8eERhCiWrNAGKYgZ7SmdIICL9KlDHatveZYc1oyVcNQuBuJ+D5QY0Qm9WrQG8OS5URASyvZ/2gCMWVA==",
+  "dgSpecHash": "Nd7w3LQCz0guXR54E4kg5BA4P+ghfBg9Tj7LlMKMh97QfJerHziMfBR0aZ9RarwNv/XUb81RinuJJCHEkLbbdA==",
   "success": true,
-  "projectFilePath": "C:\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj",
+  "projectFilePath": "C:\\wpf\\subtrackers\\SubscriptionTracker\\SubscriptionTracker.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Bercik\\.nuget\\packages\\communitytoolkit.mvvm\\8.4.2\\communitytoolkit.mvvm.8.4.2.nupkg.sha512",
     "C:\\Users\\Bercik\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
