@@ -56,6 +56,9 @@ namespace SubscriptionTracker.ViewModels
                 case "Settings":
                     CurrentView = new SettingsView();
                     break;
+                case "Family":
+                    CurrentView = new FamilyView();
+                    break;
             }
         }
 

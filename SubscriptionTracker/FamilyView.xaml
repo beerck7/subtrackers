@@ -1,0 +1,147 @@
+<UserControl x:Class="SubscriptionTracker.FamilyView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:SubscriptionTracker"
+             mc:Ignorable="d"
+             Background="Transparent">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <Grid Margin="20,20,20,90">
+            <StackPanel MaxWidth="1200" HorizontalAlignment="Stretch">
+
+                <!-- Header -->
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                    <TextBlock Text="&#xE716;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="SubTrack" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel Margin="0,0,0,30">
+                    <TextBlock Text="Rodzina i znajomi" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
+                    <TextBlock Text="Zarządzaj osobami, z którymi dzielisz subskrypcje i koszty" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <!-- Input form for adding family members -->
+                <Border Style="{StaticResource CardStyle}" CornerRadius="16" Margin="0,0,0,30" Padding="20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Name input -->
+                        <TextBox Grid.Column="0" Height="45" Margin="0,0,15,0"
+                                 Style="{StaticResource ModernTextBox}"
+                                 Tag="Nazwa / Pseudonim..."
+                                 Text="{Binding NewMemberName, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <!-- Relationship input -->
+                        <TextBox Grid.Column="1" Height="45" Margin="0,0,15,0"
+                                 Style="{StaticResource ModernTextBox}"
+                                 Tag="Relacja (np. Rodzina, Przyjaciel, Współlokator)..."
+                                 Text="{Binding NewMemberRelationship, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <!-- Add button -->
+                        <Button Grid.Column="2" Content="Dodaj osobę" Width="140" Height="45"
+                                Style="{StaticResource PrimaryButton}"
+                                Command="{Binding AddMemberCommand}" />
+                    </Grid>
+                </Border>
+
+                <!-- Members List -->
+                <TextBlock Text="Lista osób" Foreground="{DynamicResource TextPrimary}" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                <!-- Empty state message -->
+                <Border CornerRadius="16" Background="#14141A" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Padding="30" Margin="0,0,0,30">
+                    <Border.Style>
+                        <Style TargetType="Border">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Members.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <StackPanel HorizontalAlignment="Center">
+                        <TextBlock Text="&#xE77B;" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource TextSecondary}" FontSize="40" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                        <TextBlock Text="Brak zdefiniowanych osób" Foreground="{DynamicResource TextPrimary}" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Dodaj członków rodziny lub znajomych, aby dzielić z nimi koszty subskrypcji." Foreground="{DynamicResource TextSecondary}" FontSize="13" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Members grid using WrapPanel -->
+                <ItemsControl ItemsSource="{Binding Members}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Width="380" Margin="0,0,16,16" CornerRadius="16" Padding="15">
+                                <Border.Style>
+                                    <Style TargetType="Border" BasedOn="{StaticResource CardStyle}">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="#25252D"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <!-- Avatar circle with initials -->
+                                    <Border Grid.Column="0" Width="48" Height="48" CornerRadius="24" Margin="0,0,15,0" VerticalAlignment="Center" Background="{Binding AvatarColor}">
+                                        <TextBlock Text="{Binding Initials}" Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <!-- Member Info -->
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+                                            <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextPrimary}" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                                            
+                                            <!-- Relationship Badge -->
+                                            <Border CornerRadius="8" BorderThickness="1" BorderBrush="{DynamicResource PrimaryBrush}" Padding="6,2" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Relationship}" Foreground="{DynamicResource PrimaryBrush}" FontSize="10" FontWeight="SemiBold"/>
+                                            </Border>
+                                        </StackPanel>
+
+                                        <TextBlock Text="{Binding SharedSubscriptionsCountText}" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,2"/>
+                                        <TextBlock Text="{Binding TotalShareAmountText}" Foreground="{StaticResource SuccessBrush}" FontSize="13" FontWeight="SemiBold"/>
+                                    </StackPanel>
+
+                                    <!-- Delete Button -->
+                                    <Button Grid.Column="2" Command="{Binding DataContext.DeleteMemberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Cursor="Hand" ToolTip="Usuń osobę" VerticalAlignment="Center">
+                                        <Button.Template>
+                                            <ControlTemplate TargetType="Button">
+                                                <TextBlock x:Name="btnTxt" Text="&#xE74D;" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource TextSecondary}" FontSize="14" VerticalAlignment="Center"/>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <TextBlock.Foreground>
+                                                            <SolidColorBrush Color="#ef4444"/>
+                                                        </TextBlock.Foreground>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Button.Template>
+                                    </Button>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

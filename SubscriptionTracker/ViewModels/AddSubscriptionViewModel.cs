@@ -24,6 +24,8 @@ namespace SubscriptionTracker.ViewModels
         {
         }
 
+        public ObservableCollection<SelectableFamilyMember> FamilyMembersList { get; } = new();
+
         public AddSubscriptionViewModel(Subscription subscriptionToEdit)
         {
             _dataService = new DataService();
@@ -52,6 +54,7 @@ namespace SubscriptionTracker.ViewModels
             }
 
             LoadCategoriesCommand.Execute(null);
+            LoadFamilyMembersCommand.Execute(null);
         }
 
         public ObservableCollection<string> CycleOptions { get; } = new() { "Miesięcznie", "Rocznie" };
@@ -206,5 +209,58 @@ namespace SubscriptionTracker.ViewModels
         {
             window.DialogResult = false;
         }
+
+        [RelayCommand]
+        private async Task LoadFamilyMembersAsync()
+        {
+            var members = await _dataService.GetFamilyMembersAsync();
+            FamilyMembersList.Clear();
+
+            var sharedNames = string.IsNullOrWhiteSpace(SharedWith)
+                ? Array.Empty<string>()
+                : SharedWith.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(n => n.Trim().ToLower()).ToArray();
+
+            foreach (var m in members)
+            {
+                var selectable = new SelectableFamilyMember
+                {
+                    Name = m.Name,
+                    IsSelected = sharedNames.Contains(m.Name.Trim().ToLower())
+                };
+
+                selectable.PropertyChanged += (s, e) =>
+                {
+                    if (e.PropertyName == nameof(SelectableFamilyMember.IsSelected))
+                    {
+                        UpdateSharedStatus();
+                    }
+                };
+
+                FamilyMembersList.Add(selectable);
+            }
+        }
+
+        private void UpdateSharedStatus()
+        {
+            var selected = FamilyMembersList.Where(m => m.IsSelected).Select(m => m.Name).ToList();
+            if (selected.Any())
+            {
+                SharedWith = string.Join(", ", selected);
+                NumberOfMembers = selected.Count + 1;
+            }
+            else
+            {
+                SharedWith = string.Empty;
+                NumberOfMembers = 1;
+            }
+        }
+    }
+
+    public partial class SelectableFamilyMember : ObservableObject
+    {
+        public string Name { get; set; }
+
+        [ObservableProperty]
+        private bool _isSelected;
     }
 }

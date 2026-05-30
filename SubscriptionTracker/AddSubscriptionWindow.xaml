@@ -65,6 +65,35 @@
                       Margin="0,0,0,15"/>
 
             <StackPanel Visibility="{Binding IsShared, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <!-- Wybór zdefiniowanych osób -->
+                <TextBlock Text="Wybierz osoby ze swojej listy:" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,8" FontWeight="SemiBold"/>
+                
+                <TextBlock Text="Wskazówka: Dodaj członków w zakładce 'Rodzina', aby wybierać ich jednym kliknięciem!" Foreground="#ef4444" FontSize="11" TextWrapping="Wrap" Margin="0,0,0,10">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Visibility" Value="Collapsed"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding FamilyMembersList.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+
+                <ItemsControl ItemsSource="{Binding FamilyMembersList}" Margin="0,0,0,15">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" Foreground="{DynamicResource TextPrimary}" Margin="0,0,12,8" FontSize="13"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
                 <Grid Margin="0,0,0,15">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="120"/>

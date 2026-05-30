@@ -225,5 +225,41 @@ namespace SubscriptionTracker.Services
                 return true;
             }
         }
+        // ================= FAMILY MEMBERS =================
+
+        public async Task<List<FamilyMember>> GetFamilyMembersAsync()
+        {
+            var userId = SessionManager.CurrentUser?.Id ?? 0;
+            using (var db = new AppDbContext())
+            {
+                return await db.FamilyMembers
+                    .Where(f => f.UserId == userId)
+                    .ToListAsync();
+            }
+        }
+
+        public async Task AddFamilyMemberAsync(FamilyMember member)
+        {
+            member.UserId = SessionManager.CurrentUser?.Id ?? 0;
+            using (var db = new AppDbContext())
+            {
+                db.FamilyMembers.Add(member);
+                await db.SaveChangesAsync();
+            }
+        }
+
+        public async Task DeleteFamilyMemberAsync(int id)
+        {
+            var userId = SessionManager.CurrentUser?.Id ?? 0;
+            using (var db = new AppDbContext())
+            {
+                var member = await db.FamilyMembers.FirstOrDefaultAsync(f => f.Id == id && f.UserId == userId);
+                if (member != null)
+                {
+                    db.FamilyMembers.Remove(member);
+                    await db.SaveChangesAsync();
+                }
+            }
+        }
     }
 }

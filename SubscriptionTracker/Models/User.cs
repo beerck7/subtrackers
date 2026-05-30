@@ -17,5 +17,6 @@ namespace SubscriptionTracker.Models
 
         public ICollection<Subscription> Subscriptions { get; set; } = new List<Subscription>();
         public ICollection<Category> Categories { get; set; } = new List<Category>();
+        public ICollection<FamilyMember> FamilyMembers { get; set; } = new List<FamilyMember>();
     }
 }

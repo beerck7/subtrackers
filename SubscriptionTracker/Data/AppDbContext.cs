@@ -11,6 +11,7 @@ namespace SubscriptionTracker.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<PaymentLog> PaymentLogs { get; set; }
+        public DbSet<FamilyMember> FamilyMembers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -61,6 +62,13 @@ namespace SubscriptionTracker.Data
                 .WithMany()
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // User -> FamilyMember relation
+            modelBuilder.Entity<FamilyMember>()
+                .HasOne(f => f.User)
+                .WithMany(u => u.FamilyMembers)
+                .HasForeignKey(f => f.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
