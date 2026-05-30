@@ -743,57 +743,37 @@
 
 
                                                     <StackPanel Visibility="{Binding IsShared, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,15,0,0">
-
-
-
                                                         <TextBlock Text="WSPÓŁDZIELENIE KOSZTÓW" Foreground="{DynamicResource TextSecondary}" FontSize="11" FontWeight="Bold" Margin="0,0,0,5"/>
-
-
-
                                                         <WrapPanel>
-
-
-
-                                                            <TextBlock Text="Subskrypcja współdzielona z " Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
-
-
-
-                                                            <TextBlock Text="{Binding SharedWith}" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" FontSize="13"/>
-
-
-
-                                                            <TextBlock Text=" (łącznie " Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
-
-
-
-                                                            <TextBlock Text="{Binding NumberOfMembers}" FontWeight="Bold" Foreground="{DynamicResource TextPrimary}" FontSize="13"/>
-
-
-
-                                                            <TextBlock Text=" os.). Twój koszt: " Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
-
-
-
-                                                            <TextBlock Text="{Binding SplitPrice, StringFormat={}{0:0.00}}" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}" FontSize="13"/>
-
-
-
-                                                            <TextBlock Text=" PLN / os. (pełna kwota: " Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
-
-
-
-                                                            <TextBlock Text="{Binding Model.Price, StringFormat={}{0:0.00}}" FontWeight="Bold" Foreground="{DynamicResource TextPrimary}" FontSize="13"/>
-
-
-
-                                                            <TextBlock Text=" PLN)." Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
-
-
-
+                                                            <TextBlock Text="Subskrypcja współdzielona z " Foreground="{DynamicResource TextSecondary}" FontSize="13" VerticalAlignment="Center"/>
+                                                            <TextBlock Text="{Binding SharedWith}" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimary}" FontSize="13" VerticalAlignment="Center"/>
+                                                            <TextBlock Text=" (łącznie " Foreground="{DynamicResource TextSecondary}" FontSize="13" VerticalAlignment="Center"/>
+                                                            <TextBlock Text="{Binding NumberOfMembers}" FontWeight="Bold" Foreground="{DynamicResource TextPrimary}" FontSize="13" VerticalAlignment="Center"/>
+                                                            <TextBlock Text=" os.). Twój koszt: " Foreground="{DynamicResource TextSecondary}" FontSize="13" VerticalAlignment="Center"/>
+                                                            <TextBlock Text="{Binding SplitPrice, StringFormat={}{0:0.00}}" FontWeight="Bold" Foreground="{DynamicResource SuccessBrush}" FontSize="13" VerticalAlignment="Center"/>
+                                                            <TextBlock Text=" PLN / os. (pełna kwota: " Foreground="{DynamicResource TextSecondary}" FontSize="13" VerticalAlignment="Center"/>
+                                                            <TextBlock Text="{Binding Model.Price, StringFormat={}{0:0.00}}" FontWeight="Bold" Foreground="{DynamicResource TextPrimary}" FontSize="13" VerticalAlignment="Center"/>
+                                                            <TextBlock Text=" PLN)." Foreground="{DynamicResource TextSecondary}" FontSize="13" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                                            <Button Command="{Binding DataContext.EditSubscriptionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Style="{StaticResource OutlineButton}" Padding="10,4" Content="⚙️ Zarządzaj współdzieleniem" FontSize="11" VerticalAlignment="Center"/>
                                                         </WrapPanel>
+                                                    </StackPanel>
 
-
-
+                                                    <StackPanel Margin="0,15,0,0">
+                                                        <StackPanel.Style>
+                                                            <Style TargetType="StackPanel">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding IsShared}" Value="False">
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </StackPanel.Style>
+                                                        <TextBlock Text="WSPÓŁDZIELENIE KOSZTÓW" Foreground="{DynamicResource TextSecondary}" FontSize="11" FontWeight="Bold" Margin="0,0,0,5"/>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="Ta subskrypcja nie jest współdzielona." Foreground="{DynamicResource TextSecondary}" FontSize="13" VerticalAlignment="Center" Margin="0,0,15,0"/>
+                                                            <Button Command="{Binding DataContext.EditSubscriptionCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Style="{StaticResource SuccessButton}" Padding="12,5" Content="🔗 Udostępnij rodzinie i podziel koszty" FontSize="12" VerticalAlignment="Center"/>
+                                                        </StackPanel>
                                                     </StackPanel>
 
 
