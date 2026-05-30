@@ -72,11 +72,11 @@ namespace SubscriptionTracker.ViewModels
             {
                 if (sub.Cycle == "Rocznie")
                 {
-                    _totalMonthlyCostCalculated += sub.Price / 12;
+                    _totalMonthlyCostCalculated += sub.SplitPrice / 12;
                 }
                 else
                 {
-                    _totalMonthlyCostCalculated += sub.Price;
+                    _totalMonthlyCostCalculated += sub.SplitPrice;
                 }
             }
 
@@ -110,11 +110,11 @@ namespace SubscriptionTracker.ViewModels
                     {
                         if (sub.Cycle == "Rocznie")
                         {
-                            catMonthly += sub.Price / 12;
+                            catMonthly += sub.SplitPrice / 12;
                         }
                         else
                         {
-                            catMonthly += sub.Price;
+                            catMonthly += sub.SplitPrice;
                         }
                     }
 

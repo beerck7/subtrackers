@@ -22,7 +22,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="PasswordBox">
                         <Border x:Name="border" 
-                                Background="{TemplateBinding Background}" 
+                                Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" 
                                 BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}" 
                                 CornerRadius="6">
@@ -63,7 +63,7 @@
         </Border>
 
         <!-- Main Authentication Card -->
-        <Border Style="{DynamicResource CardStyle}" 
+        <Border Style="{StaticResource CardStyle}" 
                 Width="390" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 

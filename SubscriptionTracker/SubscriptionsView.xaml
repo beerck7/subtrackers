@@ -22,7 +22,7 @@
 
 
 
-            <StackPanel MaxWidth="1600" HorizontalAlignment="Stretch">
+            <StackPanel MaxWidth="1200" HorizontalAlignment="Stretch">
 
 
 
@@ -346,13 +346,13 @@
 
                             <Grid.ColumnDefinitions>
 
-                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="1.8*"/>
 
-                                <ColumnDefinition Width="1.5*" />
+                                <ColumnDefinition Width="0.8*" />
 
-                                <ColumnDefinition Width="1.2*" />
+                                <ColumnDefinition Width="0.8*" />
 
-                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2.3*" />
 
                                 <ColumnDefinition Width="Auto" MinWidth="80"/>
 
@@ -422,13 +422,13 @@
 
                                                                 <ColumnDefinition Width="Auto"/>
 
-                                                                <ColumnDefinition Width="2*"/>
+                                                                <ColumnDefinition Width="1.8*"/>
 
-                                                                <ColumnDefinition Width="1.5*" />
+                                                                <ColumnDefinition Width="0.8*" />
 
-                                                                <ColumnDefinition Width="1.2*" />
+                                                                <ColumnDefinition Width="0.8*" />
 
-                                                                <ColumnDefinition Width="1*" />
+                                                                <ColumnDefinition Width="2.3*" />
 
                                                                 <ColumnDefinition Width="Auto" MinWidth="80"/>
 

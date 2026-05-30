@@ -1,7 +1,9 @@
 using System.Configuration;
 using System.Data;
 using System.Windows;
+using Microsoft.EntityFrameworkCore;
 using System.Windows.Media;
+using System.Windows.Controls;
 
 namespace SubscriptionTracker
 {
@@ -19,7 +21,54 @@ namespace SubscriptionTracker
         {
             try
             {
-                System.IO.File.WriteAllText("crash_log.txt", e.Exception.ToString());
+                var sb = new System.Text.StringBuilder();
+                sb.AppendLine(e.Exception.ToString());
+                sb.AppendLine("\n--- BORDER AUDIT ---");
+                
+                var mainWin = Application.Current.MainWindow;
+                if (mainWin != null)
+                {
+                    AuditBorders(mainWin, sb);
+                }
+                else
+                {
+                    sb.AppendLine("MainWindow is null.");
+                }
+                
+                System.IO.File.WriteAllText("crash_log.txt", sb.ToString());
+            }
+            catch (Exception ex)
+            {
+                System.IO.File.WriteAllText("crash_log.txt", "Audit failed: " + ex.ToString() + "\nOriginal exception: " + e.Exception.ToString());
+            }
+        }
+
+        private void AuditBorders(DependencyObject obj, System.Text.StringBuilder sb)
+        {
+            if (obj == null) return;
+            
+            if (obj is Border border)
+            {
+                try
+                {
+                    var localVal = border.ReadLocalValue(Border.BackgroundProperty);
+                    object effVal = "Exception on get";
+                    try { effVal = border.Background; } catch (Exception ex) { effVal = "Get failed: " + ex.Message; }
+                    sb.AppendLine($"Border Name: '{border.Name}', Parent: '{VisualTreeHelper.GetParent(border)?.GetType().Name}', Local Background: '{localVal}', Effective Background: '{effVal}'");
+                }
+                catch (Exception ex)
+                {
+                    sb.AppendLine($"Error auditing a border: {ex.Message}");
+                }
+            }
+            
+            try
+            {
+                int count = VisualTreeHelper.GetChildrenCount(obj);
+                for (int i = 0; i < count; i++)
+                {
+                    AuditBorders(VisualTreeHelper.GetChild(obj, i), sb);
+                }
             }
             catch { }
         }
@@ -31,6 +80,19 @@ namespace SubscriptionTracker
             using (var db = new Data.AppDbContext())
             {
                 db.Database.EnsureCreated();
+                try
+                {
+                    db.Database.ExecuteSqlRaw(@"
+                        CREATE TABLE IF NOT EXISTS FamilyMembers (
+                            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            Name TEXT NOT NULL,
+                            Relationship TEXT NULL,
+                            UserId INTEGER NOT NULL,
+                            FOREIGN KEY(UserId) REFERENCES Users(Id) ON DELETE CASCADE
+                        );
+                    ");
+                }
+                catch { }
                 Services.DataSeeder.SeedData(db);
             }
 
@@ -40,12 +102,12 @@ namespace SubscriptionTracker
                 try
                 {
                     var app = Application.Current;
-                    ((SolidColorBrush)app.Resources["AppBackground"]).Color = (Color)ColorConverter.ConvertFromString("#F4F6F9");
-                    ((SolidColorBrush)app.Resources["CardBackground"]).Color = (Color)ColorConverter.ConvertFromString("#FFFFFF");
-                    ((SolidColorBrush)app.Resources["CardBorder"]).Color = (Color)ColorConverter.ConvertFromString("#E2E8F0");
-                    ((SolidColorBrush)app.Resources["InputBackground"]).Color = (Color)ColorConverter.ConvertFromString("#EDF2F7");
-                    ((SolidColorBrush)app.Resources["TextPrimary"]).Color = (Color)ColorConverter.ConvertFromString("#1A202C");
-                    ((SolidColorBrush)app.Resources["TextSecondary"]).Color = (Color)ColorConverter.ConvertFromString("#718096");
+                    app.Resources["AppBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#F4F6F9"));
+                    app.Resources["CardBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
+                    app.Resources["CardBorder"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E2E8F0"));
+                    app.Resources["InputBackground"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#EDF2F7"));
+                    app.Resources["TextPrimary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1A202C"));
+                    app.Resources["TextSecondary"] = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#718096"));
                 }
                 catch { }
             }

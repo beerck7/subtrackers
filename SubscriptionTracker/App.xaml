@@ -46,90 +46,6 @@
 
 
 
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-
-        <!-- ================= CUSTOM SLEEK SCROLLBAR STYLE ================= -->
-        <ControlTemplate x:Key="InvisibleButtonTemplate" TargetType="RepeatButton">
-            <Border Background="Transparent" />
-        </ControlTemplate>
-
-        <Style x:Key="ScrollBarThumbStyle" TargetType="Thumb">
-            <Setter Property="OverridesDefaultStyle" Value="true"/>
-            <Setter Property="IsTabStop" Value="false"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Thumb">
-                        <Border x:Name="rectangle" 
-                                CornerRadius="4" 
-                                Background="#3A3A45" 
-                                Opacity="0.6"
-                                Margin="1,0,1,0"/>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="rectangle" Property="Background" Value="{StaticResource PrimaryBrush}"/>
-                                <Setter TargetName="rectangle" Property="Opacity" Value="0.9"/>
-                            </Trigger>
-                            <Trigger Property="IsDragging" Value="true">
-                                <Setter TargetName="rectangle" Property="Background" Value="{StaticResource PrimaryHoverBrush}"/>
-                                <Setter TargetName="rectangle" Property="Opacity" Value="1.0"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style TargetType="ScrollBar">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Width" Value="8"/>
-            <Setter Property="Height" Value="Auto"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ScrollBar">
-                        <Grid x:Name="Bg" Background="Transparent" SnapsToDevicePixels="true">
-                            <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsEnabled}">
-                                <Track.DecreaseRepeatButton>
-                                    <RepeatButton Command="ScrollBar.PageUpCommand" Background="Transparent" BorderThickness="0" Template="{StaticResource InvisibleButtonTemplate}"/>
-                                </Track.DecreaseRepeatButton>
-                                <Track.IncreaseRepeatButton>
-                                    <RepeatButton Command="ScrollBar.PageDownCommand" Background="Transparent" BorderThickness="0" Template="{StaticResource InvisibleButtonTemplate}"/>
-                                </Track.IncreaseRepeatButton>
-                                <Track.Thumb>
-                                    <Thumb Style="{StaticResource ScrollBarThumbStyle}"/>
-                                </Track.Thumb>
-                            </Track>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Style.Triggers>
-                <Trigger Property="Orientation" Value="Horizontal">
-                    <Setter Property="Width" Value="Auto"/>
-                    <Setter Property="Height" Value="8"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ScrollBar">
-                                <Grid x:Name="Bg" Background="Transparent" SnapsToDevicePixels="true">
-                                    <Track x:Name="PART_Track" IsEnabled="{TemplateBinding IsEnabled}">
-                                        <Track.DecreaseRepeatButton>
-                                            <RepeatButton Command="ScrollBar.PageLeftCommand" Background="Transparent" BorderThickness="0" Template="{StaticResource InvisibleButtonTemplate}"/>
-                                        </Track.DecreaseRepeatButton>
-                                        <Track.IncreaseRepeatButton>
-                                            <RepeatButton Command="ScrollBar.PageRightCommand" Background="Transparent" BorderThickness="0" Template="{StaticResource InvisibleButtonTemplate}"/>
-                                        </Track.IncreaseRepeatButton>
-                                        <Track.Thumb>
-                                            <Thumb Style="{StaticResource ScrollBarThumbStyle}"/>
-                                        </Track.Thumb>
-                                    </Track>
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
         <!-- ================= COLORS & BRUSHES ================= -->
 
 
@@ -233,6 +149,90 @@
 
 
 
+
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+
+        <!-- ================= CUSTOM SLEEK SCROLLBAR STYLE ================= -->
+        <ControlTemplate x:Key="InvisibleButtonTemplate" TargetType="RepeatButton">
+            <Border Background="Transparent" />
+        </ControlTemplate>
+
+        <Style x:Key="ScrollBarThumbStyle" TargetType="Thumb">
+            <Setter Property="OverridesDefaultStyle" Value="true"/>
+            <Setter Property="IsTabStop" Value="false"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Thumb">
+                        <Border x:Name="rectangle" 
+                                CornerRadius="4" 
+                                Background="#3A3A45" 
+                                Opacity="0.6"
+                                Margin="1,0,1,0"/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="rectangle" Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                                <Setter TargetName="rectangle" Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                            <Trigger Property="IsDragging" Value="true">
+                                <Setter TargetName="rectangle" Property="Background" Value="{StaticResource PrimaryHoverBrush}"/>
+                                <Setter TargetName="rectangle" Property="Opacity" Value="1.0"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="ScrollBar">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Height" Value="Auto"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid x:Name="Bg" Background="Transparent" SnapsToDevicePixels="true">
+                            <Track x:Name="PART_Track" IsDirectionReversed="true" IsEnabled="{TemplateBinding IsEnabled}">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="ScrollBar.PageUpCommand" Background="Transparent" BorderThickness="0" Template="{StaticResource InvisibleButtonTemplate}"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="ScrollBar.PageDownCommand" Background="Transparent" BorderThickness="0" Template="{StaticResource InvisibleButtonTemplate}"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb Style="{StaticResource ScrollBarThumbStyle}"/>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="Orientation" Value="Horizontal">
+                    <Setter Property="Width" Value="Auto"/>
+                    <Setter Property="Height" Value="8"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ScrollBar">
+                                <Grid x:Name="Bg" Background="Transparent" SnapsToDevicePixels="true">
+                                    <Track x:Name="PART_Track" IsEnabled="{TemplateBinding IsEnabled}">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton Command="ScrollBar.PageLeftCommand" Background="Transparent" BorderThickness="0" Template="{StaticResource InvisibleButtonTemplate}"/>
+                                        </Track.DecreaseRepeatButton>
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton Command="ScrollBar.PageRightCommand" Background="Transparent" BorderThickness="0" Template="{StaticResource InvisibleButtonTemplate}"/>
+                                        </Track.IncreaseRepeatButton>
+                                        <Track.Thumb>
+                                            <Thumb Style="{StaticResource ScrollBarThumbStyle}"/>
+                                        </Track.Thumb>
+                                    </Track>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
         <!-- ================= BASE STYLES ================= -->
 
@@ -363,6 +363,7 @@
 
 
         <Style x:Key="ModernButtonBase" TargetType="Button">
+            <Setter Property="Background" Value="Transparent" />
 
 
 
@@ -426,7 +427,7 @@
 
 
 
-                                Background="{TemplateBinding Background}" 
+                                Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" 
 
 
 
@@ -922,7 +923,7 @@
 
 
 
-                        <Border x:Name="border" Background="{TemplateBinding Background}" 
+                        <Border x:Name="border" Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" 
 
 
 
@@ -1250,7 +1251,7 @@
 
 
 
-                        <Border x:Name="border" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                        <Border x:Name="border" Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" Padding="{TemplateBinding Padding}">
 
 
 
@@ -1506,7 +1507,7 @@
 
 
 
-                                          Background="{TemplateBinding Background}" 
+                                          Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" 
 
 
 
@@ -1562,7 +1563,7 @@
 
 
 
-                                                Background="{TemplateBinding Background}" 
+                                                Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" 
 
 
 
@@ -2282,7 +2283,7 @@
 
 
 
-                                Background="{TemplateBinding Background}" 
+                                Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" 
 
 
 
@@ -2588,7 +2589,7 @@
 
                                        StaysOpen="False" >
                                      <Calendar x:Name="PART_Calendar"
-                                               Background="{TemplateBinding Background}"
+                                               Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}"
                                                BorderBrush="{TemplateBinding BorderBrush}"
                                                BorderThickness="{TemplateBinding BorderThickness}"
                                                FontFamily="{TemplateBinding FontFamily}"
@@ -3121,7 +3122,7 @@
 
 
 
-                                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="12" Background="{TemplateBinding Background}">
+                                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="12" Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}">
 
 
 
@@ -3534,3 +3535,4 @@
 
 
 </Application>
+

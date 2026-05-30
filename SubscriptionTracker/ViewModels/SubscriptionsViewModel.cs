@@ -112,11 +112,11 @@ namespace SubscriptionTracker.ViewModels
 
             if (SelectedSortOption == "Cena: od najniższej")
             {
-                query = query.OrderBy(s => s.Model.Price);
+                query = query.OrderBy(s => s.Model.SplitPrice);
             }
             else if (SelectedSortOption == "Cena: od najwyższej")
             {
-                query = query.OrderByDescending(s => s.Model.Price);
+                query = query.OrderByDescending(s => s.Model.SplitPrice);
             }
             else if (SelectedSortOption == "Data płatności: najwcześniej")
             {
@@ -175,3 +175,4 @@ namespace SubscriptionTracker.ViewModels
         }
     }
 }
+

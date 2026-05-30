@@ -668,7 +668,7 @@
 
 
 
-                                                            <Border Background="{TemplateBinding Background}" CornerRadius="2"/>
+                                                            <Border Background="{Binding Background, RelativeSource={RelativeSource TemplatedParent}}" CornerRadius="2"/>
 
 
 
@@ -792,3 +792,4 @@
 
 
 
+
