@@ -8,52 +8,223 @@
              Background="Transparent">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <Grid Margin="20,20,20,90">
+        <Grid Margin="20,20,20,110">
             <StackPanel MaxWidth="1200" HorizontalAlignment="Stretch">
 
                 <!-- Header -->
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
                     <TextBlock Text="&#xE716;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <TextBlock Text="SubTrack" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
+                    <TextBlock Text="SubTrack Social" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
                 </StackPanel>
 
-                <StackPanel Margin="0,0,0,30">
-                    <TextBlock Text="Rodzina i znajomi" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
-                    <TextBlock Text="Zarządzaj osobami, z którymi dzielisz subskrypcje i koszty" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,0"/>
+                <StackPanel Margin="0,0,0,25">
+                    <TextBlock Text="Rodzina i współdzielenie" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
+                    <TextBlock Text="Wyszukuj innych użytkowników systemu po nazwie lub e-mailu, wysyłaj zaproszenia i wspólnie śledźcie koszty." Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,0"/>
                 </StackPanel>
 
-                <!-- Input form for adding family members -->
-                <Border Style="{StaticResource CardStyle}" CornerRadius="16" Margin="0,0,0,30" Padding="20">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
+                <!-- Search Section -->
+                <Border Style="{StaticResource CardStyle}" CornerRadius="16" Margin="0,0,0,25" Padding="20">
+                    <StackPanel>
+                        <TextBlock Text="Wyszukaj użytkowników w systemie" Foreground="{DynamicResource TextPrimary}" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
 
-                        <!-- Name input -->
-                        <TextBox Grid.Column="0" Height="45" Margin="0,0,15,0"
-                                 Style="{StaticResource ModernTextBox}"
-                                 Tag="Nazwa / Pseudonim..."
-                                 Text="{Binding NewMemberName, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Grid.Column="0" Height="45" Margin="0,0,12,0"
+                                     Style="{StaticResource ModernTextBox}"
+                                     Tag="Wpisz nazwę użytkownika lub adres e-mail..."
+                                     Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter" Command="{Binding SearchCommand}" />
+                                </TextBox.InputBindings>
+                            </TextBox>
 
-                        <!-- Relationship input -->
-                        <TextBox Grid.Column="1" Height="45" Margin="0,0,15,0"
-                                 Style="{StaticResource ModernTextBox}"
-                                 Tag="Relacja (np. Rodzina, Przyjaciel, Współlokator)..."
-                                 Text="{Binding NewMemberRelationship, UpdateSourceTrigger=PropertyChanged}" />
+                            <Button Grid.Column="1" Content="Szukaj" Width="120" Height="45"
+                                    Style="{StaticResource PrimaryButton}"
+                                    Command="{Binding SearchCommand}" />
+                        </Grid>
 
-                        <!-- Add button -->
-                        <Button Grid.Column="2" Content="Dodaj osobę" Width="140" Height="45"
-                                Style="{StaticResource PrimaryButton}"
-                                Command="{Binding AddMemberCommand}" />
-                    </Grid>
+                        <!-- Search Results -->
+                        <ItemsControl ItemsSource="{Binding SearchResults}" Margin="0,15,0,0">
+                            <ItemsControl.Style>
+                                <Style TargetType="ItemsControl">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SearchResults.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ItemsControl.Style>
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="360" Margin="0,0,12,12" Background="#1C1C22" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" CornerRadius="12" Padding="12">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Avatar -->
+                                            <Border Grid.Column="0" Width="36" Height="36" CornerRadius="18" Background="{StaticResource PrimaryBrush}" Margin="0,0,12,0" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Initials}" Foreground="White" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+
+                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                <TextBlock Text="{Binding Username}" Foreground="{DynamicResource TextPrimary}" FontSize="14" FontWeight="SemiBold"/>
+                                                <TextBlock Text="{Binding Email}" Foreground="{DynamicResource TextSecondary}" FontSize="11"/>
+                                            </StackPanel>
+
+                                            <!-- Invite button -->
+                                            <Button Grid.Column="2" 
+                                                    Command="{Binding DataContext.SendInvitationCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                                    CommandParameter="{Binding}" 
+                                                    IsEnabled="{Binding CanSend}"
+                                                    Padding="12,6" Height="32" FontSize="11" FontWeight="SemiBold">
+                                                <Button.Style>
+                                                    <Style TargetType="Button" BasedOn="{StaticResource SuccessButton}">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsEnabled" Value="False">
+                                                                <Setter Property="Background" Value="Transparent"/>
+                                                                <Setter Property="BorderBrush" Value="{DynamicResource CardBorder}"/>
+                                                                <Setter Property="Foreground" Value="{DynamicResource TextSecondary}"/>
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                                <TextBlock Text="{Binding StatusText}"/>
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
                 </Border>
 
-                <!-- Members List -->
-                <TextBlock Text="Lista osób" Foreground="{DynamicResource TextPrimary}" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,15"/>
+                <!-- Received Invitations Panel -->
+                <StackPanel Margin="0,0,0,25">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding PendingReceived.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBlock Text="Otrzymane zaproszenia do rodziny" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                    <ItemsControl ItemsSource="{Binding PendingReceived}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Width="380" Margin="0,0,16,12" Background="#1B221B" BorderBrush="#2e422e" BorderThickness="1" CornerRadius="12" Padding="15">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
 
-                <!-- Empty state message -->
+                                        <!-- Avatar -->
+                                        <Border Grid.Column="0" Width="40" Height="40" CornerRadius="20" Background="#2e7d32" Margin="0,0,12,0" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Initials}" Foreground="White" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextPrimary}" FontSize="15" FontWeight="Bold"/>
+                                            <TextBlock Text="Chce dołączyć do Twojej rodziny" Foreground="#81c784" FontSize="11"/>
+                                        </StackPanel>
+
+                                        <!-- Actions -->
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                            <Button Content="Akceptuj" 
+                                                    Command="{Binding DataContext.AcceptInvitationCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                                    CommandParameter="{Binding}" 
+                                                    Style="{StaticResource SuccessButton}" 
+                                                    Padding="12,6" Height="32" Margin="0,0,8,0" FontSize="11" />
+                                            <Button Content="Odrzuć" 
+                                                    Command="{Binding DataContext.DeclineOrRemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                                    CommandParameter="{Binding}" 
+                                                    Style="{StaticResource OutlineButton}" 
+                                                    Padding="12,6" Height="32" FontSize="11" />
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <!-- Sent Invitations Panel -->
+                <StackPanel Margin="0,0,0,25">
+                    <StackPanel.Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding PendingSent.Count}" Value="0">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Style>
+                    <TextBlock Text="Wysłane zaproszenia (oczekujące)" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                    <ItemsControl ItemsSource="{Binding PendingSent}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Width="380" Margin="0,0,16,12" Background="#221C1C" BorderBrush="#422e2e" BorderThickness="1" CornerRadius="12" Padding="15">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Avatar -->
+                                        <Border Grid.Column="0" Width="40" Height="40" CornerRadius="20" Background="#c62828" Margin="0,0,12,0" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Initials}" Foreground="White" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+
+                                        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextPrimary}" FontSize="15" FontWeight="Bold"/>
+                                            <TextBlock Text="Czeka na akceptację" Foreground="#ef9a9a" FontSize="11"/>
+                                        </StackPanel>
+
+                                        <!-- Cancel -->
+                                        <Button Grid.Column="2" Content="Anuluj" 
+                                                Command="{Binding DataContext.DeclineOrRemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" 
+                                                CommandParameter="{Binding}" 
+                                                Style="{StaticResource OutlineButton}" 
+                                                Padding="12,6" Height="32" FontSize="11" VerticalAlignment="Center" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <!-- Connected Family Members List -->
+                <TextBlock Text="Twoja Rodzina" Foreground="{DynamicResource TextPrimary}" FontSize="20" FontWeight="SemiBold" Margin="0,0,0,15"/>
+
+                <!-- Empty State -->
                 <Border CornerRadius="16" Background="#14141A" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Padding="30" Margin="0,0,0,30">
                     <Border.Style>
                         <Style TargetType="Border">
@@ -67,12 +238,12 @@
                     </Border.Style>
                     <StackPanel HorizontalAlignment="Center">
                         <TextBlock Text="&#xE77B;" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource TextSecondary}" FontSize="40" HorizontalAlignment="Center" Margin="0,0,0,10"/>
-                        <TextBlock Text="Brak zdefiniowanych osób" Foreground="{DynamicResource TextPrimary}" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center"/>
-                        <TextBlock Text="Dodaj członków rodziny lub znajomych, aby dzielić z nimi koszty subskrypcji." Foreground="{DynamicResource TextSecondary}" FontSize="13" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                        <TextBlock Text="Brak połączonych członków" Foreground="{DynamicResource TextPrimary}" FontSize="16" FontWeight="SemiBold" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Wyszukaj drugiego użytkownika powyżej i wyślij mu zaproszenie, aby wspólnie rozliczać subskrypcje!" Foreground="{DynamicResource TextSecondary}" FontSize="13" HorizontalAlignment="Center" Margin="0,5,0,0" TextAlignment="Center"/>
                     </StackPanel>
                 </Border>
 
-                <!-- Members grid using WrapPanel -->
+                <!-- Connected Grid -->
                 <ItemsControl ItemsSource="{Binding Members}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -100,7 +271,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <!-- Avatar circle with initials -->
+                                    <!-- Avatar -->
                                     <Border Grid.Column="0" Width="48" Height="48" CornerRadius="24" Margin="0,0,15,0" VerticalAlignment="Center" Background="{Binding AvatarColor}">
                                         <TextBlock Text="{Binding Initials}" Foreground="White" FontSize="16" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                     </Border>
@@ -120,8 +291,8 @@
                                         <TextBlock Text="{Binding TotalShareAmountText}" Foreground="{StaticResource SuccessBrush}" FontSize="13" FontWeight="SemiBold"/>
                                     </StackPanel>
 
-                                    <!-- Delete Button -->
-                                    <Button Grid.Column="2" Command="{Binding DataContext.DeleteMemberCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Cursor="Hand" ToolTip="Usuń osobę" VerticalAlignment="Center">
+                                    <!-- Disconnect Button -->
+                                    <Button Grid.Column="2" Command="{Binding DataContext.DeclineOrRemoveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" Background="Transparent" BorderThickness="0" Cursor="Hand" ToolTip="Rozłącz (usuń z rodziny)" VerticalAlignment="Center">
                                         <Button.Template>
                                             <ControlTemplate TargetType="Button">
                                                 <TextBlock x:Name="btnTxt" Text="&#xE74D;" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource TextSecondary}" FontSize="14" VerticalAlignment="Center"/>

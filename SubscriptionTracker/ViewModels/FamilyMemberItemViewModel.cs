@@ -6,11 +6,15 @@ namespace SubscriptionTracker.ViewModels
 {
     public partial class FamilyMemberItemViewModel : ObservableObject
     {
-        public FamilyMember Model { get; }
+        public int ConnectionId { get; }
+        public User OtherUser { get; }
+        public string Name => OtherUser.Username;
+        public string Email => OtherUser.Email ?? "Brak e-mail";
+        public string Relationship { get; }
 
-        public int Id => Model.Id;
-        public string Name => Model.Name;
-        public string Relationship => string.IsNullOrWhiteSpace(Model.Relationship) ? "Znajomy" : Model.Relationship;
+        public bool IsAccepted { get; }
+        public bool IsPendingReceived { get; }
+        public bool IsPendingSent { get; }
 
         [ObservableProperty]
         private int _sharedSubscriptionsCount;
@@ -38,17 +42,33 @@ namespace SubscriptionTracker.ViewModels
             }
         }
 
-        public FamilyMemberItemViewModel(FamilyMember model, int count, decimal totalShare)
+        public FamilyMemberItemViewModel(FamilyConnection connection, int currentUserId, int count, decimal totalShare)
         {
-            Model = model;
+            ConnectionId = connection.Id;
+            IsAccepted = connection.IsAccepted;
+            Relationship = string.IsNullOrWhiteSpace(connection.Relationship) ? "Znajomy" : connection.Relationship;
+
+            if (connection.SenderUserId == currentUserId)
+            {
+                OtherUser = connection.ReceiverUser;
+                IsPendingSent = !connection.IsAccepted;
+                IsPendingReceived = false;
+            }
+            else
+            {
+                OtherUser = connection.SenderUser;
+                IsPendingSent = false;
+                IsPendingReceived = !connection.IsAccepted;
+            }
+
             SharedSubscriptionsCount = count;
-            
+
             // Polish grammar helper for plural nouns
             string subText;
             if (count == 1) subText = "subskrypcję";
             else if (count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)) subText = "subskrypcje";
             else subText = "subskrypcji";
-            
+
             SharedSubscriptionsCountText = $"Współdzieli {count} {subText}";
             TotalShareAmountText = $"Udział: {totalShare:F2} PLN / mies.";
 

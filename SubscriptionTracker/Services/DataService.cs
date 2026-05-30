@@ -225,38 +225,90 @@ namespace SubscriptionTracker.Services
                 return true;
             }
         }
-        // ================= FAMILY MEMBERS =================
+        // ================= FAMILY CONNECTIONS =================
 
-        public async Task<List<FamilyMember>> GetFamilyMembersAsync()
+        public async Task<List<User>> SearchUsersAsync(string query)
         {
-            var userId = SessionManager.CurrentUser?.Id ?? 0;
+            var currentUserId = SessionManager.CurrentUser?.Id ?? 0;
+            if (string.IsNullOrWhiteSpace(query)) return new List<User>();
+
             using (var db = new AppDbContext())
             {
-                return await db.FamilyMembers
-                    .Where(f => f.UserId == userId)
+                return await db.Users
+                    .Where(u => u.Id != currentUserId && 
+                                (u.Username.ToLower().Contains(query.ToLower()) || 
+                                 (!string.IsNullOrEmpty(u.Email) && u.Email.ToLower().Contains(query.ToLower()))))
                     .ToListAsync();
             }
         }
 
-        public async Task AddFamilyMemberAsync(FamilyMember member)
+        public async Task<List<FamilyConnection>> GetFamilyConnectionsAsync()
         {
-            member.UserId = SessionManager.CurrentUser?.Id ?? 0;
+            var currentUserId = SessionManager.CurrentUser?.Id ?? 0;
             using (var db = new AppDbContext())
             {
-                db.FamilyMembers.Add(member);
-                await db.SaveChangesAsync();
+                return await db.FamilyConnections
+                    .Include(fc => fc.SenderUser)
+                    .Include(fc => fc.ReceiverUser)
+                    .Where(fc => fc.SenderUserId == currentUserId || fc.ReceiverUserId == currentUserId)
+                    .ToListAsync();
             }
         }
 
-        public async Task DeleteFamilyMemberAsync(int id)
+        public async Task<bool> SendInvitationAsync(int targetUserId, string relationship = "Rodzina")
         {
-            var userId = SessionManager.CurrentUser?.Id ?? 0;
+            var currentUserId = SessionManager.CurrentUser?.Id ?? 0;
+            if (currentUserId == 0 || targetUserId == 0 || currentUserId == targetUserId) return false;
+
             using (var db = new AppDbContext())
             {
-                var member = await db.FamilyMembers.FirstOrDefaultAsync(f => f.Id == id && f.UserId == userId);
-                if (member != null)
+                var exists = await db.FamilyConnections.AnyAsync(fc => 
+                    (fc.SenderUserId == currentUserId && fc.ReceiverUserId == targetUserId) ||
+                    (fc.SenderUserId == targetUserId && fc.ReceiverUserId == currentUserId));
+
+                if (exists) return false;
+
+                var connection = new FamilyConnection
                 {
-                    db.FamilyMembers.Remove(member);
+                    SenderUserId = currentUserId,
+                    ReceiverUserId = targetUserId,
+                    IsAccepted = false,
+                    Relationship = relationship
+                };
+
+                db.FamilyConnections.Add(connection);
+                await db.SaveChangesAsync();
+                return true;
+            }
+        }
+
+        public async Task<bool> AcceptInvitationAsync(int connectionId)
+        {
+            var currentUserId = SessionManager.CurrentUser?.Id ?? 0;
+            using (var db = new AppDbContext())
+            {
+                var connection = await db.FamilyConnections.FirstOrDefaultAsync(fc => 
+                    fc.Id == connectionId && fc.ReceiverUserId == currentUserId);
+
+                if (connection == null) return false;
+
+                connection.IsAccepted = true;
+                await db.SaveChangesAsync();
+                return true;
+            }
+        }
+
+        public async Task DeleteConnectionAsync(int connectionId)
+        {
+            var currentUserId = SessionManager.CurrentUser?.Id ?? 0;
+            using (var db = new AppDbContext())
+            {
+                var connection = await db.FamilyConnections.FirstOrDefaultAsync(fc => 
+                    fc.Id == connectionId && (fc.SenderUserId == currentUserId || fc.ReceiverUserId == currentUserId));
+
+                if (connection != null)
+                {
+                    db.FamilyConnections.Remove(connection);
                     await db.SaveChangesAsync();
                 }
             }

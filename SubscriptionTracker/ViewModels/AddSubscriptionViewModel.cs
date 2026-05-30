@@ -213,19 +213,25 @@ namespace SubscriptionTracker.ViewModels
         [RelayCommand]
         private async Task LoadFamilyMembersAsync()
         {
-            var members = await _dataService.GetFamilyMembersAsync();
+            var connections = await _dataService.GetFamilyConnectionsAsync();
             FamilyMembersList.Clear();
+
+            int currentUserId = SessionManager.CurrentUser?.Id ?? 0;
+            var acceptedConnections = connections.Where(fc => fc.IsAccepted).ToList();
 
             var sharedNames = string.IsNullOrWhiteSpace(SharedWith)
                 ? Array.Empty<string>()
                 : SharedWith.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(n => n.Trim().ToLower()).ToArray();
 
-            foreach (var m in members)
+            foreach (var conn in acceptedConnections)
             {
+                var otherUser = conn.SenderUserId == currentUserId ? conn.ReceiverUser : conn.SenderUser;
+                string otherUsername = otherUser.Username;
+
                 var selectable = new SelectableFamilyMember
                 {
-                    Name = m.Name,
-                    IsSelected = sharedNames.Contains(m.Name.Trim().ToLower())
+                    Name = otherUsername,
+                    IsSelected = sharedNames.Contains(otherUsername.Trim().ToLower())
                 };
 
                 selectable.PropertyChanged += (s, e) =>

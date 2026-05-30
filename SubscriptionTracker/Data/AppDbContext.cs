@@ -11,7 +11,7 @@ namespace SubscriptionTracker.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<PaymentLog> PaymentLogs { get; set; }
-        public DbSet<FamilyMember> FamilyMembers { get; set; }
+        public DbSet<FamilyConnection> FamilyConnections { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -63,11 +63,17 @@ namespace SubscriptionTracker.Data
                 .HasForeignKey(p => p.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // User -> FamilyMember relation
-            modelBuilder.Entity<FamilyMember>()
-                .HasOne(f => f.User)
-                .WithMany(u => u.FamilyMembers)
-                .HasForeignKey(f => f.UserId)
+            // FamilyConnections relations
+            modelBuilder.Entity<FamilyConnection>()
+                .HasOne(fc => fc.SenderUser)
+                .WithMany()
+                .HasForeignKey(fc => fc.SenderUserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<FamilyConnection>()
+                .HasOne(fc => fc.ReceiverUser)
+                .WithMany()
+                .HasForeignKey(fc => fc.ReceiverUserId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

@@ -83,12 +83,14 @@ namespace SubscriptionTracker
                 try
                 {
                     db.Database.ExecuteSqlRaw(@"
-                        CREATE TABLE IF NOT EXISTS FamilyMembers (
+                        CREATE TABLE IF NOT EXISTS FamilyConnections (
                             Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                            Name TEXT NOT NULL,
+                            SenderUserId INTEGER NOT NULL,
+                            ReceiverUserId INTEGER NOT NULL,
+                            IsAccepted INTEGER NOT NULL DEFAULT 0,
                             Relationship TEXT NULL,
-                            UserId INTEGER NOT NULL,
-                            FOREIGN KEY(UserId) REFERENCES Users(Id) ON DELETE CASCADE
+                            FOREIGN KEY(SenderUserId) REFERENCES Users(Id) ON DELETE CASCADE,
+                            FOREIGN KEY(ReceiverUserId) REFERENCES Users(Id) ON DELETE CASCADE
                         );
                     ");
                 }
