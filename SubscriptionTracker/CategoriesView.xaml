@@ -14,7 +14,7 @@
 
 
 
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
 
                     <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
 
@@ -24,17 +24,17 @@
 
 
 
-                <StackPanel Margin="0,0,0,30">
+                <StackPanel Margin="0,0,0,30" HorizontalAlignment="Center">
 
-                    <TextBlock Text="Kategorie" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold"/>
+                    <TextBlock Text="Kategorie" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center"/>
 
-                    <TextBlock Text="Organizuj i śledź budżet" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,0"/>
+                    <TextBlock Text="Organizuj i śledź budżet" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,0" HorizontalAlignment="Center"/>
 
                 </StackPanel>
 
 
 
-                <WrapPanel Margin="0,0,0,30">
+                <WrapPanel Margin="0,0,0,30" HorizontalAlignment="Center">
 
                     <TextBox Width="300" Height="45" Margin="0,0,15,15"
 
@@ -58,13 +58,13 @@
 
                 <!-- KATEGORIE LISTA -->
 
-                <ItemsControl ItemsSource="{Binding Categories}">
+                <ItemsControl ItemsSource="{Binding Categories}" HorizontalAlignment="Center">
 
                     <ItemsControl.ItemsPanel>
 
                         <ItemsPanelTemplate>
 
-                            <WrapPanel />
+                            <WrapPanel HorizontalAlignment="Center" />
 
                         </ItemsPanelTemplate>
 

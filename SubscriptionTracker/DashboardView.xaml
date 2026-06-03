@@ -110,7 +110,7 @@
 
 
 
-                <TextBlock Text="{Binding TodayDateText}" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,35"/>
+                <TextBlock Text="{Binding TodayDateText}" Foreground="{DynamicResource TextSecondary}" FontSize="14" Margin="0,5,0,35" HorizontalAlignment="Center"/>
 
 
 
