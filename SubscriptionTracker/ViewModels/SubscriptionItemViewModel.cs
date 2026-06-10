@@ -1,6 +1,7 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SubscriptionTracker.Models;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SubscriptionTracker.ViewModels
@@ -40,7 +41,36 @@ namespace SubscriptionTracker.ViewModels
 
         public bool IsShared => _subscription.IsShared;
         public int NumberOfMembers => _subscription.NumberOfMembers;
-        public string SharedWith => _subscription.SharedWith;
+        
+        public string SharedWith
+        {
+            get
+            {
+                var currentUser = Services.SessionManager.CurrentUser;
+                if (currentUser == null) return _subscription.SharedWith;
+
+                if (_subscription.UserId == currentUser.Id)
+                {
+                    return _subscription.SharedWith;
+                }
+                else
+                {
+                    var ownerName = _subscription.User?.Username ?? "Właściciel";
+                    var coPayers = (_subscription.SharedWith ?? "")
+                        .Split(',', System.StringSplitOptions.RemoveEmptyEntries)
+                        .Select(n => n.Trim())
+                        .Where(n => !string.Equals(n, currentUser.Username, System.StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+
+                    if (coPayers.Any())
+                    {
+                        return $"{ownerName}, {string.Join(", ", coPayers)}";
+                    }
+                    return ownerName;
+                }
+            }
+        }
+
         public decimal SplitPrice => _subscription.SplitPrice;
 
         public string Note

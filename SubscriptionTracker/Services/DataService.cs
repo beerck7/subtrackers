@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SubscriptionTracker.Data;
 using SubscriptionTracker.Models;
 using System.Collections.Generic;
@@ -126,12 +126,21 @@ namespace SubscriptionTracker.Services
         public async Task<List<Subscription>> GetSubscriptionsAsync()
         {
             var userId = SessionManager.CurrentUser?.Id ?? 0;
+            var username = (SessionManager.CurrentUser?.Username ?? "").Trim().ToLower();
             using (var db = new AppDbContext())
             {
-                return await db.Subscriptions
+                var subscriptions = await db.Subscriptions
                     .Include(s => s.Category)
-                    .Where(s => s.UserId == userId)
+                    .Include(s => s.User)
                     .ToListAsync();
+
+                return subscriptions.Where(s => 
+                    s.UserId == userId || 
+                    (s.IsShared && !string.IsNullOrWhiteSpace(s.SharedWith) && 
+                     s.SharedWith.Split(',', System.StringSplitOptions.RemoveEmptyEntries)
+                                  .Select(n => n.Trim().ToLower())
+                                  .Contains(username))
+                ).ToList();
             }
         }
 
@@ -151,7 +160,10 @@ namespace SubscriptionTracker.Services
 
         public async Task UpdateSubscriptionAsync(Subscription subscription)
         {
-            subscription.UserId = SessionManager.CurrentUser?.Id ?? 0;
+            if (subscription.UserId == 0)
+            {
+                subscription.UserId = SessionManager.CurrentUser?.Id ?? 0;
+            }
             using (var db = new AppDbContext())
             {
                 db.Subscriptions.Update(subscription);
@@ -195,10 +207,19 @@ namespace SubscriptionTracker.Services
         public async Task<bool> LogSubscriptionPaymentAsync(int subscriptionId, string note)
         {
             var userId = SessionManager.CurrentUser?.Id ?? 0;
+            var username = (SessionManager.CurrentUser?.Username ?? "").Trim().ToLower();
             using (var db = new AppDbContext())
             {
-                var sub = await db.Subscriptions.FirstOrDefaultAsync(s => s.Id == subscriptionId && s.UserId == userId);
+                var sub = await db.Subscriptions.FirstOrDefaultAsync(s => s.Id == subscriptionId);
                 if (sub == null) return false;
+
+                bool isCoPayer = sub.IsShared && !string.IsNullOrWhiteSpace(sub.SharedWith) &&
+                                 sub.SharedWith.Split(',', System.StringSplitOptions.RemoveEmptyEntries)
+                                     .Select(n => n.Trim().ToLower())
+                                     .Contains(username);
+
+                if (sub.UserId != userId && !isCoPayer)
+                    return false;
 
                 var log = new PaymentLog
                 {
