@@ -1,4 +1,4 @@
-<UserControl x:Class="SubscriptionTracker.SettingsView"
+﻿<UserControl x:Class="SubscriptionTracker.SettingsView"
 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 
@@ -118,7 +118,6 @@
 
 
 
-                        <!-- Widok wyświetlania danych profilu -->
 
                         <Grid>
 
@@ -164,7 +163,6 @@
 
 
 
-                        <!-- Widok edycji danych profilu -->
 
                         <Grid>
 
@@ -322,9 +320,25 @@
                     </StackPanel>
                 </Border>
 
-
-
-                <Button Content="Usuń dane konta" Style="{StaticResource DangerButton}" Command="{Binding DeleteAllDataCommand}" Margin="0,30,0,0" Padding="0,15" />
+                <Border Style="{StaticResource CardStyle}" Margin="0,20,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Zarządzanie kontem" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="18" Margin="0,0,0,20"/>
+                        
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            
+                            <StackPanel VerticalAlignment="Center" Margin="0,0,20,0">
+                                <TextBlock Text="Usuń wszystkie dane" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
+                                <TextBlock Text="Trwale usuwa wszystkie subskrypcje i kategorie z Twojego konta. Tej operacji nie można cofnąć." Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,4,0,0" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            
+                            <Button Grid.Column="1" Content="Usuń dane konta" Command="{Binding DeleteAllDataCommand}" Style="{StaticResource DangerButton}" Padding="15,10" VerticalAlignment="Center"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
 
 
 

@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SubscriptionTracker.Models;
 using System.Threading.Tasks;
@@ -37,7 +37,7 @@ namespace SubscriptionTracker.ViewModels
         public string StatusText => Status == "Aktywna" ? "Aktywna" : "Wstrzymana";
         public string StatusBrush => Status == "Aktywna" ? "#22c55e" : "#ef4444";
         
-        // Cost sharing
+
         public bool IsShared => _subscription.IsShared;
         public int NumberOfMembers => _subscription.NumberOfMembers;
         public string SharedWith => _subscription.SharedWith;

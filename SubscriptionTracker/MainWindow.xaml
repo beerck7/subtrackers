@@ -17,7 +17,27 @@
     </WindowChrome.WindowChrome>
 
     <Window.Resources>
-        <!-- Style for Bottom Navigation Buttons -->
+        <CubicEase x:Key="EaseOut" EasingMode="EaseOut"/>
+        
+        <Style TargetType="{x:Type UserControl}">
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TranslateTransform Y="15"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Opacity" Value="0"/>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.35" EasingFunction="{StaticResource EaseOut}"/>
+                            <DoubleAnimation Storyboard.TargetProperty="(UIElement.RenderTransform).(TranslateTransform.Y)" To="0" Duration="0:0:0.35" EasingFunction="{StaticResource EaseOut}"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
         <Style x:Key="NavButton" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="{DynamicResource TextSecondary}"/>
@@ -48,7 +68,6 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Custom Dark Title Bar (Height: 40px) -->
         <Border Grid.Row="0" Height="40" Background="#14141A" BorderBrush="{DynamicResource CardBorder}" BorderThickness="0,0,0,1">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -57,18 +76,14 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- App Icon & Title on the Left -->
                 <StackPanel Grid.Column="0" Orientation="Horizontal" Margin="15,0,0,0" VerticalAlignment="Center">
                     <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="14" Margin="0,0,8,0" VerticalAlignment="Center"/>
                     <TextBlock Text="SubTrack" Foreground="{DynamicResource TextPrimary}" FontSize="13" FontWeight="SemiBold" VerticalAlignment="Center"/>
                 </StackPanel>
 
-                <!-- Draggable Caption Area -->
                 <Grid Grid.Column="1" Background="Transparent"/>
 
-                <!-- Window Controls on the Right -->
                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Stretch">
-                    <!-- Minimize Button -->
                     <Button Click="Minimize_Click" Width="46" Background="Transparent" BorderThickness="0" Cursor="Hand" WindowChrome.IsHitTestVisibleInChrome="True">
                         <Button.Style>
                             <Style TargetType="Button">
@@ -90,7 +105,6 @@
                         </Button.Style>
                     </Button>
 
-                    <!-- Maximize / Restore Button -->
                     <Button Click="Maximize_Click" Width="46" Background="Transparent" BorderThickness="0" Cursor="Hand" WindowChrome.IsHitTestVisibleInChrome="True">
                         <Button.Style>
                             <Style TargetType="Button">
@@ -115,7 +129,6 @@
                         </Button.Style>
                     </Button>
 
-                    <!-- Close Button -->
                     <Button Click="Close_Click" Width="46" Background="Transparent" BorderThickness="0" Cursor="Hand" WindowChrome.IsHitTestVisibleInChrome="True">
                         <Button.Style>
                             <Style TargetType="Button">
@@ -141,9 +154,12 @@
             </Grid>
         </Border>
 
-        <!-- Main Content Area -->
         <Grid Grid.Row="1">
-            <ContentControl x:Name="MainContent" Content="{Binding CurrentView}" Margin="0,0,0,0" />
+            <ContentControl x:Name="MainContent" Content="{Binding CurrentView}" Margin="0,0,0,0" RenderTransformOrigin="0.5,0.5">
+                <ContentControl.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1" />
+                </ContentControl.RenderTransform>
+            </ContentControl>
 
             <Border VerticalAlignment="Bottom" HorizontalAlignment="Center"
                     Width="640"
@@ -180,7 +196,6 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!-- Panel główny -->
                     <Button Grid.Column="0" ToolTip="Panel główny" Command="{Binding NavigateCommand}" CommandParameter="Dashboard">
                         <Button.Style>
                             <Style TargetType="Button" BasedOn="{StaticResource NavButton}">
@@ -197,7 +212,6 @@
                         </StackPanel>
                     </Button>
 
-                    <!-- Subskrypcje -->
                     <Button Grid.Column="1" ToolTip="Subskrypcje" Command="{Binding NavigateCommand}" CommandParameter="Subscriptions">
                         <Button.Style>
                             <Style TargetType="Button" BasedOn="{StaticResource NavButton}">
@@ -214,7 +228,6 @@
                         </StackPanel>
                     </Button>
 
-                    <!-- Kategorie -->
                     <Button Grid.Column="2" ToolTip="Kategorie" Command="{Binding NavigateCommand}" CommandParameter="Categories">
                         <Button.Style>
                             <Style TargetType="Button" BasedOn="{StaticResource NavButton}">
@@ -231,7 +244,6 @@
                         </StackPanel>
                     </Button>
 
-                    <!-- Ustawienia -->
                     <Button Grid.Column="3" ToolTip="Ustawienia" Command="{Binding NavigateCommand}" CommandParameter="Settings">
                         <Button.Style>
                             <Style TargetType="Button" BasedOn="{StaticResource NavButton}">
@@ -248,7 +260,6 @@
                         </StackPanel>
                     </Button>
 
-                    <!-- Rodzina -->
                     <Button Grid.Column="4" ToolTip="Rodzina" Command="{Binding NavigateCommand}" CommandParameter="Family">
                         <Button.Style>
                             <Style TargetType="Button" BasedOn="{StaticResource NavButton}">
@@ -265,10 +276,8 @@
                         </StackPanel>
                     </Button>
 
-                    <!-- Separator -->
                     <Rectangle Grid.Column="5" Width="1" Fill="{DynamicResource CardBorder}" Margin="10,5"/>
 
-                    <!-- Wyloguj -->
                     <Button Grid.Column="6" ToolTip="Wyloguj" Style="{StaticResource NavButton}" Command="{Binding ShutdownCommand}">
                         <StackPanel>
                             <TextBlock Text="&#xE8D8;" FontFamily="Segoe MDL2 Assets" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,4"/>

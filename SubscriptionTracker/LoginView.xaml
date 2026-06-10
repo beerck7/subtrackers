@@ -9,7 +9,6 @@
              Background="{DynamicResource AppBackground}">
 
     <UserControl.Resources>
-        <!-- Custom stylized PasswordBox mimicking the ModernTextBox -->
         <Style x:Key="ModernPasswordBox" TargetType="PasswordBox">
             <Setter Property="Background" Value="{DynamicResource InputBackground}"/>
             <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
@@ -44,7 +43,6 @@
     </UserControl.Resources>
 
     <Grid>
-        <!-- Background Glowing Ambient Gradients -->
         <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="500" Height="500" CornerRadius="250" Margin="0,0,150,150" Opacity="0.12" IsHitTestVisible="False">
             <Border.Background>
                 <RadialGradientBrush Center="0.5,0.5" RadiusX="0.5" RadiusY="0.5">
@@ -62,16 +60,19 @@
             </Border.Background>
         </Border>
 
-        <!-- Main Authentication Card -->
-        <Border Style="{StaticResource CardStyle}" 
+        <Border x:Name="LoginCard"
+                Style="{StaticResource CardStyle}" 
                 Width="390" 
                 HorizontalAlignment="Center" 
                 VerticalAlignment="Center" 
                 CornerRadius="16" 
-                Padding="30,35">
+                Padding="30,35"
+                RenderTransformOrigin="0.5,0.5">
+            <Border.RenderTransform>
+                <ScaleTransform ScaleX="1" ScaleY="1" />
+            </Border.RenderTransform>
             
             <StackPanel>
-                <!-- Logo -->
                 <TextBlock Text="&#xE8C7;" 
                            FontFamily="Segoe MDL2 Assets" 
                            FontSize="48" 
@@ -79,7 +80,6 @@
                            HorizontalAlignment="Center" 
                            Margin="0,0,0,12" />
 
-                <!-- App title -->
                 <TextBlock Text="SubTrack" 
                            FontSize="26" 
                            FontWeight="Bold" 
@@ -93,11 +93,8 @@
                            HorizontalAlignment="Center" 
                            Margin="0,0,0,25" />
 
-                <!-- Card header title -->
 
-                <!-- Inputs -->
                 <StackPanel Margin="0,0,0,15">
-                    <!-- Username -->
                     <TextBlock Text="Nazwa użytkownika" 
                                FontSize="11" 
                                FontWeight="SemiBold" 
@@ -111,7 +108,6 @@
                              Padding="10,0" 
                              Margin="0,0,0,12" />
 
-                    <!-- Email (Visible only in Register Mode) -->
                     <StackPanel Visibility="{Binding IsRegisterMode, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <TextBlock Text="Adres e-mail" 
                                    FontSize="11" 
@@ -126,7 +122,6 @@
                                  Margin="0,0,0,12" />
                     </StackPanel>
 
-                    <!-- Password -->
                     <TextBlock Text="Hasło" 
                                FontSize="11" 
                                FontWeight="SemiBold" 
@@ -140,7 +135,6 @@
                                  Margin="0,0,0,15" />
                 </StackPanel>
 
-                <!-- Dynamic Error / Status Messages with zero converter required -->
                 <TextBlock x:Name="ErrorText"
                            Text="{Binding ErrorMessage}" 
                            FontSize="12" 
@@ -166,14 +160,13 @@
                     </TextBlock.Style>
                 </TextBlock>
 
-                <!-- Action Button -->
                 <Button Style="{DynamicResource PrimaryButton}" 
                         Content="{Binding SubmitButtonText}" 
+                        IsDefault="True"
                         Height="40" 
                         Click="SubmitButton_Click" 
                         Margin="0,0,0,15" />
 
-                <!-- Dynamic Toggle Button -->
                 <Button Style="{DynamicResource NavButton}" 
                         Content="{Binding ToggleText}" 
                         FontSize="12" 

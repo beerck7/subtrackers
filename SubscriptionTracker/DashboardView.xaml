@@ -1,4 +1,4 @@
-<UserControl x:Class="SubscriptionTracker.DashboardView"
+﻿<UserControl x:Class="SubscriptionTracker.DashboardView"
 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 
@@ -8,7 +8,7 @@
 
     <UserControl.Resources>
 
-        <!-- SegmentRadioButton Style -->
+
 
         <Style x:Key="SegmentRadioButton" TargetType="RadioButton">
 
@@ -86,19 +86,7 @@
 
 
 
-                <!--<StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
-
-
-
-                    <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
-
-
-
-                    <TextBlock Text="SubTrack" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
-
-
-
-                </StackPanel>-->
+
 
 
 
@@ -118,7 +106,7 @@
 
 
 
-                <!-- Górny panel podsumowań (Symetryczny Grid o równych proporcjach) -->
+
 
 
 
@@ -254,7 +242,7 @@
 
 
 
-                <!-- Dolny panel szczegółowy (Symetryczny Grid o proporcjach 1.3:1) -->
+
 
 
 
@@ -490,7 +478,7 @@
 
 
 
-                                <!-- Segmented Toggle Switch (Miesięcznie / Rocznie) -->
+
 
                                 <Border Grid.Column="1" Background="{DynamicResource InputBackground}" CornerRadius="15" Padding="3" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" VerticalAlignment="Center">
 
@@ -506,13 +494,13 @@
 
 
 
-                                        <!-- Monthly Button -->
+
 
                                         <RadioButton x:Name="BtnMonthly" Grid.Column="0" GroupName="PeriodGroup" IsChecked="True" Content="Miesięcznie" Style="{StaticResource SegmentRadioButton}"/>
 
 
 
-                                        <!-- Yearly Button -->
+
 
                                         <RadioButton x:Name="BtnYearly" Grid.Column="1" GroupName="PeriodGroup" IsChecked="{Binding IsYearlyView}" Content="Rocznie" Style="{StaticResource SegmentRadioButton}"/>
 
@@ -530,7 +518,7 @@
 
                             <Grid Width="150" Height="150" HorizontalAlignment="Center">
 
-                                <!-- Dynamic Donut Chart Segments (Premium Look) -->
+
 
                                 <ItemsControl ItemsSource="{Binding CategoryExpenses}">
 
@@ -568,13 +556,13 @@
 
 
 
-                                <!-- Sleek Background Ring -->
+
 
                                 <Ellipse Stroke="#1A1A22" StrokeThickness="18" Width="120" Height="120" IsHitTestVisible="False"/>
 
 
 
-                                <!-- Center Cutout -->
+
 
                                 <Ellipse Fill="{DynamicResource CardBackground}" Width="98" Height="98" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
 

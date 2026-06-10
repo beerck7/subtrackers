@@ -1,4 +1,4 @@
-<UserControl x:Class="SubscriptionTracker.SubscriptionsView"
+﻿<UserControl x:Class="SubscriptionTracker.SubscriptionsView"
 
 
 
@@ -98,7 +98,6 @@
 
 
 
-                        <!-- Filtry i Szukaj -->
 
 
 
@@ -106,7 +105,6 @@
 
 
 
-                            <!-- Szukaj -->
 
 
 
@@ -198,7 +196,6 @@
 
 
 
-                            <!-- Kategoria -->
 
 
 
@@ -246,7 +243,6 @@
 
 
 
-                            <!-- Status -->
 
 
 
@@ -290,7 +286,6 @@
 
 
 
-                            <!-- Sortowanie -->
 
 
 
@@ -338,7 +333,6 @@
 
 
 
-                        <!-- Nagłówki tabeli -->
 
 
 
@@ -376,7 +370,6 @@
 
 
 
-                        <!-- LISTA OBSŁUGIWANA PRZEZ MODEL Z DANYMI -->
 
 
 
@@ -396,7 +389,6 @@
 
 
 
-                                        <!-- Klikalny wiersz -->
 
 
 
@@ -456,7 +448,6 @@
 
                                                             
 
-                                                            <!-- Kolumna Status -->
 
                                                             <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
 
@@ -468,7 +459,6 @@
 
                                                             
 
-                                                            <!-- Cena (tylko kwota) -->
 
                                                             <TextBlock Grid.Column="4" Text="{Binding FormattedPrice}" Foreground="{DynamicResource TextPrimary}" FontWeight="Bold" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,30,0"/>
 
@@ -618,7 +608,6 @@
 
 
 
-                                        <!-- Sekcja szczegółów (Rozwijana) -->
 
 
 
@@ -674,7 +663,6 @@
 
 
 
-                                                <!-- Lewa kolumna: Informacje o czasie i statusie -->
 
 
 
@@ -782,7 +770,6 @@
 
 
 
-                                                <!-- Prawa kolumna: Notatki -->
 
 
 

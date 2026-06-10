@@ -1,4 +1,4 @@
-<Window x:Class="SubscriptionTracker.CustomMessageBox"
+﻿<Window x:Class="SubscriptionTracker.CustomMessageBox"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="SubTrack Alert" 
@@ -40,7 +40,6 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <!-- NAGŁÓWEK (DRAGGABLE) -->
             <Grid Grid.Row="0" Background="Transparent" MouseLeftButtonDown="Header_MouseLeftButtonDown" Margin="0,0,0,16">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -70,14 +69,12 @@
                 </Button>
             </Grid>
 
-            <!-- TREŚĆ -->
             <Grid Grid.Row="1" Margin="0,0,0,24">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- IKONA -->
                 <TextBlock x:Name="TxtIcon" 
                            Grid.Column="0" 
                            Text="&#xE9CE;" 
@@ -87,7 +84,6 @@
                            VerticalAlignment="Top" 
                            Margin="0,0,16,0"/>
 
-                <!-- TEKST WIADOMOŚCI -->
                 <TextBlock x:Name="TxtMessage" 
                            Grid.Column="1" 
                            Text="Treść wiadomości..." 
@@ -98,7 +94,6 @@
                            VerticalAlignment="Center"/>
             </Grid>
 
-            <!-- PRZYCISKI AKCJI -->
             <StackPanel Grid.Row="2" 
                         Orientation="Horizontal" 
                         HorizontalAlignment="Right">

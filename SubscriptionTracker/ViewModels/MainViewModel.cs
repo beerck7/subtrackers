@@ -2,6 +2,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SubscriptionTracker.Services;
 using System.Windows.Controls;
+using System;
+using System.Threading.Tasks;
 
 namespace SubscriptionTracker.ViewModels
 {
@@ -16,9 +18,11 @@ namespace SubscriptionTracker.ViewModels
         [ObservableProperty]
         private bool _isLoggedIn = false;
 
+        public event Action StartTransitionAnimation;
+        public event Action EndTransitionAnimation;
+
         public MainViewModel()
         {
-            // Initial state: Not logged in, show the login view
             ShowLoginScreen();
         }
 
@@ -32,13 +36,16 @@ namespace SubscriptionTracker.ViewModels
         private void OnLoginSuccess()
         {
             IsLoggedIn = true;
-            Navigate("Dashboard");
+            NavigateAsync("Dashboard").ConfigureAwait(false);
         }
 
         [RelayCommand]
-        private void Navigate(string viewName)
+        private async Task NavigateAsync(string viewName)
         {
-            if (!IsLoggedIn) return; // Prevent navigation if not authenticated
+            if (!IsLoggedIn || ActiveViewName == viewName) return;
+
+            StartTransitionAnimation?.Invoke();
+            await Task.Delay(250);
 
             ActiveViewName = viewName;
             
@@ -60,12 +67,13 @@ namespace SubscriptionTracker.ViewModels
                     CurrentView = new FamilyView();
                     break;
             }
+
+            EndTransitionAnimation?.Invoke();
         }
 
         [RelayCommand]
         private void Shutdown()
         {
-            // Reset the active user session and redirect to the login screen
             SessionManager.CurrentUser = null;
             ShowLoginScreen();
         }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -25,32 +25,32 @@ namespace SubscriptionTracker
             msgBox.TxtMessage.Text = messageBoxText;
             msgBox.TxtTitle.Text = string.IsNullOrWhiteSpace(caption) ? "SubTrack" : caption;
 
-            // Configure Icon
+
             switch (icon)
             {
                 case MessageBoxImage.Information:
-                    msgBox.TxtIcon.Text = "\xE9CE"; // Info
+                    msgBox.TxtIcon.Text = "\xE9CE";
                     msgBox.TxtIcon.Foreground = Application.Current.Resources["PrimaryBrush"] as Brush ?? new SolidColorBrush(Colors.DodgerBlue);
                     break;
                 case MessageBoxImage.Warning:
-                    msgBox.TxtIcon.Text = "\xE7BA"; // Warning
+                    msgBox.TxtIcon.Text = "\xE7BA";
                     msgBox.TxtIcon.Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#eab308"));
                     break;
                 case MessageBoxImage.Error:
-                    msgBox.TxtIcon.Text = "\xE783"; // Error
+                    msgBox.TxtIcon.Text = "\xE783";
                     msgBox.TxtIcon.Foreground = Application.Current.Resources["DangerBrush"] as Brush ?? new SolidColorBrush(Colors.Red);
                     break;
                 case MessageBoxImage.Question:
-                    msgBox.TxtIcon.Text = "\xE9CE"; // Question/Info
+                    msgBox.TxtIcon.Text = "\xE9CE";
                     msgBox.TxtIcon.Foreground = Application.Current.Resources["PrimaryBrush"] as Brush ?? new SolidColorBrush(Colors.DodgerBlue);
                     break;
                 default:
-                    msgBox.TxtIcon.Text = "\xE73E"; // Checkmark as default success
+                    msgBox.TxtIcon.Text = "\xE73E";
                     msgBox.TxtIcon.Foreground = Application.Current.Resources["SuccessBrush"] as Brush ?? new SolidColorBrush(Colors.LimeGreen);
                     break;
             }
 
-            // Configure Buttons
+
             if (button == MessageBoxButton.YesNo)
             {
                 msgBox.BtnOk.Visibility = Visibility.Collapsed;
@@ -64,7 +64,7 @@ namespace SubscriptionTracker
                 msgBox.BtnNo.Visibility = Visibility.Collapsed;
             }
 
-            // Show modally
+
             msgBox.ShowDialog();
             return msgBox._result;
         }

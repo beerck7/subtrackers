@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SubscriptionTracker.Models;
 using System.Linq;
 
@@ -63,7 +63,7 @@ namespace SubscriptionTracker.ViewModels
 
             SharedSubscriptionsCount = count;
 
-            // Polish grammar helper for plural nouns
+
             string subText;
             if (count == 1) subText = "subskrypcję";
             else if (count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20)) subText = "subskrypcje";
@@ -72,7 +72,7 @@ namespace SubscriptionTracker.ViewModels
             SharedSubscriptionsCountText = $"Współdzieli {count} {subText}";
             TotalShareAmountText = $"Udział: {totalShare:F2} PLN / mies.";
 
-            // Pick a beautiful pastel color based on the name hash
+
             string[] colors = new string[] { "#ef4444", "#3b82f6", "#22c55e", "#eab308", "#a855f7", "#ec4899", "#f97316", "#06b6d4" };
             int hash = Name.GetHashCode();
             AvatarColor = colors[System.Math.Abs(hash) % colors.Length];

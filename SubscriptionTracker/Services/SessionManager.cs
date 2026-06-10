@@ -1,4 +1,4 @@
-using SubscriptionTracker.Models;
+﻿using SubscriptionTracker.Models;
 
 namespace SubscriptionTracker.Services
 {

@@ -1,4 +1,4 @@
-namespace SubscriptionTracker.Models
+﻿namespace SubscriptionTracker.Models
 {
     public class FamilyConnection
     {
@@ -12,6 +12,6 @@ namespace SubscriptionTracker.Models
 
         public bool IsAccepted { get; set; }
 
-        public string Relationship { get; set; } // np. Rodzina, Przyjaciel, Partner, Współlokator
+        public string Relationship { get; set; }
     }
 }

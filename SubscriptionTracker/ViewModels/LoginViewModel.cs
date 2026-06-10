@@ -11,6 +11,8 @@ namespace SubscriptionTracker.ViewModels
         private readonly DataService _dataService;
         private readonly Action _onLoginSuccess;
 
+        public event Action LoginSuccessfulAnimation;
+
         [ObservableProperty]
         private string _username = string.Empty;
 
@@ -86,14 +88,13 @@ namespace SubscriptionTracker.ViewModels
             {
                 if (IsRegisterMode)
                 {
-                    // Registration Mode
                     bool registered = await _dataService.RegisterUserAsync(Username, Password, Email);
                     if (registered)
                     {
                         IsRegisterMode = false;
                         IsStatusError = false;
                         ErrorMessage = "Rejestracja udana! Zaloguj się.";
-                        Password = string.Empty; // Clear password on success to signal UI
+                        Password = string.Empty;
                     }
                     else
                     {
@@ -102,11 +103,12 @@ namespace SubscriptionTracker.ViewModels
                 }
                 else
                 {
-                    // Login Mode
                     var user = await _dataService.LoginUserAsync(Username, Password);
                     if (user != null)
                     {
                         SessionManager.CurrentUser = user;
+                        LoginSuccessfulAnimation?.Invoke();
+                        await Task.Delay(350);
                         _onLoginSuccess?.Invoke();
                     }
                     else

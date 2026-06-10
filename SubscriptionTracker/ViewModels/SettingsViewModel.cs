@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SubscriptionTracker.Services;
 using SubscriptionTracker.Data;
@@ -37,7 +37,7 @@ namespace SubscriptionTracker.ViewModels
 
         public SettingsViewModel()
         {
-            // Assign fields directly to backing variables to prevent event firing during instantiation
+
             _userName = SessionManager.CurrentUser?.Username ?? AppSettings.UserName;
             _userEmail = SessionManager.CurrentUser?.Email ?? AppSettings.UserEmail;
             _isDarkTheme = AppSettings.IsDarkTheme;
@@ -54,7 +54,7 @@ namespace SubscriptionTracker.ViewModels
             IsEditing = !IsEditing;
             if (!IsEditing)
             {
-                // Revert changes if cancelled
+
                 UserName = SessionManager.CurrentUser?.Username ?? AppSettings.UserName;
                 UserEmail = SessionManager.CurrentUser?.Email ?? AppSettings.UserEmail;
             }
@@ -144,7 +144,7 @@ namespace SubscriptionTracker.ViewModels
                     var userCats = await db.Categories.Where(c => c.UserId == userId).ToListAsync();
                     db.Categories.RemoveRange(userCats);
                     
-                    // Re-seed default categories specifically for this user
+
                     db.Categories.Add(new Models.Category { Name = "Streaming", Color = "#22c55e", UserId = userId });
                     db.Categories.Add(new Models.Category { Name = "Muzyka", Color = "#f43f5e", UserId = userId });
                     db.Categories.Add(new Models.Category { Name = "Oprogramowanie", Color = "#3b82f6", UserId = userId });
@@ -204,7 +204,7 @@ namespace SubscriptionTracker.ViewModels
                     var subs = await ds.GetSubscriptionsAsync();
                     var logs = await ds.GetPaymentLogsAsync();
 
-                    // Calculate stats
+
                     decimal monthlyTotal = 0;
                     foreach (var s in subs.Where(x => x.Status == "Aktywna" || string.IsNullOrEmpty(x.Status)))
                     {
@@ -217,7 +217,7 @@ namespace SubscriptionTracker.ViewModels
                     decimal yearlyTotal = monthlyTotal * 12;
                     int activeCount = subs.Count(x => x.Status == "Aktywna" || string.IsNullOrEmpty(x.Status));
 
-                    // Build Subscriptions Rows
+
                     var subRowsHtml = new System.Text.StringBuilder();
                     foreach (var s in subs)
                     {
@@ -242,7 +242,7 @@ namespace SubscriptionTracker.ViewModels
                         subRowsHtml.AppendLine("<tr><td colspan=\"8\" style=\"text-align:center;color:#64748b;\">Brak zarejestrowanych subskrypcji</td></tr>");
                     }
 
-                    // Build Payment Log Rows
+
                     var logRowsHtml = new System.Text.StringBuilder();
                     foreach (var l in logs)
                     {
@@ -259,7 +259,7 @@ namespace SubscriptionTracker.ViewModels
                         logRowsHtml.AppendLine("<tr><td colspan=\"4\" style=\"text-align:center;color:#64748b;\">Brak historii płatności</td></tr>");
                     }
 
-                    // Load report template and swap properties
+
                     string template = GetHtmlReportTemplate();
                     template = template.Replace("@Username", System.Net.WebUtility.HtmlEncode(SessionManager.CurrentUser?.Username ?? "Użytkownik"))
                                        .Replace("@UserEmail", System.Net.WebUtility.HtmlEncode(SessionManager.CurrentUser?.Email ?? "brak@email.com"))
@@ -288,7 +288,7 @@ namespace SubscriptionTracker.ViewModels
 <html>
 <head>
     <meta charset=""utf-8"" />
-    <title>SubTrack Premium Financial Report</title>
+    <title>SubTrack — Raport Finansowy</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #0c0d12; color: #f8fafc; margin: 0; padding: 40px; }
         .container { max-width: 900px; margin: 0 auto; background: #16171e; border: 1px solid #272733; border-radius: 12px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
@@ -317,41 +317,41 @@ namespace SubscriptionTracker.ViewModels
     <div class=""container"">
         <div class=""header"">
             <div>
-                <h1 style=""color: #22c55e;"">SubTrack Report</h1>
-                <p style=""margin: 5px 0 0 0; color: #94a3b8;"">Financial Subscription & Expense Statement</p>
+                <h1 style=""color: #22c55e;"">SubTrack — Raport</h1>
+                <p style=""margin: 5px 0 0 0; color: #94a3b8;"">Zestawienie finansowe subskrypcji i wydatków</p>
             </div>
             <div class=""meta"">
-                <p>User: <strong>@Username</strong> (@UserEmail)</p>
-                <p>Generated: <strong>@GeneratedTime</strong></p>
+                <p>Użytkownik: <strong>@Username</strong> (@UserEmail)</p>
+                <p>Wygenerowano: <strong>@GeneratedTime</strong></p>
             </div>
         </div>
         
         <div class=""stats-grid"">
             <div class=""stat-card"">
-                <h3>Monthly Expenses</h3>
+                <h3>Wydatki miesięczne</h3>
                 <div class=""value highlight"">@MonthlyCosts PLN</div>
             </div>
             <div class=""stat-card"">
-                <h3>Yearly Projected</h3>
+                <h3>Prognoza roczna</h3>
                 <div class=""value"">@YearlyCosts PLN</div>
             </div>
             <div class=""stat-card"">
-                <h3>Active Services</h3>
+                <h3>Aktywne usługi</h3>
                 <div class=""value"">@ActiveCount</div>
             </div>
         </div>
         
-        <div class=""section-title"">Subscriptions & Cost Splits</div>
+        <div class=""section-title"">Subskrypcje i podział kosztów</div>
         <table>
             <thead>
                 <tr>
-                    <th>Service</th>
-                    <th>Category</th>
-                    <th>Full Price</th>
-                    <th>Split Details</th>
-                    <th>Your Share</th>
-                    <th>Cycle</th>
-                    <th>Next Payment</th>
+                    <th>Usługa</th>
+                    <th>Kategoria</th>
+                    <th>Pełna cena</th>
+                    <th>Szczegóły podziału</th>
+                    <th>Twój udział</th>
+                    <th>Cykl</th>
+                    <th>Następna płatność</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -360,14 +360,14 @@ namespace SubscriptionTracker.ViewModels
             </tbody>
         </table>
         
-        <div class=""section-title"">Recent Payment Ledger Activity</div>
+        <div class=""section-title"">Historia płatności</div>
         <table>
             <thead>
                 <tr>
-                    <th>Service</th>
-                    <th>Date Paid</th>
-                    <th>Amount Paid</th>
-                    <th>System Note</th>
+                    <th>Usługa</th>
+                    <th>Data płatności</th>
+                    <th>Kwota</th>
+                    <th>Notatka</th>
                 </tr>
             </thead>
             <tbody>
@@ -376,7 +376,7 @@ namespace SubscriptionTracker.ViewModels
         </table>
         
         <div class=""footer"">
-            <p>Generated dynamically by SubTrack WPF. &copy; @CurrentYear SubTrack Team.</p>
+            <p>Raport wygenerowany automatycznie przez SubTrack WPF. &copy; @CurrentYear SubTrack Team.</p>
         </div>
     </div>
 </body>

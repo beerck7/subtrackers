@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SubscriptionTracker.Models;
 using SubscriptionTracker.Services;
@@ -74,10 +74,10 @@ namespace SubscriptionTracker.ViewModels
 
             foreach (var conn in connections)
             {
-                // Find the other user
+
                 var otherUser = conn.SenderUserId == currentUserId ? conn.ReceiverUser : conn.SenderUser;
 
-                // Calculate sharing statistics
+
                 var sharedSubs = subscriptions.Where(s => 
                     s.IsShared && 
                     !string.IsNullOrWhiteSpace(s.SharedWith) && 
@@ -105,7 +105,7 @@ namespace SubscriptionTracker.ViewModels
                 }
             }
 
-            // Refresh search results statuses if any query is active
+
             if (!string.IsNullOrWhiteSpace(SearchQuery))
             {
                 await SearchAsync();
@@ -129,7 +129,7 @@ namespace SubscriptionTracker.ViewModels
 
             foreach (var user in users)
             {
-                // Determine connection state
+
                 var conn = connections.FirstOrDefault(c => 
                     (c.SenderUserId == currentUserId && c.ReceiverUserId == user.Id) ||
                     (c.SenderUserId == user.Id && c.ReceiverUserId == currentUserId));

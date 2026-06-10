@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SubscriptionTracker.Data;
 using SubscriptionTracker.Models;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace SubscriptionTracker.Services
 {
     public class DataService
     {
-        // ================= USER AUTHENTICATION =================
+
 
         public async Task<User> LoginUserAsync(string username, string password)
         {
@@ -50,7 +50,7 @@ namespace SubscriptionTracker.Services
                 db.Users.Add(user);
                 await db.SaveChangesAsync();
 
-                // Seed default categories specifically for this user
+
                 var defaultCategories = new List<Category>
                 {
                     new Category { Name = "Streaming", Color = "#22c55e", UserId = user.Id },
@@ -75,7 +75,7 @@ namespace SubscriptionTracker.Services
             }
         }
 
-        // ================= CATEGORIES =================
+
 
         public async Task<List<Category>> GetCategoriesAsync()
         {
@@ -121,7 +121,7 @@ namespace SubscriptionTracker.Services
             }
         }
 
-        // ================= SUBSCRIPTIONS =================
+
 
         public async Task<List<Subscription>> GetSubscriptionsAsync()
         {
@@ -177,7 +177,7 @@ namespace SubscriptionTracker.Services
             }
         }
 
-        // ================= PAYMENT LOGS =================
+
 
         public async Task<List<PaymentLog>> GetPaymentLogsAsync()
         {
@@ -211,7 +211,7 @@ namespace SubscriptionTracker.Services
 
                 db.PaymentLogs.Add(log);
 
-                // Advance NextPaymentDate automatically based on the cycle type
+
                 if (sub.Cycle == "Rocznie")
                 {
                     sub.NextPaymentDate = sub.NextPaymentDate.AddYears(1);
@@ -225,7 +225,7 @@ namespace SubscriptionTracker.Services
                 return true;
             }
         }
-        // ================= FAMILY CONNECTIONS =================
+
 
         public async Task<List<User>> SearchUsersAsync(string query)
         {

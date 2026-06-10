@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,7 +15,7 @@ namespace SubscriptionTracker.Models
         [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
 
-        public string Cycle { get; set; } // np. Miesięcznie, Rocznie
+        public string Cycle { get; set; }
 
         public DateTime StartDate { get; set; }
         public DateTime NextPaymentDate { get; set; }
@@ -28,17 +28,17 @@ namespace SubscriptionTracker.Models
 
         public string Note { get; set; }
 
-        public string Status { get; set; } // Aktywna / Nieaktywna
+        public string Status { get; set; }
 
-        // Cost-sharing
+
         public bool IsShared { get; set; } = false;
         public int NumberOfMembers { get; set; } = 1;
-        public string SharedWith { get; set; } = string.Empty; // Comma-separated co-payer names
+        public string SharedWith { get; set; } = string.Empty;
 
         [NotMapped]
         public decimal SplitPrice => IsShared && NumberOfMembers > 1 ? Math.Round(Price / NumberOfMembers, 2) : Price;
 
-        // Navigation for payment logs
+
         public ICollection<PaymentLog> PaymentLogs { get; set; }
     }
 }

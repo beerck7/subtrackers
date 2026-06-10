@@ -1,4 +1,4 @@
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SubscriptionTracker.Models;
 using SubscriptionTracker.Services;
@@ -148,7 +148,7 @@ namespace SubscriptionTracker.ViewModels
             CategoryExpenses.Clear();
             if (_totalMonthlyCostCalculated > 0)
             {
-                double currentAngle = -Math.PI / 2.0; // Start at top
+                double currentAngle = -Math.PI / 2.0;
                 foreach (var raw in _rawCategoryExpenses)
                 {
                     decimal displayCost = IsYearlyView ? raw.MonthlyCost * 12 : raw.MonthlyCost;
@@ -162,7 +162,7 @@ namespace SubscriptionTracker.ViewModels
                         FormattedCostWithPercentage = $"{displayCost:0.00} {Services.AppSettings.DefaultCurrency} ({pct:0}%)"
                     };
                     
-                    // Arc path calculation
+
                     double sweepAngle = (pct / 100.0) * 2.0 * Math.PI;
                     double cx = 75.0;
                     double cy = 75.0;

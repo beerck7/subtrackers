@@ -1,4 +1,4 @@
-<UserControl x:Class="SubscriptionTracker.CategoriesView"
+﻿<UserControl x:Class="SubscriptionTracker.CategoriesView"
 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 
@@ -56,7 +56,6 @@
 
 
 
-                <!-- KATEGORIE LISTA -->
 
                 <ItemsControl ItemsSource="{Binding Categories}" HorizontalAlignment="Center">
 

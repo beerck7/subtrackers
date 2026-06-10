@@ -1,4 +1,4 @@
-using System.Configuration;
+﻿using System.Configuration;
 using System.Data;
 using System.Windows;
 using Microsoft.EntityFrameworkCore;
@@ -7,9 +7,6 @@ using System.Windows.Controls;
 
 namespace SubscriptionTracker
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         public App()
@@ -98,7 +95,7 @@ namespace SubscriptionTracker
                 Services.DataSeeder.SeedData(db);
             }
 
-            // Apply saved theme
+
             if (!Services.AppSettings.IsDarkTheme)
             {
                 try

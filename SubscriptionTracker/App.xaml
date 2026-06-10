@@ -1,4 +1,4 @@
-<Application x:Class="SubscriptionTracker.App"
+﻿<Application x:Class="SubscriptionTracker.App"
 
 
 
@@ -46,7 +46,6 @@
 
 
 
-        <!-- ================= COLORS & BRUSHES ================= -->
 
 
 
@@ -152,7 +151,6 @@
 
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
 
-        <!-- ================= CUSTOM SLEEK SCROLLBAR STYLE ================= -->
         <ControlTemplate x:Key="InvisibleButtonTemplate" TargetType="RepeatButton">
             <Border Background="Transparent" />
         </ControlTemplate>
@@ -234,7 +232,6 @@
             </Style.Triggers>
         </Style>
 
-        <!-- ================= BASE STYLES ================= -->
 
 
 
@@ -242,7 +239,6 @@
 
 
 
-        <!-- Standard Card Style -->
 
 
 
@@ -298,7 +294,6 @@
 
 
 
-            <!-- Shadow effect for depth -->
 
 
 
@@ -354,7 +349,6 @@
 
 
 
-        <!-- Modern Button Base -->
 
 
 
@@ -619,7 +613,6 @@
 
 
 
-        <!-- Primary Button -->
 
 
 
@@ -667,7 +660,6 @@
 
 
 
-        <!-- Success Button -->
 
 
 
@@ -715,7 +707,6 @@
 
 
 
-        <!-- Danger Button -->
 
 
 
@@ -763,7 +754,6 @@
 
 
 
-        <!-- Outline Button -->
 
 
 
@@ -827,7 +817,6 @@
 
 
 
-        <!-- Modern TextBox -->
 
 
 
@@ -963,7 +952,6 @@
 
 
 
-                                <!-- Beautiful Placeholder (Watermark) -->
 
 
 
@@ -1179,7 +1167,6 @@
 
 
 
-        <!-- Modern ComboBoxItem Style -->
 
 
 
@@ -1387,7 +1374,6 @@
 
 
 
-        <!-- Modern ComboBox Style -->
 
 
 
@@ -2075,7 +2061,6 @@
 
 
 
-        <!-- DatePickerTextBox Style -->
 
 
 
@@ -2187,7 +2172,6 @@
 
 
 
-        <!-- Modern DatePicker Style -->
 
 
 
@@ -2650,7 +2634,6 @@
 
 
 
-        <!-- Keyless styles to force datepicker calendar popup into our modern dark/dynamic theme -->
 
 
 
@@ -3066,7 +3049,6 @@
 
 
 
-        <!-- Modern Calendar Style (Premium Dark Theme) -->
 
 
 
@@ -3150,7 +3132,6 @@
 
 
 
-                                                <!-- Premium Header Panel -->
 
 
 
@@ -3314,7 +3295,6 @@
 
 
 
-                                                <!-- Views Grid -->
 
 
 
