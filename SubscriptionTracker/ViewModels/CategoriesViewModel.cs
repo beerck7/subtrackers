@@ -1,8 +1,9 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SubscriptionTracker.Models;
 using SubscriptionTracker.Services;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -45,9 +46,16 @@ namespace SubscriptionTracker.ViewModels
                 return;
             }
 
+            var existingCategories = await _dataService.GetCategoriesAsync();
+            if (existingCategories != null && existingCategories.Any(c => c.Name.Trim().ToLower() == NewCategoryName.Trim().ToLower()))
+            {
+                CustomMessageBox.Show("Kategoria o takiej nazwie już istnieje.", "Błąd", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
             var category = new Category
             {
-                Name = NewCategoryName,
+                Name = NewCategoryName.Trim(),
                 Color = "#3b82f6"
             };
 

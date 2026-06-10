@@ -1,4 +1,4 @@
-﻿<Application x:Class="SubscriptionTracker.App"
+<Application x:Class="SubscriptionTracker.App"
 
 
 
@@ -3500,11 +3500,65 @@
 
         </Style>
 
-
-
-        
-
-
+        <!-- Modern CheckBox -->
+        <Style x:Key="ModernCheckBox" TargetType="CheckBox">
+            <Setter Property="Background" Value="{DynamicResource InputBackground}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource CardBorder}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextPrimary}"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Grid x:Name="templateRoot" Background="Transparent">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="checkBoxBorder" 
+                                    Background="{TemplateBinding Background}" 
+                                    BorderBrush="{TemplateBinding BorderBrush}" 
+                                    BorderThickness="{TemplateBinding BorderThickness}" 
+                                    CornerRadius="4" 
+                                    Width="18" 
+                                    Height="18" 
+                                    VerticalAlignment="Center" 
+                                    HorizontalAlignment="Left">
+                                <Grid>
+                                    <Path x:Name="checkmark" 
+                                          Data="M 3,8 L 7,12 L 15,4" 
+                                          Stroke="#FFFFFF" 
+                                          StrokeThickness="2" 
+                                          StrokeStartLineCap="Round" 
+                                          StrokeEndLineCap="Round" 
+                                          Visibility="Collapsed"/>
+                                </Grid>
+                            </Border>
+                            <ContentPresenter x:Name="contentPresenter" 
+                                              Grid.Column="1" 
+                                              Focusable="False" 
+                                              HorizontalAlignment="Left" 
+                                              VerticalAlignment="Center" 
+                                              Margin="8,0,0,0"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="true">
+                                <Setter TargetName="checkBoxBorder" Property="Background" Value="{StaticResource PrimaryBrush}"/>
+                                <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                                <Setter TargetName="checkmark" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{StaticResource PrimaryBrush}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
     </Application.Resources>
 
