@@ -16,8 +16,14 @@
         <Border.Effect>
             <DropShadowEffect Color="Black" BlurRadius="25" Opacity="0.4" ShadowDepth="10" Direction="270" />
         </Border.Effect>
-        <StackPanel>
-            <Grid Margin="0,0,0,30">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="0,0,0,20">
                 <TextBlock Text="{Binding TitleText}" Foreground="{DynamicResource TextPrimary}" FontSize="22" FontWeight="Bold"/>
                 <Button Content="&#xE711;" FontFamily="Segoe MDL2 Assets" Foreground="{DynamicResource TextSecondary}" Background="Transparent" BorderThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="Hand" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=AddWindow}" FontSize="16">
                     <Button.Template>
@@ -27,104 +33,108 @@
                     </Button.Template>
                 </Button>
             </Grid>
-            
-            <TextBlock Text="Nazwa usługi (np. Spotify)" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
-            <TextBox Style="{StaticResource ModernTextBox}" Tag="Wpisz nazwę subskrypcji (np. Netflix)..." Margin="0,0,0,20" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <TextBlock Text="Kategoria" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
-            <ComboBox Style="{StaticResource ModernComboBox}" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" DisplayMemberPath="Name" Margin="0,0,0,20" />
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,20">
+                <StackPanel Margin="0,0,10,0">
+                    <TextBlock Text="Nazwa usługi (np. Spotify)" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
+                    <TextBox Style="{StaticResource ModernTextBox}" Tag="Wpisz nazwę subskrypcji (np. Netflix)..." Margin="0,0,0,20" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <TextBlock Text="Cykl rozliczeniowy" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
-            <ComboBox Style="{StaticResource ModernComboBox}" ItemsSource="{Binding CycleOptions}" SelectedItem="{Binding Cycle}" Margin="0,0,0,20" />
+                    <TextBlock Text="Kategoria" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
+                    <ComboBox Style="{StaticResource ModernComboBox}" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" DisplayMemberPath="Name" Margin="0,0,0,20" />
 
-            <Grid Margin="0,0,0,20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="15"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <StackPanel>
-                    <TextBlock Text="Data rozpoczęcia" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
-                    <DatePicker SelectedDate="{Binding StartDate}" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Background="{DynamicResource InputBackground}" Padding="5" />
-                </StackPanel>
-                <StackPanel Grid.Column="2">
-                    <TextBlock Text="Następna płatność" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
-                    <DatePicker SelectedDate="{Binding NextPaymentDate}" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Background="{DynamicResource InputBackground}" Padding="5" />
-                </StackPanel>
-            </Grid>
+                    <TextBlock Text="Cykl rozliczeniowy" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
+                    <ComboBox Style="{StaticResource ModernComboBox}" ItemsSource="{Binding CycleOptions}" SelectedItem="{Binding Cycle}" Margin="0,0,0,20" />
 
-            <TextBlock Text="Cena (PLN)" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
-            <TextBox Style="{StaticResource ModernTextBox}" Tag="Wpisz kwotę płatności (np. 29.99)..." Margin="0,0,0,15" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}"/>
-
-            <!-- Współdzielenie kosztów -->
-            <CheckBox Content="Subskrypcja współdzielona" 
-                      IsChecked="{Binding IsShared}" 
-                      Foreground="{DynamicResource TextPrimary}" 
-                      FontSize="13" 
-                      FontWeight="SemiBold" 
-                      Margin="0,0,0,15"/>
-
-            <StackPanel Visibility="{Binding IsShared, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <!-- Wybór zdefiniowanych osób -->
-                <TextBlock Text="Wybierz osoby ze swojej listy:" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,8" FontWeight="SemiBold"/>
-                
-                <TextBlock Text="Wskazówka: Dodaj członków w zakładce 'Rodzina', aby wybierać ich jednym kliknięciem!" Foreground="#ef4444" FontSize="11" TextWrapping="Wrap" Margin="0,0,0,10">
-                    <TextBlock.Style>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding FamilyMembersList.Count}" Value="0">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-
-                <ItemsControl ItemsSource="{Binding FamilyMembersList}" Margin="0,0,0,15">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" Foreground="{DynamicResource TextPrimary}" Margin="0,0,12,8" FontSize="13"/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-                <Grid Margin="0,0,0,15">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120"/>
-                        <ColumnDefinition Width="15"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <StackPanel>
-                        <TextBlock Text="Liczba osób" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
-                        <TextBox Style="{StaticResource ModernTextBox}" Text="{Binding NumberOfMembers, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
-                    </StackPanel>
-                    <StackPanel Grid.Column="2">
-                        <TextBlock Text="Z kim dzielisz (np. Kasia, Tomek)" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
-                        <TextBox Style="{StaticResource ModernTextBox}" Tag="Imiona współdzielących..." Text="{Binding SharedWith, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
-                </Grid>
-
-                <Border Background="#161b26" CornerRadius="8" Padding="12" Margin="0,0,0,25" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1">
-                    <Grid>
-                        <TextBlock Text="Twój koszt jednostkowy:" Foreground="{DynamicResource TextSecondary}" FontSize="13" VerticalAlignment="Center"/>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
-                            <TextBlock Text="{Binding CalculatedSplitPrice}" Foreground="{DynamicResource SuccessBrush}" FontSize="16" FontWeight="Bold"/>
-                            <TextBlock Text=" PLN" Foreground="{DynamicResource SuccessBrush}" FontSize="13" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
-                            <TextBlock Text=" / os. (pełna kwota: " Foreground="{DynamicResource TextSecondary}" FontSize="11" VerticalAlignment="Bottom" Margin="5,0,0,2"/>
-                            <TextBlock Text="{Binding Price}" Foreground="{DynamicResource TextSecondary}" FontSize="11" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
-                            <TextBlock Text=" PLN)" Foreground="{DynamicResource TextSecondary}" FontSize="11" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="15"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <TextBlock Text="Data rozpoczęcia" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
+                            <DatePicker SelectedDate="{Binding StartDate}" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Background="{DynamicResource InputBackground}" Padding="5" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Następna płatność" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
+                            <DatePicker SelectedDate="{Binding NextPaymentDate}" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" Background="{DynamicResource InputBackground}" Padding="5" />
                         </StackPanel>
                     </Grid>
-                </Border>
-            </StackPanel>
 
-            <Grid>
+                    <TextBlock Text="Cena (PLN)" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
+                    <TextBox Style="{StaticResource ModernTextBox}" Tag="Wpisz kwotę płatności (np. 29.99)..." Margin="0,0,0,15" Text="{Binding PriceText, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <!-- Współdzielenie kosztów -->
+                    <CheckBox Content="Subskrypcja współdzielona" 
+                              IsChecked="{Binding IsShared}" 
+                              Foreground="{DynamicResource TextPrimary}" 
+                              FontSize="13" 
+                              FontWeight="SemiBold" 
+                              Margin="0,0,0,15"/>
+
+                    <StackPanel Visibility="{Binding IsShared, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <!-- Wybór zdefiniowanych osób -->
+                        <TextBlock Text="Wybierz osoby ze swojej listy:" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,8" FontWeight="SemiBold"/>
+                        
+                        <TextBlock Text="Wskazówka: Dodaj członków w zakładce 'Rodzina', aby wybierać ich jednym kliknięciem!" Foreground="#ef4444" FontSize="11" TextWrapping="Wrap" Margin="0,0,0,10">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding FamilyMembersList.Count}" Value="0">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+
+                        <ItemsControl ItemsSource="{Binding FamilyMembersList}" Margin="0,0,0,15">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsSelected}" Foreground="{DynamicResource TextPrimary}" Margin="0,0,12,8" FontSize="13"/>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <Grid Margin="0,0,0,15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="15"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel>
+                                <TextBlock Text="Liczba osób" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                                <TextBox Style="{StaticResource ModernTextBox}" Text="{Binding NumberOfMembers, UpdateSourceTrigger=PropertyChanged}" TextAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Text="Z kim dzielisz (np. Kasia, Tomek)" Foreground="{DynamicResource TextSecondary}" FontSize="12" Margin="0,0,0,5" FontWeight="SemiBold"/>
+                                <TextBox Style="{StaticResource ModernTextBox}" Tag="Imiona współdzielących..." Text="{Binding SharedWith, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <Border Background="#161b26" CornerRadius="8" Padding="12" Margin="0,0,0,25" BorderBrush="{DynamicResource CardBorder}" BorderThickness="1">
+                            <Grid>
+                                <TextBlock Text="Twój koszt jednostkowy:" Foreground="{DynamicResource TextSecondary}" FontSize="13" VerticalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding CalculatedSplitPrice}" Foreground="{DynamicResource SuccessBrush}" FontSize="16" FontWeight="Bold"/>
+                                    <TextBlock Text=" PLN" Foreground="{DynamicResource SuccessBrush}" FontSize="13" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+                                    <TextBlock Text=" / os. (pełna kwota: " Foreground="{DynamicResource TextSecondary}" FontSize="11" VerticalAlignment="Bottom" Margin="5,0,0,2"/>
+                                    <TextBlock Text="{Binding Price}" Foreground="{DynamicResource TextSecondary}" FontSize="11" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+                                    <TextBlock Text=" PLN)" Foreground="{DynamicResource TextSecondary}" FontSize="11" VerticalAlignment="Bottom" Margin="0,0,0,2"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </StackPanel>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="15"/>
@@ -133,6 +143,6 @@
                 <Button Content="Anuluj" Style="{StaticResource OutlineButton}" Command="{Binding CancelCommand}" CommandParameter="{Binding ElementName=AddWindow}" />
                 <Button Grid.Column="2" Content="{Binding ButtonText}" Style="{StaticResource SuccessButton}" Command="{Binding SaveCommand}" CommandParameter="{Binding ElementName=AddWindow}" />
             </Grid>
-        </StackPanel>
+        </Grid>
     </Border>
 </Window>

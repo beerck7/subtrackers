@@ -35,7 +35,7 @@ namespace SubscriptionTracker.ViewModels
             if (IsEditMode)
             {
                 Name = _editingSubscription.Name;
-                Price = _editingSubscription.Price;
+                PriceText = _editingSubscription.Price.ToString("0.00");
                 Cycle = _editingSubscription.Cycle;
                 StartDate = _editingSubscription.StartDate;
                 NextPaymentDate = _editingSubscription.NextPaymentDate;
@@ -51,6 +51,7 @@ namespace SubscriptionTracker.ViewModels
                 IsShared = false;
                 NumberOfMembers = 1;
                 SharedWith = string.Empty;
+                PriceText = string.Empty;
             }
 
             LoadCategoriesCommand.Execute(null);
@@ -95,9 +96,55 @@ namespace SubscriptionTracker.ViewModels
         private string _name;
 
         [ObservableProperty]
-        [Range(0.01, 99999.99, ErrorMessage = "Cena musi być większa od zera")]
         [NotifyPropertyChangedFor(nameof(CalculatedSplitPrice))]
         private decimal _price;
+
+        private string _priceText;
+
+        [Required(ErrorMessage = "Podaj cenę")]
+        [CustomValidation(typeof(AddSubscriptionViewModel), nameof(ValidatePriceText))]
+        public string PriceText
+        {
+            get => _priceText;
+            set
+            {
+                if (SetProperty(ref _priceText, value))
+                {
+                    string normalized = value?.Replace(',', '.') ?? "";
+                    if (decimal.TryParse(normalized, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal parsedPrice))
+                    {
+                        Price = parsedPrice;
+                    }
+                    else
+                    {
+                        Price = 0;
+                    }
+                    ValidateProperty(value, nameof(PriceText));
+                }
+            }
+        }
+
+        public static ValidationResult ValidatePriceText(string priceText, ValidationContext context)
+        {
+            if (string.IsNullOrWhiteSpace(priceText))
+            {
+                return new ValidationResult("Cena jest wymagana");
+            }
+            string normalized = priceText.Replace(',', '.');
+            if (!decimal.TryParse(normalized, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal parsedPrice))
+            {
+                return new ValidationResult("Niepoprawny format ceny");
+            }
+            if (parsedPrice <= 0)
+            {
+                return new ValidationResult("Cena musi być większa od zera");
+            }
+            if (parsedPrice > 99999.99m)
+            {
+                return new ValidationResult("Cena jest zbyt wysoka");
+            }
+            return ValidationResult.Success;
+        }
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(CalculatedSplitPrice))]
