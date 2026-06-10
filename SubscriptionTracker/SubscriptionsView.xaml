@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="SubscriptionTracker.SubscriptionsView"
+<UserControl x:Class="SubscriptionTracker.SubscriptionsView"
 
 
 
@@ -432,13 +432,10 @@
 
                                                             </Border>
 
-                                                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
-
-                                                                <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15"/>
-
-                                                                <TextBlock Text="{Binding Category}" Foreground="{DynamicResource TextSecondary}" FontSize="13"/>
-
-                                                            </StackPanel>
+                                                            <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="0,0,10,0">
+                                                                 <TextBlock Text="{Binding Name}" Foreground="{DynamicResource TextPrimary}" FontWeight="SemiBold" FontSize="15" TextTrimming="CharacterEllipsis"/>
+                                                                 <TextBlock Text="{Binding Category}" Foreground="{DynamicResource TextSecondary}" FontSize="13" TextTrimming="CharacterEllipsis"/>
+                                                             </StackPanel>
 
                                                             <StackPanel Grid.Column="2" VerticalAlignment="Center">
 

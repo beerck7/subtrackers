@@ -1,4 +1,4 @@
-using SubscriptionTracker.ViewModels;
+﻿using SubscriptionTracker.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System;

@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SubscriptionTracker.Data;
 using SubscriptionTracker.Models;
 using System.Collections.Generic;
