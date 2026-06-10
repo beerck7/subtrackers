@@ -29,7 +29,7 @@ namespace SubscriptionTracker.ViewModels
         public string FormattedPrice => IsShared ? $"{SplitPrice:0.00} PLN / os. (pełna: {_subscription.Price:0.00} PLN)" : $"{_subscription.Price:0.00} {Services.AppSettings.DefaultCurrency}";
         
         public string Initials => string.IsNullOrWhiteSpace(Name) ? "?" : Name.Substring(0, 1).ToUpper();
-        public string IconColor => _subscription.Category?.Color ?? "#808080";
+        public string IconColor => !string.IsNullOrWhiteSpace(_subscription.Color) ? _subscription.Color : (_subscription.Category?.Color ?? "#808080");
         
         public string StartDateFormatted => _subscription.StartDate.ToString("dd.MM.yyyy");
         public string NextPaymentDateFormatted => _subscription.NextPaymentDate.ToString("dd.MM.yyyy");

@@ -37,7 +37,51 @@
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Margin="0,0,0,20">
                 <StackPanel Margin="0,0,10,0">
                     <TextBlock Text="Nazwa usługi (np. Spotify)" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
-                    <TextBox Style="{StaticResource ModernTextBox}" Tag="Wpisz nazwę subskrypcji (np. Netflix)..." Margin="0,0,0,20" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Style="{StaticResource ModernTextBox}" Tag="Wpisz nazwę subskrypcji (np. Netflix)..." Margin="0,0,0,15" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+
+                    <TextBlock Text="Kolor tła ikony (opcjonalnie)" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
+                    <ListBox ItemsSource="{Binding AvailableColors}" 
+                             SelectedItem="{Binding SelectedColor}" 
+                             Margin="0,0,0,20" 
+                             Background="Transparent" 
+                             BorderThickness="0"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                             ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="BorderThickness" Value="0"/>
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0,10,5">
+                                    <Ellipse Width="24" Height="24" Fill="{Binding}" Cursor="Hand"/>
+                                    <!-- Selection Indicator -->
+                                    <Ellipse Width="8" Height="8" Fill="White" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed" x:Name="selectedMarker"/>
+                                </Grid>
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=IsSelected}" Value="True">
+                                        <Setter TargetName="selectedMarker" Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
 
                     <TextBlock Text="Kategoria" Foreground="{DynamicResource TextSecondary}" FontSize="13" Margin="0,0,0,8" FontWeight="SemiBold"/>
                     <ComboBox Style="{StaticResource ModernComboBox}" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" DisplayMemberPath="Name" Margin="0,0,0,20" />

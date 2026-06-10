@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SubscriptionTracker.Models;
 using SubscriptionTracker.Services;
@@ -42,6 +42,7 @@ namespace SubscriptionTracker.ViewModels
                 IsShared = _editingSubscription.IsShared;
                 NumberOfMembers = _editingSubscription.NumberOfMembers;
                 SharedWith = _editingSubscription.SharedWith;
+                SelectedColor = _editingSubscription.Color;
             }
             else
             {
@@ -52,6 +53,7 @@ namespace SubscriptionTracker.ViewModels
                 NumberOfMembers = 1;
                 SharedWith = string.Empty;
                 PriceText = string.Empty;
+                SelectedColor = string.Empty;
             }
 
             LoadCategoriesCommand.Execute(null);
@@ -123,6 +125,21 @@ namespace SubscriptionTracker.ViewModels
                 }
             }
         }
+
+        public ObservableCollection<string> AvailableColors { get; } = new()
+        {
+            "#3b82f6", // Niebieski
+            "#22c55e", // Zielony
+            "#f43f5e", // Czerwony
+            "#eab308", // Żółty
+            "#a855f7", // Fioletowy
+            "#ec4899", // Różowy
+            "#14b8a6", // Turkusowy
+            "#6b7280"  // Szary
+        };
+
+        [ObservableProperty]
+        private string _selectedColor = string.Empty;
 
         public static ValidationResult ValidatePriceText(string priceText, ValidationContext context)
         {
@@ -225,6 +242,7 @@ namespace SubscriptionTracker.ViewModels
                 _editingSubscription.IsShared = IsShared;
                 _editingSubscription.NumberOfMembers = IsShared ? NumberOfMembers : 1;
                 _editingSubscription.SharedWith = IsShared ? (SharedWith ?? string.Empty) : string.Empty;
+                _editingSubscription.Color = SelectedColor ?? string.Empty;
 
                 await _dataService.UpdateSubscriptionAsync(_editingSubscription);
             }
@@ -242,7 +260,8 @@ namespace SubscriptionTracker.ViewModels
                     Note = "",
                     IsShared = IsShared,
                     NumberOfMembers = IsShared ? NumberOfMembers : 1,
-                    SharedWith = IsShared ? (SharedWith ?? string.Empty) : string.Empty
+                    SharedWith = IsShared ? (SharedWith ?? string.Empty) : string.Empty,
+                    Color = SelectedColor ?? string.Empty
                 };
 
                 await _dataService.AddSubscriptionAsync(sub);

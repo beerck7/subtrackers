@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -34,6 +34,7 @@ namespace SubscriptionTracker.Models
         public bool IsShared { get; set; } = false;
         public int NumberOfMembers { get; set; } = 1;
         public string SharedWith { get; set; } = string.Empty;
+        public string Color { get; set; } = string.Empty;
 
         [NotMapped]
         public decimal SplitPrice => IsShared && NumberOfMembers > 1 ? Math.Round(Price / NumberOfMembers, 2) : Price;

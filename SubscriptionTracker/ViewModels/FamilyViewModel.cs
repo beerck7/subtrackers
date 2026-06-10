@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SubscriptionTracker.Models;
 using SubscriptionTracker.Services;
@@ -78,12 +78,19 @@ namespace SubscriptionTracker.ViewModels
                 var otherUser = conn.SenderUserId == currentUserId ? conn.ReceiverUser : conn.SenderUser;
 
 
+                var otherUsername = otherUser.Username.Trim().ToLower();
+                var currentUsername = (SessionManager.CurrentUser?.Username ?? "").Trim().ToLower();
+
                 var sharedSubs = subscriptions.Where(s => 
                     s.IsShared && 
-                    !string.IsNullOrWhiteSpace(s.SharedWith) && 
-                    s.SharedWith.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                        .Select(name => name.Trim().ToLower())
-                        .Contains(otherUser.Username.Trim().ToLower())
+                    ((s.UserId == currentUserId && !string.IsNullOrWhiteSpace(s.SharedWith) && 
+                      s.SharedWith.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                          .Select(name => name.Trim().ToLower())
+                          .Contains(otherUsername)) ||
+                     (s.UserId == otherUser.Id && !string.IsNullOrWhiteSpace(s.SharedWith) && 
+                      s.SharedWith.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                          .Select(name => name.Trim().ToLower())
+                          .Contains(currentUsername)))
                 ).ToList();
 
                 int count = sharedSubs.Count;

@@ -1,4 +1,4 @@
-﻿using System.Configuration;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 using Microsoft.EntityFrameworkCore;
@@ -90,6 +90,11 @@ namespace SubscriptionTracker
                             FOREIGN KEY(ReceiverUserId) REFERENCES Users(Id) ON DELETE CASCADE
                         );
                     ");
+                }
+                catch { }
+                try
+                {
+                    db.Database.ExecuteSqlRaw("ALTER TABLE Subscriptions ADD COLUMN Color TEXT NULL;");
                 }
                 catch { }
                 Services.DataSeeder.SeedData(db);
