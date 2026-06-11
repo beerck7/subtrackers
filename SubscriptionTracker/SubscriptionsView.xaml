@@ -26,19 +26,7 @@
 
 
 
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
-
-
-
-                    <TextBlock Text="&#xE9D9;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
-
-
-
-                    <TextBlock Text="SubTrack" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
-
-
-
-                </StackPanel>
+                
 
 
 

@@ -11,10 +11,7 @@
         <Grid Margin="20,20,20,110">
             <StackPanel MaxWidth="1200" HorizontalAlignment="Stretch">
 
-                <StackPanel Orientation="Horizontal" Margin="0,0,0,20" HorizontalAlignment="Center">
-                    <TextBlock Text="&#xE716;" FontFamily="Segoe MDL2 Assets" Foreground="{StaticResource PrimaryBrush}" FontSize="20" Margin="0,0,10,0" VerticalAlignment="Center"/>
-                    <TextBlock Text="SubTrack Social" Foreground="{DynamicResource TextPrimary}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center"/>
-                </StackPanel>
+                
 
                 <StackPanel Margin="0,0,0,25" HorizontalAlignment="Center">
                     <TextBlock Text="Rodzina i współdzielenie" Foreground="{DynamicResource TextPrimary}" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center"/>
