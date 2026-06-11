@@ -1,4 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SubscriptionTracker.Models;
 using SubscriptionTracker.Services;
@@ -161,8 +161,16 @@ namespace SubscriptionTracker.ViewModels
         private async Task DeleteSubscriptionAsync(SubscriptionItemViewModel item)
         {
             if (item == null) return;
+            
+            var currentUserId = SessionManager.CurrentUser?.Id ?? 0;
+            bool isOwner = item.Model.UserId == currentUserId;
+            
+            string message = isOwner 
+                ? $"Czy na pewno chcesz usunąć subskrypcję {item.Name}?" 
+                : $"Nie jesteś właścicielem tej subskrypcji. Czy chcesz zrezygnować ze współdzielenia usługi {item.Name} i usunąć ją ze swojej listy?";
+
             var result = CustomMessageBox.Show(
-                $"Czy na pewno chcesz usunąć subskrypcję {item.Name}?",
+                message,
                 "Potwierdzenie",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);

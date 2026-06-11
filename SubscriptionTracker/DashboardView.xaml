@@ -469,7 +469,7 @@
 
                             <Grid Width="150" Height="150" HorizontalAlignment="Center">
 
-
+                                <Ellipse Stroke="#1A1A22" StrokeThickness="18" Width="120" Height="120" IsHitTestVisible="False"/>
 
                                 <ItemsControl ItemsSource="{Binding CategoryExpenses}">
 
@@ -477,7 +477,7 @@
 
                                         <ItemsPanelTemplate>
 
-                                            <Grid />
+                                            <Canvas Width="150" Height="150" />
 
                                         </ItemsPanelTemplate>
 
@@ -505,19 +505,7 @@
 
                                 </ItemsControl>
 
-
-
-
-
-                                <Ellipse Stroke="#1A1A22" StrokeThickness="18" Width="120" Height="120" IsHitTestVisible="False"/>
-
-
-
-
-
                                 <Ellipse Fill="{DynamicResource CardBackground}" Width="98" Height="98" HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False"/>
-
-
 
                                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False">
 

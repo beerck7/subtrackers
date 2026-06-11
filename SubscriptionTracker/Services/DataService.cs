@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SubscriptionTracker.Data;
 using SubscriptionTracker.Models;
 using System.Collections.Generic;
@@ -178,12 +178,37 @@ namespace SubscriptionTracker.Services
         public async Task DeleteSubscriptionAsync(int id)
         {
             var userId = SessionManager.CurrentUser?.Id ?? 0;
+            var username = (SessionManager.CurrentUser?.Username ?? "").Trim().ToLower();
+            if (userId == 0) return;
+
             using (var db = new AppDbContext())
             {
-                var sub = await db.Subscriptions.FirstOrDefaultAsync(s => s.Id == id && s.UserId == userId);
+                var sub = await db.Subscriptions.FirstOrDefaultAsync(s => s.Id == id);
                 if (sub != null)
                 {
-                    db.Subscriptions.Remove(sub);
+                    if (sub.UserId == userId)
+                    {
+                        db.Subscriptions.Remove(sub);
+                    }
+                    else if (sub.IsShared && !string.IsNullOrWhiteSpace(sub.SharedWith))
+                    {
+                        var members = sub.SharedWith.Split(',', System.StringSplitOptions.RemoveEmptyEntries)
+                                                    .Select(n => n.Trim())
+                                                    .ToList();
+
+                        var userMember = members.FirstOrDefault(n => n.ToLower() == username);
+                        if (userMember != null)
+                        {
+                            members.Remove(userMember);
+                            sub.SharedWith = string.Join(", ", members);
+                            sub.NumberOfMembers = System.Math.Max(1, sub.NumberOfMembers - 1);
+                            if (sub.NumberOfMembers <= 1)
+                            {
+                                sub.IsShared = false;
+                            }
+                            db.Subscriptions.Update(sub);
+                        }
+                    }
                     await db.SaveChangesAsync();
                 }
             }
