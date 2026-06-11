@@ -8,7 +8,7 @@
              Background="Transparent">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
-        <Grid Margin="20,20,20,110">
+        <Grid Margin="20,20,20,140">
             <StackPanel MaxWidth="1200" HorizontalAlignment="Stretch">
 
                 

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="SubscriptionTracker.CategoriesView"
+<UserControl x:Class="SubscriptionTracker.CategoriesView"
 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 
@@ -8,7 +8,7 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
 
-        <Grid Margin="20,20,20,90">
+        <Grid Margin="20,20,20,140">
 
             <StackPanel MaxWidth="1200" HorizontalAlignment="Stretch">
 
