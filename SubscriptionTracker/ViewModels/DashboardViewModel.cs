@@ -102,29 +102,25 @@ namespace SubscriptionTracker.ViewModels
             _rawCategoryExpenses.Clear();
             if (_totalMonthlyCostCalculated > 0)
             {
-                var categories = await _dataService.GetCategoriesAsync();
-                foreach (var cat in categories)
-                {
-                    decimal catMonthly = 0;
-                    foreach (var sub in cat.Subscriptions.Where(s => s.Status == "Aktywna" || string.IsNullOrEmpty(s.Status)))
+                var grouped = activeSubs
+                    .GroupBy(s => s.Category?.Name ?? "Inne")
+                    .Select(g => new
                     {
-                        if (sub.Cycle == "Rocznie")
-                        {
-                            catMonthly += sub.SplitPrice / 12;
-                        }
-                        else
-                        {
-                            catMonthly += sub.SplitPrice;
-                        }
-                    }
+                        CategoryName = g.Key,
+                        Color = g.FirstOrDefault()?.Category?.Color ?? "#a855f7",
+                        MonthlyCost = g.Sum(sub => sub.Cycle == "Rocznie" ? sub.SplitPrice / 12 : sub.SplitPrice)
+                    })
+                    .ToList();
 
-                    if (catMonthly > 0)
+                foreach (var item in grouped)
+                {
+                    if (item.MonthlyCost > 0)
                     {
                         _rawCategoryExpenses.Add(new CategoryExpenseItemRaw
                         {
-                            Name = cat.Name,
-                            Color = cat.Color ?? "#808080",
-                            MonthlyCost = catMonthly
+                            Name = item.CategoryName,
+                            Color = item.Color,
+                            MonthlyCost = item.MonthlyCost
                         });
                     }
                 }
