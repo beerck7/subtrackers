@@ -49,6 +49,7 @@ Możesz zalogować się za pomocą poniższych danych:
 4. **Elastyczny Podział Kosztów**:
    * Podział ceny subskrypcji na dowolną liczbę zaakceptowanych członków rodziny.
    * Automatyczne obliczanie i prezentacja stawki jednostkowej oraz pełnej kwoty.
+   * Funkcja rezygnacji (opt-out) – możliwość bezpiecznego opuszczenia współdzielonej subskrypcji przez zaproszonego członka rodziny bez usuwania jej dla reszty grupy.
 
 5. **Wygodne Ustawienia**:
    * Dynamiczny przełącznik motywu (Jasny/Ciemny) działający bez restartu aplikacji.
